@@ -137,7 +137,7 @@ Incluye:
 Todos los diagramas están en la carpeta /docs.
 
 ## 📌 Tecnologías utilizadas
-Java / Kotlin
+Kotlin
 
 JavaFX
 
