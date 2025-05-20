@@ -6,12 +6,12 @@ Gestión digital de plantilla y convocatorias del club deportivo New Team
 
 
 
-📝 Descripción del proyecto
+## 📝 Descripción del proyecto
 New Team Manager es una aplicación de escritorio desarrollada para digitalizar la gestión interna del club deportivo New Team. Ofrece un entorno intuitivo, seguro y robusto para la administración de jugadores, entrenadores, convocatorias, estadísticas e historial del equipo.
 
 Este sistema ha sido diseñado usando Kotlin y JavaFX con arquitectura MVVM, soporte para múltiples formatos de entrada/salida (CSV, JSON, XML, binario), y control de acceso basado en roles (usuario normal / administrador).
 
-🎯 Objetivos principales
+## 🎯 Objetivos principales
 🧑‍💼 Gestión completa de la plantilla (jugadores y cuerpo técnico)
 
 📅 Creación y modificación de convocatorias oficiales
@@ -28,30 +28,30 @@ Este sistema ha sido diseñado usando Kotlin y JavaFX con arquitectura MVVM, sop
 
 🧪 Alta cobertura de pruebas (excepto controladores)
 
-🧩 Funcionalidades principales
-📋 Gestión de Personal
+# 🧩 Funcionalidades principales
+## 📋 Gestión de Personal
 Modelo base común para empleados (ID, nombre, apellidos, fecha de nacimiento, incorporación, salario, país, imagen)
 
 Jugadores: posición, dorsal, altura, peso, minutos jugados, goles
 
 Entrenadores: especialización (porteros, asistente, principal)
 
-🗂️ Datos del equipo
+## 🗂️ Datos del equipo
 Nombre oficial
 
 Fecha de fundación
 
 Escudo 
 
-🧠 Caché LRU
+## 🧠 Caché LRU
 Gestión de datos más recientes (hasta 5 elementos) para mayor eficiencia
 
-🔄 Operaciones CRUD
+## 🔄 Operaciones CRUD
 Crear, leer, actualizar y eliminar miembros de la plantilla
 
 Validación estricta de datos (nombre, símbolos inválidos, etc.)
 
-📁 Entrada/Salida de datos
+## 📁 Entrada/Salida de datos
 Formatos soportados: CSV, JSON, XML y binario
 
 Localización configurable vía fichero externo
@@ -60,7 +60,7 @@ Exportación/importación completa de la base de datos
 
 Soporte para backup en ZIP
 
-🧾 Convocatorias
+## 🧾 Convocatorias
 Fecha y descripción
 
 Máximo 18 jugadores (máximo 2 porteros)
@@ -75,12 +75,12 @@ Impresión en HTML y PDF (opcional)
 
 Usuarios normales solo pueden consultar e imprimir
 
-📈 Estadísticas
+## 📈 Estadísticas
 Cálculo automático del promedio de minutos jugados y goles (solo jugadores)
 
 Contador de miembros en listas dinámicas
 
-👥 Control de acceso
+## 👥 Control de acceso
 Usuarios almacenados en BD con contraseña cifrada (bcrypt)
 
 Usuario normal: acceso de solo lectura
@@ -91,7 +91,7 @@ Objeto Sesion para gestionar el usuario activo
 
 Control de visibilidad de componentes según rol
 
-🖼️ Interfaz gráfica
+## 🖼️ Interfaz gráfica
 Diseño dividido: formulario a la izquierda, lista a la derecha
 
 Contador de elementos
@@ -104,7 +104,7 @@ Ventana modal "Acerca de mí" con foto y datos del autor (GitHub)
 
 Aplicación no redimensionable, con splash screen e ícono personalizado
 
-🧪 Tests y calidad
+## 🧪 Tests y calidad
 Pruebas unitarias con alta cobertura en servicios y modelo
 
 Excluidos: controladores JavaFX
@@ -113,30 +113,30 @@ Informes de cobertura generados automáticamente
 
 Validación cruzada de operaciones CRUD y filtros
 
-📚 Documentación técnica
+# 📚 Documentación técnica
 Incluye:
 
-✅ Requisitos funcionales y no funcionales
+## ✅ Requisitos funcionales y no funcionales
 
-📄 Casos de uso (alta, baja, modificación, convocatorias)
+## 📄 Casos de uso (alta, baja, modificación, convocatorias)
 
-🧭 Grafo de navegación y diseño de vistas
+## 🧭 Grafo de navegación y diseño de vistas
 
-📊 Diagrama de clases del modelo de negocio
+## 📊 Diagrama de clases del modelo de negocio
 
-🧱 Diagrama entidad-relación de la base de datos
+##  🧱 Diagrama entidad-relación de la base de datos
 
-⏱️ Diagramas de secuencia
+## ⏱️ Diagramas de secuencia
 
-📈 Informes de cobertura y calidad
+## 📈 Informes de cobertura y calidad
 
-💰 Estimación de costes del desarrollo
+## 💰 Estimación de costes del desarrollo
 
-📆 Planificación y seguimiento con Trello
+## 📆 Planificación y seguimiento con Trello
 
 Todos los diagramas están en la carpeta /docs.
 
-📌 Tecnologías utilizadas
+## 📌 Tecnologías utilizadas
 Java / Kotlin
 
 JavaFX
@@ -157,6 +157,6 @@ Maven / Gradle
 
 Trello (planificación)
 
-👤 Autores
+# 👤 Autores
 Nombre: Cristian Ortega, Carlos Cortes, Samuel Gomez, Victor Marin
 GitHub: @Cristianortegaa_, @Aragorn7372, @Sggz221, @charlieecy
