@@ -1,4 +1,4 @@
-##⚽ New Team Manager
+#⚽ New Team Manager
 
 Gestión digital de plantilla y convocatorias del club deportivo New Team
 
