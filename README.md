@@ -159,4 +159,5 @@ Trello (planificación)
 
 # 👤 Autores
 Nombre: Cristian Ortega, Carlos Cortes, Samuel Gomez, Victor Marin
+
 GitHub: @Cristianortegaa_, @Aragorn7372, @Sggz221, @charlieecy
