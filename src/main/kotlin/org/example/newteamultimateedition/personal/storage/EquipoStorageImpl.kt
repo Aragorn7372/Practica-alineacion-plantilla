@@ -2,8 +2,8 @@ package org.example.newteamultimateedition.personal.storage
 
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
-import org.example.newteam.gestion.errors.GestionErrors
-import org.example.newteam.gestion.models.Integrante
+import org.example.newteamultimateedition.personal.error.PersonasError
+import org.example.newteamultimateedition.personal.models.Persona
 import java.io.File
 
 /**
@@ -28,7 +28,7 @@ class EquipoStorageImpl(
      * @see [EquipoStorageXML]
      * @see [EquipoStorageBIN]
      */
-    override fun fileRead(file: File): Result<List<Integrante>, GestionErrors> {
+    override fun fileRead(file: File): Result<List<Persona>, PersonasError> {
         when {
             file.name.endsWith(".csv") -> {
                 return storageCSV.fileRead(file)
@@ -55,7 +55,7 @@ class EquipoStorageImpl(
      * @see [EquipoStorageXML]
      * @see [EquipoStorageBIN]
      */
-    override fun fileWrite(equipo: List<Integrante>, file: File): Result<Unit, GestionErrors> {
+    override fun fileWrite(equipo: List<Persona>, file: File): Result<Unit, PersonasError> {
         when {
             file.name.endsWith(".csv") -> {
                 storageCSV.fileWrite(equipo,file)

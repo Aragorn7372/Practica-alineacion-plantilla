@@ -3,10 +3,11 @@ package org.example.newteamultimateedition.personal.storage
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
-import org.example.practicaenequipocristianvictoraitornico.common.config.Config
-import org.example.newteamultimateedition.personal.exception.PersonasException
-import org.example.practicaenequipocristianvictoraitornico.players.models.Jugadores
-import org.example.practicaenequipocristianvictoraitornico.players.models.Persona
+import org.example.newteamultimateedition.common.config.Config
+import org.example.newteamultimateedition.personal.error.PersonasError
+import org.example.newteamultimateedition.personal.models.Jugador
+import org.example.newteamultimateedition.personal.models.Persona
+
 
 import org.lighthousegames.logging.logging
 import java.io.File
@@ -17,7 +18,7 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
 import kotlin.io.path.name
-
+/*
 class PersonalStorageZip(
 
     private val csv: PersonalStorageCsv,
@@ -25,11 +26,11 @@ class PersonalStorageZip(
     private val bin: PersonalStorageBin,
     private val xml: PersonalStorageXml,
 ) {
-    private val config=Config
+    private val config = Config
 
     private val tempDirName = "players"
     private val logger = logging()
-    fun leerDelArchivo(file: File): Result<List<Persona>, PersonasException> {
+    fun leerDelArchivo(file: File): Result<List<Persona>, PersonasError> {
         logger.info { "descomprimiendo archivos" }
         val tempDir = Files.createTempDirectory(tempDirName)
         try {
@@ -53,7 +54,7 @@ class PersonalStorageZip(
                 ) {
                     Files.copy(
                         it,
-                        Paths.get(config.configProperties.imgDir + "/", it.name),
+                        Paths.get(config.configProperties.imagesDirectory + "/", it.name),
                         StandardCopyOption.REPLACE_EXISTING
                     )
                 }
@@ -71,23 +72,23 @@ class PersonalStorageZip(
                 "xml" -> xml.leerDelArchivo(personas.first())
 
                 else -> {
-                    return Err(PersonasException.PersonasStorageException("tipo invalido"))
+                    return Err(PersonasError.PersonasStorageError("tipo invalido"))
                 }
             }
 
         } catch (ex: Exception) {
-            return Err(PersonasException.PersonasStorageException("tipo invalido"))
+            return Err(PersonasError.PersonasStorageError("tipo invalido"))
         }
     }
 
 
-    fun escribirAUnArchivo(file: File, persona: List<Persona>, tipe: Tipo): Result<String, PersonasException> {
+    fun escribirAUnArchivo(file: File, persona: List<Persona>, tipe: Tipo): Result<String, PersonasError> {
         logger.debug { "exportando a zip con datos en formato: $tipe " }
         val tempDir = Files.createTempDirectory(tempDirName)
         try {
             persona.forEach {
-                if (it is Jugadores) {
-                    val newfile = File(config.configProperties.imgDir + "/" + it.imagen)
+                if (it is Jugador) {
+                    val newfile = File(config.configProperties.imagesDirectory + "/" + it.imagen)
                     if (newfile.exists()) {
                         Files.copy(
                             newfile.toPath(),
@@ -116,13 +117,16 @@ class PersonalStorageZip(
                 }
                 tempDir.toFile().deleteRecursively()
                 return Ok(file.absolutePath)
-            } else return Err(PersonasException.PersonasStorageException(datafile.error.toString()))
+            } else return Err(PersonasError.PersonasStorageError(datafile.error.toString()))
         } catch (e: Exception) {
             logger.debug { "fallo al importar" }
-            return Err(PersonasException.PersonasStorageException(e.message.toString()))
+            return Err(PersonasError.PersonasStorageError(e.message.toString()))
         }
     }
 }
 enum class Tipo {
     CSV, JSON, XML, BIN
 }
+
+
+ */

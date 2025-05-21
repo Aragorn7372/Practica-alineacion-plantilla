@@ -2,23 +2,26 @@ package org.example.newteamultimateedition.personal.services
 
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.michaelbull.result.*
-import org.example.newteamultimateedition.personal.exception.PersonasException
+import org.example.newteamultimateedition.common.database.provideDatabaseManager
+import org.example.newteamultimateedition.personal.cache.darPersonasCache
+import org.example.newteamultimateedition.personal.dao.getPersonasDao
+import org.example.newteamultimateedition.personal.error.PersonasError
 import org.example.newteamultimateedition.personal.models.Persona
 import org.example.newteamultimateedition.personal.repository.PersonasRepositoryImplementation
-import org.example.newteamultimateedition.personal.storage.EquipoStorage
 import org.example.newteamultimateedition.personal.storage.EquipoStorageImpl
 import org.example.newteamultimateedition.personal.validator.PersonaValidation
 import org.lighthousegames.logging.logging
 import java.nio.file.Path
 
-class PersonaServiceImpl<Tipo>(
-    private val repositorio: PersonasRepositoryImplementation,
-    private val cache: Cache<Long, Persona>,
-    private val validator: PersonaValidation,
-    private val storage: EquipoStorageImpl
+class PersonaServiceImpl(
+    private val repositorio: PersonasRepositoryImplementation = PersonasRepositoryImplementation(getPersonasDao(
+        provideDatabaseManager())),
+    private val cache: Cache<Long, Persona> = darPersonasCache(),
+    private val validator: PersonaValidation = PersonaValidation(),
+    private val storage: EquipoStorageImpl = EquipoStorageImpl(),
 ):PersonaService {
     private val logger= logging()
-    override fun importarDatosDesdeFichero(fichero: Path): Result<List<Persona>, PersonasException> {
+    override fun importarDatosDesdeFichero(fichero: Path): Result<List<Persona>, PersonasError> {
         logger.debug { "importando desde fichero" }
         val archivo= fichero.toFile()
         try {
@@ -31,75 +34,75 @@ class PersonaServiceImpl<Tipo>(
             } else return Err(lista.error)
             return lista
         }catch (e:Exception){
-            return Err(PersonasException.PersonaDatabaseException(e.message.toString()))
+            return Err(PersonasError.PersonaDatabaseError(e.message.toString()))
         }
     }
 
-    override fun exportarDatosDesdeFichero(fichero: Path, tipo: Tipo): Result<String, PersonasException> {
+    override fun exportarDatosDesdeFichero(fichero: Path): Result<Unit, PersonasError> {
         logger.debug { "exportando desde fichero" }
         val archivo= fichero.toFile()
         val lista: List<Persona>
         try {
             lista=repositorio.getAll()
         }catch (e:Exception){
-            return Err(PersonasException.PersonaDatabaseException(e.message.toString()))
+            return Err(PersonasError.PersonaDatabaseError(e.message.toString()))
         }
-        val result= storage.fileWrite(archivo,lista)
+        val result= storage.fileWrite(lista,archivo)
         if (result.isOk){
             return Ok(result.value)
         }
         return Err(result.error)
     }
 
-    override fun getAll(): Result<List<Persona>,PersonasException> {
+    override fun getAll(): Result<List<Persona>,PersonasError> {
         try {
             return Ok(repositorio.getAll())
         }catch (e:Exception){
-            return Err(PersonasException.PersonaDatabaseException(e.message.toString()))
+            return Err(PersonasError.PersonaDatabaseError(e.message.toString()))
         }
     }
 
-    override fun getByID(id: Long): Result<Persona, PersonasException> {
+    override fun getByID(id: Long): Result<Persona, PersonasError> {
         return cache.getIfPresent(id)?.let { Ok(it) }?:run {
             try {
                 repositorio.getById(id)?.let {
                     cache.put(id,it)
                     return Ok(it)
                 }?:run {
-                    return Err(PersonasException.PersonaNotFoundException(id))
+                    return Err(PersonasError.PersonaNotFoundError(id))
                 }
             }catch (e:Exception){
-                return Err(PersonasException.PersonaDatabaseException(e.message.toString()))
+                return Err(PersonasError.PersonaDatabaseError(e.message.toString()))
             }
 
         }
     }
 
-    override fun save(item: Persona): Result<Persona, PersonasException> {
+    override fun save(item: Persona): Result<Persona, PersonasError> {
         val validado=validator.validator(item)
         return if (validado.isOk){
             try {
                 return Ok(repositorio.save(item))
             }catch (e:Exception){
-                return Err(PersonasException.PersonaDatabaseException(e.message.toString()))
+                return Err(PersonasError.PersonaDatabaseError(e.message.toString()))
             }
 
         } else Err(validado.error)
     }
 
-    override fun delete(id: Long): Result<Persona, PersonasException> {
+    override fun delete(id: Long): Result<Persona, PersonasError> {
 
         return try {
             repositorio.delete(id)?.let {
                 cache.getIfPresent(id)?.let { cache.invalidate(id) }
                 return Ok(it)
-            } ?: Err(PersonasException.PersonaNotFoundException(id))
+            } ?: Err(PersonasError.PersonaNotFoundError(id))
         }catch (e:Exception){
-            return Err(PersonasException.PersonaDatabaseException(e.message.toString()))
+            return Err(PersonasError.PersonaDatabaseError(e.message.toString()))
         }
     }
 
-    override fun update(id: Long, item: Persona): Result<Persona, PersonasException> {
+    override fun update(id: Long, item: Persona): Result<Persona, PersonasError> {
         val validado=validator.validator(item)
         if (validado.isOk){
             try {
@@ -109,9 +112,9 @@ class PersonaServiceImpl<Tipo>(
                         cache.put(id,it)
                     }
                     return Ok(it)
-                }?: return Err(PersonasException.PersonaNotFoundException(id))
+                }?: return Err(PersonasError.PersonaNotFoundError(id))
             }catch (e:Exception){
-                return Err(PersonasException.PersonaDatabaseException(e.message.toString()))
+                return Err(PersonasError.PersonaDatabaseError(e.message.toString()))
             }
 
         }

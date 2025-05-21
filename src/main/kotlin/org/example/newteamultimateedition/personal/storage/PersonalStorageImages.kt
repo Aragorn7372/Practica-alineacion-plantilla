@@ -1,13 +1,13 @@
 package org.example.newteamultimateedition.personal.storage
 
 import com.github.michaelbull.result.Result
-import org.example.newteamultimateedition.personal.exception.PersonasException
+import org.example.newteamultimateedition.personal.error.PersonasError
 import java.io.File
 
 interface PersonalStorageImages {
-    fun saveImage(fileName: File): Result<File, PersonasException>
-    fun loadImage(fileName: String): Result<File, PersonasException>
-    fun deleteImage(fileName: String): Result<Unit, PersonasException>
-    fun deleteAllImage(): Result<Int, PersonasException>
-    fun updateImage(Imagen: String, newFileImage: File): Result<File, PersonasException>
+    fun saveImage(fileName: File): Result<File, PersonasError>
+    fun loadImage(fileName: String): Result<File, PersonasError>
+    fun deleteImage(fileName: String): Result<Unit, PersonasError>
+    fun deleteAllImage(): Result<Int, PersonasError>
+    fun updateImage(Imagen: String, newFileImage: File): Result<File, PersonasError>
 }

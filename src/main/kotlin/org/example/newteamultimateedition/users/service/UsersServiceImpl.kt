@@ -59,6 +59,7 @@ class UsersServiceImpl(
             return Err(UsersException.DatabaseException(e.message.toString()))
         }
     }
+    /*
     fun goodLogin(username: String, password: String): Result<User, UsersException> {
         val userResult = getUserByUsername(username)
         return if (userResult != null) {
@@ -74,7 +75,6 @@ class UsersServiceImpl(
             Err(UsersException.UsersNotFoundException(username))
         }
     }
-    override fun getUserByUsername(username: String): User? {
-        return repositorio.getByName(username)
-    }
+
+     */
 }

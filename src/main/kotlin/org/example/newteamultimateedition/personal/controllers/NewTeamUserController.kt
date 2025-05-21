@@ -1,5 +1,5 @@
 package org.example.newteamultimateedition.personal.controllers
-
+/*
 import com.github.michaelbull.result.*
 import javafx.fxml.FXML
 import javafx.scene.control.*
@@ -494,3 +494,4 @@ class NewTeamUserController () {
         }
     }
 }
+ */

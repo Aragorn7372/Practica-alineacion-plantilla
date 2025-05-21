@@ -38,8 +38,10 @@ class UsersRepositoryImpl(
         usersDao.save(mapper.toEntity(objeto))
         return objeto
     }
-
+/*
     override fun getByName(username: String): User? {
         return usersDao.getByName(username)?.let { mapper.toModel(it) }
     }
+
+ */
 }

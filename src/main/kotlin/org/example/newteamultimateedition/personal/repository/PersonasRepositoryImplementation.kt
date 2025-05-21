@@ -2,17 +2,17 @@ package org.example.newteamultimateedition.personal.repository
 
 import org.example.newteamultimateedition.personal.dao.PersonaDao
 import org.example.newteamultimateedition.personal.extensions.copy
+import org.example.newteamultimateedition.personal.mapper.toEntity
+import org.example.newteamultimateedition.personal.mapper.toModel
 import org.example.newteamultimateedition.personal.models.Entrenador
 import org.example.newteamultimateedition.personal.models.Jugador
 import org.example.newteamultimateedition.personal.models.Persona
 
-import org.example.newteamultimateedition.users.models.User
 import org.lighthousegames.logging.logging
 
 class PersonasRepositoryImplementation(
     private val dao: PersonaDao,
-    private val mapper: PersonaMapper,
-): PersonalRepository {
+    ): PersonalRepository {
     private val logger = logging()
 
     /**
@@ -20,7 +20,7 @@ class PersonasRepositoryImplementation(
      */
     override fun getAll(): List<Persona> {
         logger.debug { "Getting all personas" }
-        return dao.getAll().map { mapper.toDatabaseModel(it) }
+        return dao.getAll().map { it.toModel() }
     }
 
     /**
@@ -30,7 +30,7 @@ class PersonasRepositoryImplementation(
      */
     override fun getById(id: Long): Persona? {
         logger.debug { "Getting persona by id $id" }
-        return dao.getById(id.toInt())?.let { mapper.toDatabaseModel(it) }
+        return dao.getById(id.toInt())?.toModel()
     }
 
     /**
@@ -41,9 +41,11 @@ class PersonasRepositoryImplementation(
      */
     override fun update(objeto: Persona, id: Long): Persona? {
         logger.debug { "Updating persona by id $id" }
-    val updated = dao.update(mapper.toEntity(objeto),id.toInt())
+
+        val updated = dao.update(objeto.toEntity(),id.toInt())
+
         return if (updated==1){ if(objeto is Jugador){
-            (objeto.copy(newId = id)
+            objeto.copy(newId = id)
         } else if (objeto is Entrenador) {
             objeto.copy(newId = id)
         }else null
@@ -59,7 +61,7 @@ class PersonasRepositoryImplementation(
     override fun delete(id: Long): Persona? {
         logger.debug { "Deleting persona by id $id" }
         dao.getById(id.toInt())?.let {
-            if (dao.deleteById(id.toInt())==1) return mapper.toDatabaseModel(it)
+            if (dao.deleteById(id.toInt())==1) return it.toModel()
             else null
         }
         return null
@@ -71,7 +73,7 @@ class PersonasRepositoryImplementation(
      * @return persona guardada
      */
     override fun save(objeto: Persona): Persona {
-        val id = dao.save(mapper.toEntity(objeto))
+        val id = dao.save(objeto.toEntity())
         val persona: Persona
         if (objeto is Jugador){
             persona = objeto.copy(newId = id.toLong())
@@ -81,12 +83,4 @@ class PersonasRepositoryImplementation(
         return persona
 
     }
-
-    override fun getByName(username: String): User? {
-        TODO("Not yet implemented")
-    }
-
-
-
-
 }
