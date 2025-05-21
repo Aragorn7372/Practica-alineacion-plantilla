@@ -34,4 +34,11 @@ module org.example.newteamultimateedition {
 
     opens org.example.newteamultimateedition to javafx.fxml;
     exports org.example.newteamultimateedition;
+
+    opens org.example.newteamultimateedition.common.controller to javafx.fxml;
+    opens org.example.newteamultimateedition.routes to javafx.fxml;
+
+    // Exportar los paquetes públicos si son utilizados en otros módulos
+    exports org.example.newteamultimateedition.common.controller;
+    exports org.example.newteamultimateedition.routes;
 }

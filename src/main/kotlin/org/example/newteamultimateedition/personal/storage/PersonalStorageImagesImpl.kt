@@ -3,8 +3,8 @@ package org.example.newteamultimateedition.personal.storage
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
-import org.example.practicaenequipocristianvictoraitornico.common.config.Config
-import org.example.newteamultimateedition.personal.exception.PersonasException
+import org.example.newteamultimateedition.common.config.Config
+import org.example.newteamultimateedition.personal.error.PersonasError
 import org.lighthousegames.logging.logging
 
 import java.io.File
@@ -17,14 +17,14 @@ class PersonalStorageImagesImpl(
     private val config: Config
         ): PersonalStorageImages {
     private val logger= logging()
-    override fun saveImage(fileName: File): Result<File, PersonasException> {
+    override fun saveImage(fileName: File): Result<File, PersonasError> {
         logger.debug { "Saving $fileName." }
-        val name= File(config.configProperties.imgDir + "/" + getName(fileName))
+        val name= File(config.configProperties.imagesDirectory + "/" + getName(fileName))
         return try {
             Files.copy(fileName.toPath(), name.toPath(), StandardCopyOption.REPLACE_EXISTING)
             Ok(fileName)
         }catch (e: Exception){
-            return Err(PersonasException.PersonasStorageException(e.message.toString()))
+            return Err(PersonasError.PersonasStorageError(e.message.toString()))
         }
     }
     private fun getName(fileName: File):String {
@@ -33,45 +33,45 @@ class PersonalStorageImagesImpl(
         return "${Instant.now().toEpochMilli()}.$extension"
     }
 
-    override fun loadImage(fileName: String): Result<File, PersonasException> {
+    override fun loadImage(fileName: String): Result<File, PersonasError> {
         logger.debug { "Loading $fileName." }
-        val file= File(config.configProperties.imgDir + "/"+ fileName)
+        val file= File(config.configProperties.imagesDirectory + "/"+ fileName)
         if(file.exists()){
             return Ok(file)
         }else{
-            return Err(PersonasException.PersonasStorageException(file.name))
+            return Err(PersonasError.PersonasStorageError(file.name))
         }
 
     }
 
-    override fun deleteImage(fileName: String): Result<Unit, PersonasException> {
+    override fun deleteImage(fileName: String): Result<Unit, PersonasError> {
         logger.debug { "Deleting $fileName." }
         val file= File(fileName)
         Files.deleteIfExists(file.toPath())
         return Ok(Unit)
     }
 
-    override fun deleteAllImage(): Result<Int, PersonasException> {
+    override fun deleteAllImage(): Result<Int, PersonasError> {
         logger.debug { "Deleting all files." }
         try {
-            return Ok(Files.walk(Paths.get(config.configProperties.imgDir))
+            return Ok(Files.walk(Paths.get(config.configProperties.imagesDirectory))
                 .filter{Files.isRegularFile(it)}.map{Files.deleteIfExists(it)}
                 .count().toInt())
         }
         catch (e: Exception){
-            return  Err(PersonasException.PersonasStorageException(e.message.toString()))
+            return  Err(PersonasError.PersonasStorageError(e.message.toString()))
         }
 
     }
 
-    override fun updateImage(Imagen: String, newFileImage: File): Result<File, PersonasException> {
+    override fun updateImage(Imagen: String, newFileImage: File): Result<File, PersonasError> {
         logger.debug { "Updating $Imagen." }
-        val updated= File(config.configProperties.imgDir + "/" + getName(newFileImage))
+        val updated= File(config.configProperties.imagesDirectory + "/" + getName(newFileImage))
         try {
             Files.copy(updated.toPath(), newFileImage.toPath(), StandardCopyOption.REPLACE_EXISTING)
             return Ok(newFileImage)
         }catch (e: Exception){
-            return Err(PersonasException.PersonasStorageException(e.message.toString()))
+            return Err(PersonasError.PersonasStorageError(e.message.toString()))
         }
     }
 }

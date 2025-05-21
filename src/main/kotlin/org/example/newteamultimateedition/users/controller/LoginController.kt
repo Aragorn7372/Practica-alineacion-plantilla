@@ -8,6 +8,8 @@ import javafx.scene.control.TextField
 import javafx.scene.input.KeyCode
 import javafx.stage.Stage
 import org.example.newteamultimateedition.routes.RoutesManager
+import org.example.newteamultimateedition.users.service.UsersServiceImpl
+import org.koin.java.KoinJavaComponent.inject
 
 import org.mindrot.jbcrypt.BCrypt
 
@@ -20,8 +22,9 @@ import org.mindrot.jbcrypt.BCrypt
  * @property userText [TextField] Campo que recoge el usuario
  * @property loginButton [Button] boton que procesa el inicio de sesion
  */
+
 class LoginController {
-    private val dao: UsersServiceImpl by
+    private val dao: UsersServiceImpl by inject()
     @FXML
     lateinit var acercaDeButton: Button
     @FXML
@@ -93,4 +96,6 @@ class LoginController {
     }
 }
 
+
+ */
 

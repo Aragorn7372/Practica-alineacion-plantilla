@@ -7,7 +7,10 @@ import org.jdbi.v3.sqlobject.SqlObjectPlugin
 import org.lighthousegames.logging.logging
 import java.util.*
 
-
+/**
+ * Clase que representa el JDBI, para simplificar las interacciones con la base de datos.
+ * @see [Config.configProperties]
+ */
 class DatabaseManager{
     private val logger= logging()
     val jdbi: Jdbi by lazy {

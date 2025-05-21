@@ -8,5 +8,4 @@ interface Repository<T, ID> {
     fun update(objeto:T,id: ID):T?
     fun delete(id: ID):T?
     fun save(objeto: T):T
-    fun getByName(username: String): T?
 }

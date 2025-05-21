@@ -1,5 +1,6 @@
-package org.example.newteamultimateedition.personal.controllers
 
+package org.example.newteamultimateedition.personal.controllers
+/*
 import com.github.michaelbull.result.*
 import javafx.application.Platform
 import javafx.fxml.FXML
@@ -1028,3 +1029,4 @@ class NewTeamAdminController () {
         }
     }
 }
+ */

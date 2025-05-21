@@ -5,16 +5,10 @@ import com.github.michaelbull.result.onSuccess
 import javafx.beans.property.SimpleObjectProperty
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
-import org.example.newteam.gestion.configuration.Configuration
-import org.example.newteam.gestion.di.Dependencies
-import org.example.newteam.gestion.errors.GestionErrors
 import org.example.newteamultimateedition.personal.extensions.redondearA2Decimales
-import org.example.newteamultimateedition.personal.mapper.toEntrenadorModel
-import org.example.newteamultimateedition.personal.mapper.toJugadorModel
 import org.example.newteamultimateedition.personal.models.Entrenador
-import org.example.newteam.gestion.models.Integrante
 import org.example.newteamultimateedition.personal.models.Jugador
-import org.example.newteam.gestion.service.EquipoServiceImpl
+import org.example.newteamultimateedition.personal.models.Persona
 import org.lighthousegames.logging.logging
 import java.io.File
 import java.nio.file.Files
@@ -22,6 +16,7 @@ import java.nio.file.StandardCopyOption
 import java.time.Instant
 import java.time.LocalDate
 
+/*
 /**
  * Clase que representa el ViewModel de la aplicación
  * @property service servicio inyectado
@@ -32,12 +27,12 @@ class EquipoViewModel (
 ) {
     private val logger = logging()
 
-    private var allIntegrantes: List<Integrante> = emptyList()
+    private var allIntegrantes: List<Persona> = emptyList()
 
     val state: SimpleObjectProperty<GeneralState> = SimpleObjectProperty(GeneralState())
 
     data class GeneralState(
-        var integrantes: ObservableList<Integrante> = FXCollections.observableArrayList(), //lista de todos los integrantes
+        var integrantes: ObservableList<Persona> = FXCollections.observableArrayList(), //lista de todos los integrantes
         val integrante: IntegranteState = IntegranteState(), //el integrante seleccionado
         val goalAvg: String = "0.0", //goles promedio
         val minutesAvg: String = "0.0", //minutos jugados promedio
@@ -48,8 +43,8 @@ class EquipoViewModel (
         val id: Long = 0L,
         val nombre: String = "",
         val apellidos: String = "",
-        val fecha_nacimiento: LocalDate = LocalDate.now(),
-        val fecha_incorporacion: LocalDate = LocalDate.now(),
+        val fechaNacimiento: LocalDate = LocalDate.now(),
+        val fechaIncorporacion: LocalDate = LocalDate.now(),
         val salario: Double = 0.0,
         val pais: String = "",
         val imagen: String = "media/profile_picture.png",
@@ -59,8 +54,8 @@ class EquipoViewModel (
         val altura: Double = 0.0,
         val peso: Double = 0.0,
         val goles: Int = 0,
-        val partidos_jugados: Int = 0,
-        val minutos_jugados: Int = 0
+        val partidosJugados: Int = 0,
+        val minutosJugados: Int = 0
     )
 
     /**
@@ -68,7 +63,7 @@ class EquipoViewModel (
      * @param integrante el integrante a guardar
      * @see updateState
      */
-    fun saveIntegrante(integrante: Integrante) {
+    fun saveIntegrante(integrante: Persona) {
         service.save(integrante).onSuccess {
             state.value.integrantes.addAll(it)
         }
@@ -119,7 +114,7 @@ class EquipoViewModel (
      * Guarda en el estado los integrantes ordenados
      * @see updateState
      */
-    fun sortIntegrantes(integrantesOrdenados: List<Integrante>) {
+    fun sortIntegrantes(integrantesOrdenados: List<Persona>) {
         logger.debug { "Ordenando la lista de integrantes" }
 
         state.value.integrantes.setAll(integrantesOrdenados)
@@ -129,7 +124,7 @@ class EquipoViewModel (
      * Guarda en el estado los integrantes filtrados
      * @see updateState
      */
-    fun filterIntegrantes(integrantesFiltrados: List<Integrante>) {
+    fun filterIntegrantes(integrantesFiltrados: List<Persona>) {
         logger.debug { "Filtrando la lista de integrantes" }
 
         state.value.integrantes.setAll(integrantesFiltrados)
@@ -188,8 +183,8 @@ class EquipoViewModel (
                     id = integrante.id,
                     nombre = integrante.nombre,
                     apellidos = integrante.apellidos,
-                    fecha_nacimiento = integrante.fecha_nacimiento,
-                    fecha_incorporacion = integrante.fecha_incorporacion,
+                    fechaNacimiento = integrante.fecha_nacimiento,
+                    fechaIncorporacion = integrante.fecha_incorporacion,
                     salario = integrante.salario,
                     pais = integrante.pais,
                     imagen = integrante.imagen,
@@ -198,8 +193,8 @@ class EquipoViewModel (
                     altura = integrante.altura,
                     peso = integrante.peso,
                     goles = integrante.goles,
-                    partidos_jugados = integrante.partidos_jugados,
-                    minutos_jugados = integrante.minutos_jugados
+                    partidosJugados = integrante.partidos_jugados,
+                    minutosJugados = integrante.minutos_jugados
                 )
             )
         }
@@ -209,8 +204,8 @@ class EquipoViewModel (
                     id = integrante.id,
                     nombre = integrante.nombre,
                     apellidos = integrante.apellidos,
-                    fecha_nacimiento = integrante.fecha_nacimiento,
-                    fecha_incorporacion = integrante.fecha_incorporacion,
+                    fechaNacimiento = integrante.fecha_nacimiento,
+                    fechaIncorporacion = integrante.fecha_incorporacion,
                     salario = integrante.salario,
                     pais = integrante.pais,
                     imagen = integrante.imagen,
@@ -263,3 +258,5 @@ class EquipoViewModel (
     }
 
 }
+
+ */

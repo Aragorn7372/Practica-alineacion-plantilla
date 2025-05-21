@@ -8,8 +8,8 @@ import nl.adaptivity.xmlutil.serialization.XmlElement
  * @property id Identificador del objeto
  * @property nombre Nombre del integrante
  * @property apellidos Apellidos del integrante
- * @property fecha_nacimiento Fecha de nacimiento del integrante
- * @property fecha_incorporacion Fecha de incorporacion al equipo del integrante
+ * @property fechaNacimiento Fecha de nacimiento del integrante
+ * @property fechaIncorporacion Fecha de incorporacion al equipo del integrante
  * @property pais Pais de origen del integrante
  * @property especialidad Especializacion del integrante
  * @property salario Salario del integrante
@@ -18,8 +18,8 @@ import nl.adaptivity.xmlutil.serialization.XmlElement
  * @property altura Altura
  * @property peso Peso del integrante
  * @property goles Numero de goles que ha marcado el integrante
- * @property partidos_jugados Numero de partidos jugados por el integrante
- * @property minutos_jugados Numero de minutos jugados por el integrante
+ * @property partidosJugados Numero de partidos jugados por el integrante
+ * @property minutosJugados Numero de minutos jugados por el integrante
  * @property imagen imagen de perfil asignada al integrante
  */
 @Serializable
@@ -35,10 +35,10 @@ data class IntegranteDTO(
     val apellidos: String,
     @SerialName("fecha_nacimiento")
     @XmlElement
-    val fecha_nacimiento: String,
+    val fechaNacimiento: String,
     @SerialName("fecha_incorporacion")
     @XmlElement
-    val fecha_incorporacion: String,
+    val fechaIncorporacion: String,
     @SerialName("salario")
     @XmlElement
     val salario: Double,
@@ -68,10 +68,10 @@ data class IntegranteDTO(
     val goles: Int?,
     @SerialName("partidos_jugados")
     @XmlElement
-    val partidos_jugados: Int?,
+    val partidosJugados: Int?,
     @SerialName("minutos_jugados")
     @XmlElement
-    val minutos_jugados: Int?,
+    val minutosJugados: Int?,
     @SerialName("imagen")
     @XmlElement
     val imagen: String

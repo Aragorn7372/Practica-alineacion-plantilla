@@ -4,12 +4,10 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import org.example.newteamultimateedition.personal.dto.IntegranteDTO
-import org.example.newteam.gestion.errors.GestionErrors
 import org.example.newteamultimateedition.personal.mapper.toDto
 import org.example.newteamultimateedition.personal.mapper.toModel
 import org.example.newteamultimateedition.personal.models.Entrenador
-import org.example.newteam.gestion.models.Integrante
-import org.example.newteamultimateedition.personal.exception.PersonasException
+import org.example.newteamultimateedition.personal.error.PersonasError
 import org.example.newteamultimateedition.personal.models.Jugador
 import org.example.newteamultimateedition.personal.models.Persona
 import org.lighthousegames.logging.logging
@@ -29,10 +27,10 @@ class EquipoStorageBIN: EquipoStorage {
      * Lee el archivo como una lista de DTO de integrante y lo mapea al modelo segun va leyendo
      * @return [Result] de [List] [Integrante] o [GestionErrors.StorageError]
      */
-    override fun fileRead(file: File): Result<List<Persona>, PersonasException> {
+    override fun fileRead(file: File): Result<List<Persona>, PersonasError> {
         logger.debug{"Leyendo archivo BIN"}
 
-        if (!file.exists() || !file.isFile || !file.canRead()) return Err(PersonasException.PersonasStorageException("El fichero no existe, la ruta especificada no es un fichero o no se tienen permisos de lectura"))
+        if (!file.exists() || !file.isFile || !file.canRead()) return Err(PersonasError.PersonasStorageError("El fichero no existe, la ruta especificada no es un fichero o no se tienen permisos de lectura"))
 
         val equipo = mutableListOf<IntegranteDTO>() // Mutable para poder añadir sobre la marcha los objetos
 
@@ -75,13 +73,13 @@ class EquipoStorageBIN: EquipoStorage {
                         fechaIncorporacion, salario, pais, rol,
                         especialidad, posicion = null, dorsal = null,
                         altura = null, peso = null, goles = null,
-                        partidos_jugados = null, minutos_jugados = null, imagen
+                        partidosJugados = null, minutosJugados = null, imagen
                     )
                     equipo.add(integranteEntrenador)
                 }
             }
         }
-        return Ok(equipo.map{ org.example.newteamultimateedition.personal.mapper.toModel() })
+        return Ok(equipo.map{ it.toModel() })
     }
 
     /**
@@ -90,20 +88,20 @@ class EquipoStorageBIN: EquipoStorage {
      * @param file El archivo donde se escribira la lista
      * @return [Result] de [Unit] o [GestionErrors.StorageError]
      */
-    override fun fileWrite(equipo: List<Persona>, file: File): Result<Unit, PersonasException> {
+    override fun fileWrite(equipo: List<Persona>, file: File): Result<Unit, PersonasError> {
         logger.debug { "Escribiendo archivo BIN" }
 
         if(!file.parentFile.exists() || !file.parentFile.isDirectory){
-            return Err(PersonasException.PersonasStorageException("El directorio padre del fichero no existe"))
+            return Err(PersonasError.PersonasStorageError("El directorio padre del fichero no existe"))
         }
 
         val integrantesDTO = equipo.map {
             when (it) {
                 is Jugador -> {
-                    org.example.newteamultimateedition.personal.mapper.toDto()
+                    it.toDto()
                 }
                 is Entrenador -> {
-                    org.example.newteamultimateedition.personal.mapper.toDto()
+                    it.toDto()
                 }
                 else -> null
             }
@@ -116,8 +114,8 @@ class EquipoStorageBIN: EquipoStorage {
                     raf.writeLong(integrante!!.id)
                     raf.writeUTF(integrante.nombre)
                     raf.writeUTF(integrante.apellidos)
-                    raf.writeUTF(integrante.fecha_nacimiento)
-                    raf.writeUTF(integrante.fecha_incorporacion)
+                    raf.writeUTF(integrante.fechaNacimiento)
+                    raf.writeUTF(integrante.fechaIncorporacion)
                     raf.writeDouble(integrante.salario)
                     raf.writeUTF(integrante.pais)
                     raf.writeUTF(integrante.rol)
@@ -126,16 +124,16 @@ class EquipoStorageBIN: EquipoStorage {
                     raf.writeDouble(integrante.altura!!)
                     raf.writeDouble(integrante.peso!!)
                     raf.writeInt(integrante.goles!!)
-                    raf.writeInt(integrante.partidos_jugados!!)
-                    raf.writeInt(integrante.minutos_jugados!!)
+                    raf.writeInt(integrante.partidosJugados!!)
+                    raf.writeInt(integrante.minutosJugados!!)
                     raf.writeUTF(integrante.imagen)
                 }
                 else{
                     raf.writeLong(integrante!!.id)
                     raf.writeUTF(integrante.nombre)
                     raf.writeUTF(integrante.apellidos)
-                    raf.writeUTF(integrante.fecha_nacimiento)
-                    raf.writeUTF(integrante.fecha_incorporacion)
+                    raf.writeUTF(integrante.fechaNacimiento)
+                    raf.writeUTF(integrante.fechaIncorporacion)
                     raf.writeDouble(integrante.salario)
                     raf.writeUTF(integrante.pais)
                     raf.writeUTF(integrante.rol)
