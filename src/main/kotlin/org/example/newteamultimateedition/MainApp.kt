@@ -1,17 +1,27 @@
 package org.example.newteamultimateedition
 
 import javafx.application.Application
-import javafx.fxml.FXMLLoader
-import javafx.scene.Scene
 import javafx.stage.Stage
+import org.example.newteamultimateedition.routes.RoutesManager
+import org.example.newteamultimateedition.di.appModule
 
-class MainApp : Application() {
-    override fun start(stage: Stage) {
-        val fxmlLoader = FXMLLoader(MainApp::class.java.getResource("hello-view.fxml"))
-        val scene = Scene(fxmlLoader.load(), 320.0, 240.0)
-        stage.title = "Hello!"
-        stage.scene = scene
-        stage.show()
+import org.koin.core.component.KoinComponent
+import org.koin.core.context.startKoin
+import java.time.LocalDateTime
+
+class MainApp : Application(), KoinComponent {
+    init {
+        println(LocalDateTime.now().toString())
+        // creamos Koin
+        startKoin {
+            printLogger() // Logger de Koin
+            modules(appModule) // Módulos de Koin
+        }
+    }
+    override fun start(primaryStage: Stage) {
+        RoutesManager.apply {
+            app= this@MainApp
+        }.run { initSplashStage(primaryStage) }
     }
 }
 
