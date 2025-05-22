@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="600.0" style="-fx-background-color: #e0e1dd;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.example.newteamultimateedition.common.controller.SplashController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="330.0" prefWidth="600.0" style="-fx-background-color: #e0e1dd;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newteamultimateedition.common.controller.SplashController">
    <children>
       <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -16,9 +16,10 @@
                   <Image url="@../media/logo.png" />
                </image>
             </ImageView>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #1b263b;">
+            <AnchorPane prefHeight="86.0" prefWidth="600.0" style="-fx-background-color: #1b263b;">
                <children>
                   <ProgressBar fx:id="progressBar" layoutX="150.0" layoutY="22.0" prefHeight="27.0" prefWidth="300.0" progress="0.0" />
+                  <Label fx:id="mensajeCarga" layoutX="286.0" layoutY="56.0" textFill="WHITE" />
                </children>
             </AnchorPane>
          </children>

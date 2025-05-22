@@ -2,6 +2,7 @@ package org.example.newteamultimateedition.common.controller
 
 import javafx.application.Platform
 import javafx.fxml.FXML
+import javafx.scene.control.Label
 import javafx.scene.control.ProgressBar
 import javafx.stage.Stage
 import org.example.newteamultimateedition.routes.RoutesManager
@@ -15,6 +16,9 @@ import kotlin.concurrent.thread
 class SplashController {
     @FXML
     lateinit var progressBar: ProgressBar
+    @FXML
+    lateinit var mensajeCarga: Label
+
     var isFinished: Boolean = false
 
     /**
@@ -22,7 +26,8 @@ class SplashController {
      * @see initEvents
      */
     fun initialize() {
-        thread { isFinished = progressBarInit() }
+        mensajeCarga.text = "Cargando... 0%"
+        thread { isFinished = functionsInit() }
         initEvents()
     }
 
@@ -31,23 +36,28 @@ class SplashController {
      */
     private fun initEvents(){
         progressBar.progressProperty().addListener { _, _, newValue ->
-            if(newValue == 1.0) RoutesManager.initLoginStage(progressBar.scene.window as Stage)
+            if(newValue == 1.0)
+                mensajeCarga.text = "¡Listo!"
+                RoutesManager.initLoginStage(progressBar.scene.window as Stage)
         }
     }
 
     /**
      * Rellena la barra de progreso
      * @see [progressBar]
+     * @see [mensajeCarga]
      */
-    private fun progressBarInit(): Boolean {
+    private fun functionsInit(): Boolean {
         progressBar.progress = 0.0
         for (i in 0..100){
+            val progress = i / 100.0
             Platform.runLater {
-                progressBar.progress = i / 100.0 // Se rellena la barra de progreso exponencialmente
+                progressBar.progress
+                mensajeCarga.text = "Cargando... $i"
+
             }
             Thread.sleep(50)
         }
         return true
     }
-
 }
