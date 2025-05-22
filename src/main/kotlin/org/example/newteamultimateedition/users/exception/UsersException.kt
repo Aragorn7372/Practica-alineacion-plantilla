@@ -3,6 +3,7 @@ package org.example.newteamultimateedition.users.exception
 
 
 abstract class UsersException (val messager: String) {
+
     /**
      * Excepción que indica que no se ha encontrado el usuario buscado.
      *
@@ -10,7 +11,7 @@ abstract class UsersException (val messager: String) {
      */
     class UsersNotFoundException(id: String): UsersException("Persona no encontrada con id: $id")
     /**
-     * Excepción que indica que el nombre o la contraseña estan en blanco.
+     * Excepción que indica que el nombre o la contraseña están en blanco.
      *
      * @param userName Mensaje de error.
      */
