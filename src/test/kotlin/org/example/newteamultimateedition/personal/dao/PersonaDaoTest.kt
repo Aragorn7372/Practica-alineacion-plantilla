@@ -12,7 +12,6 @@ import java.time.LocalDateTime
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PersonaDaoTest {
-    private lateinit var personaDao: PersonaDao
     private lateinit var dao: PersonaDao
 
     val personaEntity= PersonaEntity(

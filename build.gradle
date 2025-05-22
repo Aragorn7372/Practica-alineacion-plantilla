@@ -149,7 +149,7 @@ jacocoTestReport {
     }
 
     // Exclusiones de cobertura
-    beforeEvaluate {
+    afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
                     "*/models/",
