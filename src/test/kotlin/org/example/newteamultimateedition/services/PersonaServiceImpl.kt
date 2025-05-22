@@ -116,8 +116,8 @@ class PersonaServiceImplTest {
     fun getAll() {
         whenever(repository.getAll()) doReturn lista
         val result = service.getAll()
-        val result2=result
-        println(result2)
+
+        println(result)
         assertTrue(result.isOk)
         assertTrue(result.value.isNotEmpty(),"debe estar llena")
         assertEquals(lista.size,result.value.size,"deben ser iguales")
