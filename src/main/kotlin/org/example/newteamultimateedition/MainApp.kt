@@ -35,7 +35,9 @@ class MainApp : Application(), KoinComponent {
         )
         val service = PersonaServiceImpl()
 
-        service.save(persona).onSuccess { println(it) }
+        val p = service.save(persona)
+        if(p.isOk) println(p.value)
+        else println(p.error.messager)
 
         println(LocalDateTime.now().toString())
         // creamos Koin
@@ -47,7 +49,7 @@ class MainApp : Application(), KoinComponent {
     override fun start(primaryStage: Stage) {
         RoutesManager.apply {
             app= this@MainApp
-        }.run { initSplashStage(primaryStage) }
+        }.run { initUserStage(primaryStage) }
     }
 }
 
