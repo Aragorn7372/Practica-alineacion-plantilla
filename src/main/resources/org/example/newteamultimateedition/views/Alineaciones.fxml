@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="alineacionRoot" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+
+    <!-- Centro: Campo con titulares -->
+    <center>
+        <StackPane>
+            <!-- Imagen de fondo del campo -->
+            <ImageView fitHeight="600" fitWidth="800" preserveRatio="true">
+            <image>
+               <Image url="@../media/FondoCampoFutbol.png" />
+            </image></ImageView>
+
+            <!-- Contenedor para los jugadores titulares -->
+            <Pane fx:id="campoTitulares" prefHeight="600" prefWidth="294.0">
+                <!-- Los jugadores titulares se colocarán dinámicamente en el controller -->
+            </Pane>
+        </StackPane>
+    </center>
+
+    <!-- Derecha: Suplentes y entrenador -->
+    <right>
+        <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="200.0" spacing="20" style="-fx-background-color: #f5f5f5;">
+            <padding>
+                <Insets bottom="10" left="10" right="10" top="10" />
+            </padding>
+
+            <Label style="-fx-text-fill: #374a64; -fx-font-size: 18px; -fx-underline: true;" text="Suplentes" textFill="#2b4261" />
+
+            <VBox fx:id="listaSuplentes" spacing="10">
+                <!-- Se agregan dinámicamente los suplentes -->
+            </VBox>
+
+            <Separator style="-fx-background-color: #374a64;" />
+
+            <Label style="-fx-text-fill: #374a64; -fx-font-size: 18px; -fx-underline: true;" text="Entrenador" textFill="#374a63" />
+            <Label fx:id="nombreEntrenador" style="-fx-text-fill: white; -fx-font-size: 16px;" />
+        </VBox>
+
+    </right>
+   <top>
+      <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #f5f5f5;" BorderPane.alignment="CENTER">
+         <children>
+            <Label prefHeight="84.0" prefWidth="407.0" text="ALINEACIONES" textFill="#374a64">
+               <font>
+                  <Font name="System Bold" size="53.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" top="7.0" />
+               </HBox.margin>
+            </Label>
+            <ImageView fitHeight="200.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../media/app-icon.png" />
+               </image>
+               <HBox.margin>
+                  <Insets left="30.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
+      </HBox>
+   </top>
+</BorderPane>

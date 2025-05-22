@@ -22,7 +22,13 @@ class AboutController {
     lateinit var githubLinkSamuel: Hyperlink
 
     @FXML
-    lateinit var githubLinkJesus: Hyperlink
+    lateinit var githubLinkCristian: Hyperlink
+
+    @FXML
+    lateinit var githubLinkVictor: Hyperlink
+
+    @FXML
+    lateinit var repositorioGitHub: Hyperlink
 
     /**
      * Método automáticamente llamado por JavaFX cuando se crea el [AboutController] asociado al correspondiente .fxml
@@ -46,11 +52,17 @@ class AboutController {
             logger.debug{ "Abriendo Github de Samuel" }
             Open.open("https://github.com/Sggz221")
         }
-
-
-        githubLinkJesus.setOnAction {
+        githubLinkCristian.setOnAction {
             logger.debug{ "Abriendo Github de Samuel" }
-            Open.open("https://github.com/JesusCoboArrogante")
+            Open.open("https://github.com/Cristianortegaa")
+        }
+        githubLinkVictor.setOnAction {
+            logger.debug{ "Abriendo Github de Samuel" }
+            Open.open("https://github.com/Aragorn7372")
+        }
+        repositorioGitHub.setOnAction {
+            logger.debug{ "Abriendo Github de Samuel" }
+            Open.open("https://github.com/Aragorn7372/Practica-alineacion-plantilla")
         }
     }
 
@@ -58,15 +70,20 @@ class AboutController {
      * Establece los cambios en el estado del ratón al posicionarlo encima de los enlaces.
      */
     private fun initEffects() {
-        githubLinkCarlos.setOnMouseEntered {
+        githubLinkCarlos.setOnMouseClicked {
             githubLinkCarlos.scene.cursor = Cursor.HAND
         }
-
         githubLinkSamuel.setOnMouseClicked {
             githubLinkSamuel.scene.cursor = Cursor.HAND
         }
-        githubLinkJesus.setOnMouseClicked {
-            githubLinkJesus.scene.cursor = Cursor.HAND
+        githubLinkCristian.setOnMouseClicked {
+            githubLinkCristian.scene.cursor = Cursor.HAND
+        }
+        githubLinkVictor.setOnMouseClicked {
+            githubLinkVictor.scene.cursor = Cursor.HAND
+        }
+        repositorioGitHub.setOnMouseClicked {
+            githubLinkCristian.scene.cursor = Cursor.HAND
         }
     }
 }
