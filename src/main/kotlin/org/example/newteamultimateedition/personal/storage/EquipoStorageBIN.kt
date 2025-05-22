@@ -23,9 +23,9 @@ class EquipoStorageBIN: EquipoStorage {
     private var logger = logging()
 
     /**
-     * Permite leer de un archivo una lista de [Integrante] usa la codificacion UTF-8
+     * Permite leer de un archivo una lista de [Persona] usa la codificacion UTF-8
      * Lee el archivo como una lista de DTO de integrante y lo mapea al modelo segun va leyendo
-     * @return [Result] de [List] [Integrante] o [GestionErrors.StorageError]
+     * @return [Result] de [List] [Persona] o [PersonasError.PersonasStorageError]
      */
     override fun fileRead(file: File): Result<List<Persona>, PersonasError> {
         logger.debug{"Leyendo archivo BIN"}
@@ -83,10 +83,10 @@ class EquipoStorageBIN: EquipoStorage {
     }
 
     /**
-     * Escribe en un fichero dada una lista de [Integrante] y una ruta especificada
+     * Escribe en un fichero dada una lista de [Persona] y una ruta especificada
      * @param equipo La lista de integrantes
      * @param file El archivo donde se escribira la lista
-     * @return [Result] de [Unit] o [GestionErrors.StorageError]
+     * @return [Result] de [Unit] o [PersonasError.PersonasStorageError]
      */
     override fun fileWrite(equipo: List<Persona>, file: File): Result<Unit, PersonasError> {
         logger.debug { "Escribiendo archivo BIN" }
@@ -119,7 +119,7 @@ class EquipoStorageBIN: EquipoStorage {
                     raf.writeDouble(integrante.salario)
                     raf.writeUTF(integrante.pais)
                     raf.writeUTF(integrante.rol)
-                    raf.writeUTF(integrante.posicion)
+                    raf.writeUTF(integrante.posicion!!)
                     raf.writeInt(integrante.dorsal!!)
                     raf.writeDouble(integrante.altura!!)
                     raf.writeDouble(integrante.peso!!)
@@ -137,7 +137,7 @@ class EquipoStorageBIN: EquipoStorage {
                     raf.writeDouble(integrante.salario)
                     raf.writeUTF(integrante.pais)
                     raf.writeUTF(integrante.rol)
-                    raf.writeUTF(integrante.especialidad)
+                    raf.writeUTF(integrante.especialidad!!)
                     raf.writeUTF(integrante.imagen)
                 }
             }

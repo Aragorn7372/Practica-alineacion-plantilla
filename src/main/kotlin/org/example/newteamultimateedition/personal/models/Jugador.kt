@@ -4,7 +4,7 @@ package org.example.newteamultimateedition.personal.models
 import java.time.LocalDate
 import java.time.LocalDateTime
 /**
- * Clase que representa un Jugador y hereda de [Integrante]
+ * Clase que representa un Jugador y hereda de [Persona]
  * @param id [Long] Identificador
  * @param nombre [String] Nombre
  * @param apellidos [String] Apellidos
@@ -13,7 +13,6 @@ import java.time.LocalDateTime
  * @param pais [String] Pais de origen
  * @param createdAt [LocalDateTime] Fecha y hora a la que se creo el objeto
  * @param updatedAt [LocalDateTime] Fecha y hora a la que se actualizo el objeto por ultima vez
- * @param isDeleted [Boolean] Campo que identifica si esta operativo o no
  * @param posicion [Posicion] Posicion de la que juega el jugador
  * @param dorsal [Int] Numero del jugador en el equipo
  * @param altura [Double] Altura en metros del jugador

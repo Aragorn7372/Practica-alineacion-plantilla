@@ -15,7 +15,6 @@ import nl.adaptivity.xmlutil.serialization.XmlElement
  * @property pais Pais de origen del integrante
  * @property especialidad Especializacion del integrante
  * @property salario Salario del integrante
- * @property isDeleted Campo de borrado logico del integrante
  * @property posicion Posicion de la que juega el integrante
  * @property dorsal Dorsal del integrante
  * @property altura Altura

@@ -44,11 +44,16 @@ class PersonasRepositoryImplementation(
 
         val updated = dao.update(objeto.toEntity(),id)
 
-        return if (updated==1){ if(objeto is Jugador){
-            objeto.copy(newId = id)
-        } else if (objeto is Entrenador) {
-            objeto.copy(newId = id)
-        }else null
+        return if (updated==1){
+            when (objeto) {
+                is Jugador -> {
+                    objeto.copy(newId = id)
+                }
+                is Entrenador -> {
+                    objeto.copy(newId = id)
+                }
+                else -> null
+            }
         }
         else null
     }

@@ -18,7 +18,6 @@ import kotlin.math.round
  * @param newFechaIncorporacion Nueva fecha de incorporacion que recibira el objeto en la copia si desea actualizar, por defecto la misma que antes
  * @param newPais Nuevo pais que recibira el objeto en la copia si desea actualizar, por defecto el mismo que antes
  * @param newSalario Nuevo salario que recibira el objeto en la copia si desea actualizar, por defecto el mismo que antes
- * @param newIsDeleted Nuevo campo de borrado que recibira el objeto en la copia si desea actualizar, por defecto el mismo que antes
  * @param newPosicion Nueva posicion que recibira el objeto en la copia si desea actualizar, por defecto la misma que antes
  * @param newDorsal Nueva dorsal que recibira el objeto en la copia si desea actualizar, por defecto la misma que antes
  * @param newAltura Nueva altura que recibira el objeto en la copia si desea actualizar, por defecto la misma que antes
@@ -77,7 +76,6 @@ fun Jugador.copy(
  * @param newFechaIncorporacion Nueva fecha de incorporacion que recibira el objeto en la copia si desea actualizar, por defecto la misma que antes
  * @param newPais Nuevo pais que recibira el objeto en la copia si desea actualizar, por defecto el mismo que antes
  * @param newSalario Nuevo salario que recibira el objeto en la copia si desea actualizar, por defecto el mismo que antes
- * @param newIsDeleted Nuevo campo de borrado que recibira el objeto en la copia si desea actualizar, por defecto el mismo que antes
  * @param newEspecialidad Nueva especialidad que recibira el objeto, por defecto la misma de antes
  * @param newImagen Nueva imagen que recibira el objeto en la copia si desea actualizar, por defecto la misma que antes
  * @return La copia del objeto creado

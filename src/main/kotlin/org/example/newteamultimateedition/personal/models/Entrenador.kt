@@ -5,7 +5,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 /**
- * Clase que representa un Entrenador y hereda de [Integrante]
+ * Clase que representa un Entrenador y hereda de [Persona]
  * @param id [Long] Identificador
  * @param nombre [String] Nombre
  * @param apellidos [String] Apellidos
@@ -14,7 +14,6 @@ import java.time.LocalDateTime
  * @param pais [String] Pais de origen
  * @param createdAt [LocalDateTime] Fecha y hora a la que se creo el objeto
  * @param updatedAt [LocalDateTime] Fecha y hora a la que se actualizo el objeto por ultima vez
- * @param isDeleted [Boolean] Campo que identifica si esta operativo o no
  * @param especialidad [Especialidad] Especializacion del entrenador
  * @property rol [String] Con valor "Entrenador"
  */

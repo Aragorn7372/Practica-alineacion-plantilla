@@ -7,7 +7,7 @@ import org.example.newteamultimateedition.personal.models.*
 import java.time.LocalDate
 
     /**
-     * Convierte un [IntegranteEntity] en un [Integrante]
+     * Convierte un [PersonaEntity] en un [Persona]
      */
     fun PersonaEntity.toModel(): Persona {
         return if (this.rol == "Jugador") {
@@ -68,7 +68,7 @@ fun Persona.toEntity(): PersonaEntity {
 }
 
     /**
-     * Convierte un [Jugador] en un [IntegranteEntity]
+     * Convierte un [Jugador] en un [PersonaEntity]
      */
     fun Jugador.toEntity(): PersonaEntity {
         return PersonaEntity(
@@ -95,7 +95,7 @@ fun Persona.toEntity(): PersonaEntity {
     }
 
     /**
-     * Convierte un [Entrenador] en un [IntegranteEntity]
+     * Convierte un [Entrenador] en un [PersonaEntity]
      */
     fun Entrenador.toEntity(): PersonaEntity {
         return PersonaEntity(
@@ -122,8 +122,8 @@ fun Persona.toEntity(): PersonaEntity {
     }
 
     /**
-     * Funcion de extension que convierte [IntegranteDTO] a un objeto [Integrante] [Jugador] o [Entrenador] segun [IntegranteDTO.rol]
-     * @return La version [Integrante] de la DTO. O bien [Jugador] o [Entrenador]
+     * Funcion de extension que convierte [IntegranteDTO] a un objeto [Persona] [Jugador] o [Entrenador] segun [IntegranteDTO.rol]
+     * @return La version [Persona] de la DTO. O bien [Jugador] o [Entrenador]
      */
     fun IntegranteDTO.toModel(): Persona {
         return if (this.rol == "Jugador") {
@@ -160,8 +160,8 @@ fun Persona.toEntity(): PersonaEntity {
     }
 
     /**
-     * Funcion de extension que convierte [IntegranteXmlDTO] a un objeto [Integrante] [Jugador] o [Entrenador] segun [IntegranteXmlDTO.rol]
-     * @return La version [Integrante] de la DTO. O bien [Jugador] o [Entrenador]
+     * Funcion de extension que convierte [IntegranteXmlDTO] a un objeto [Persona] [Jugador] o [Entrenador] segun [IntegranteXmlDTO.rol]
+     * @return La version [Persona] de la DTO. O bien [Jugador] o [Entrenador]
      */
     fun IntegranteXmlDTO.toModel(): Persona {
         return if (this.rol == "Jugador") {

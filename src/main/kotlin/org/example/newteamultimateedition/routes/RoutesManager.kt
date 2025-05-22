@@ -111,7 +111,7 @@ object RoutesManager {
 
     /**
      * Inicia la vista de acerca de
-     * @param stage [Stage] vista de acerca de
+     * @param [stage] vista de acerca de
      * @see [Vistas.ABOUT]
      */
     fun initAboutStage() {

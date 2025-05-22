@@ -22,7 +22,7 @@ class EquipoStorageImpl(
     /**
      * Llama a uno u otro storage en función de la extensión del archivo a leer que le entra por parámetro
      * @param file [File] archivo a leer
-     * @return [Result] de [List] [Integrante] o [GestionErrors.StorageError]
+     * @return [Result] de [List] [Persona] o [PersonasError.PersonasStorageError]
      * @see [EquipoStorageCSV]
      * @see [EquipoStorageJSON]
      * @see [EquipoStorageXML]
@@ -49,7 +49,7 @@ class EquipoStorageImpl(
      * Llama a uno u otro storage en función de la extensión del archivo a escribir que le entra por parámetro
      * @param equipo Lista de integrantes a escribir
      * @param file [File] Archivo a escribir
-     * @return [Result] de [List] [Integrante] o [GestionErrors.StorageError]
+     * @return [Result] de [List] [Persona] o [PersonasError.PersonasStorageError]
      * @see [EquipoStorageCSV]
      * @see [EquipoStorageJSON]
      * @see [EquipoStorageXML]

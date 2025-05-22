@@ -21,9 +21,9 @@ class EquipoStorageXML: EquipoStorage {
     private var logger = logging()
 
     /**
-     * Permite leer de un archivo una lista de [Integrante]
+     * Permite leer de un archivo una lista de [Persona]
      * Lee el archivo como una lista de DTO de integrante y lo mapea al modelo segun va leyendo
-     *  @return [Result] de [List] [Integrante] o [GestionErrors.StorageError]
+     *  @return [Result] de [List] [Persona] o [PersonasError.PersonasStorageError]
      */
     override fun fileRead(file: File): Result<List<Persona>, PersonasError> {
         logger.debug { "Leyendo fichero XML" }
@@ -41,10 +41,10 @@ class EquipoStorageXML: EquipoStorage {
     }
 
     /**
-     * Escribe en un fichero dada una lista de [Integrante] y una ruta especificada
+     * Escribe en un fichero dada una lista de [Persona] y una ruta especificada
      * @param equipo La lista de integrantes
      * @param file El archivo donde se escribira la lista
-     * @return [Result] de [List] [Integrante] o [GestionErrors.StorageError]
+     * @return [Result] de [List] [Persona] o [PersonasError.PersonasStorageError]
      */
     override fun fileWrite(equipo: List<Persona>, file: File): Result<Unit, PersonasError> {
         logger.debug { "Escribiendo en fichero XML" }
