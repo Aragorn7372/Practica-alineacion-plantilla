@@ -111,7 +111,7 @@ class EquipoStorageBIN: EquipoStorage {
             for(integrante in integrantesDTO) {
                 // Forzamos todas las llamadas con nulls porque o bien sabemos que no peude haber null en ese campo, o bien nos interesa procesarlo para los otros formatos de archivo
                 if (integrante?.rol == "Jugador"){
-                    raf.writeLong(integrante!!.id)
+                    raf.writeLong(integrante.id)
                     raf.writeUTF(integrante.nombre)
                     raf.writeUTF(integrante.apellidos)
                     raf.writeUTF(integrante.fechaNacimiento)

@@ -142,17 +142,23 @@ jacocoTestReport {
     // Poner a true el/los tipo/s de archivo en que queramos que saque el reporte
     reports {
         xml.required = true
-        csv.required = false
+        csv.required = true
         html.required = true
     }
 
     // Exclusiones de cobertura
-    afterEvaluate {
+    beforeEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
-                    "/models/",
-                    "/errors/",
-                    "/Main.*"
+                    "*/models/",
+                    "*/error/",
+                    "/Main.*",
+                    "*/exception/",
+                    "*/cache/",
+                    "*/dto",
+                    "*/di/",
+                    "*/UsersEntity.*",
+                    "*/PersonaEntity.*"
             ])
         }))
     }

@@ -9,10 +9,13 @@ import javafx.scene.input.KeyCode
 import javafx.stage.Stage
 import org.example.newteamultimateedition.routes.RoutesManager
 import org.example.newteamultimateedition.users.service.UsersServiceImpl
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.koin.java.KoinJavaComponent.inject
 
-import org.mindrot.jbcrypt.BCrypt
 
+import org.mindrot.jbcrypt.BCrypt
+/*
 /**
  * Controlador de Login
  * @property dao DAO que interviene con la base de datos

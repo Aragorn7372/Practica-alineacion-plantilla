@@ -46,6 +46,18 @@ import java.time.LocalDate
             )
         }
     }
+/* id = 2,
+        rol = "Entrenador",
+        nombre = "Entrenadora",
+        apellidos = "hola",
+        fechaNacimiento = LocalDate.parse("2020-01-01"),
+        fechaIncorporacion = LocalDate.parse("2020-01-02"),
+        salario = 3000.0,
+        pais = "españa",
+        especialidad = "ENTRENADOR_PRINCIPAL",
+        imagen = "oijsdoiasjd",
+        createdAt = persona2.createdAt,
+        updatedAt = persona2.updatedAt,*/
 
 fun Persona.toEntity(): PersonaEntity {
     return when(this){

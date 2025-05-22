@@ -13,17 +13,17 @@ interface PersonaDao {
     fun getAll(): List<PersonaEntity>
 
     @SqlQuery("SELECT * FROM empleados where id = :id")
-    fun getById(@Bind("id") id: Int): PersonaEntity?
+    fun getById(@Bind("id") id: Long): PersonaEntity?
 
     @SqlUpdate("INSERT INTO empleados (nombre, apellidos, fecha_nacimiento, fecha_incorporacion, salario, pais, rol, especialidad, posicion, dorsal, altura, peso, goles, partidos_jugados, minutos_jugados, createdAt, updatedAt, imagen) VALUES (:nombre, :apellidos, :fecha_nacimiento, :fecha_incorporacion, :salario, :pais, :rol, :especialidad, :posicion, :dorsal, :altura, :peso, :goles, :partidos_jugados, :minutos_jugados, :createdAt, :updatedAt, :imagen)")
     @GetGeneratedKeys("id") //Por que como el id es autonumérico y generado por la BBDD, lo necesitamos, es lo que devuelve la función
     fun save(@BindBean("persona") persona: PersonaEntity): Int
 
     @SqlUpdate("UPDATE empleados SET nombre = :nombre, apellidos = :apellidos, fecha_nacimiento = :fecha_nacimiento, fecha_incorporacion = :fecha_incorporacion, salario = :salario, pais = :pais, rol = :rol, especialidad = :especialidad, posicion = :posicion, dorsal = :dorsal, altura = :altura, peso = :peso, goles = :goles, partidos_jugados = :partidos_jugados, minutos_jugados = :minutos_jugados, createdAt = :createdAt, updatedAt = :updatedAt, imagen = :imagen WHERE id = :id")
-    fun update(@BindBean("persona") persona: PersonaEntity, @Bind("identification") identification: Int): Int
+    fun update(@BindBean("persona") persona: PersonaEntity, @Bind("identification") identification: Long): Int
 
     @SqlUpdate("DELETE FROM empleados WHERE id=:id")
-    fun deleteById(@Bind("id") id: Int): Int
+    fun deleteById(@Bind("id") id: Long): Int
 }
 fun getPersonasDao(jdbi: Jdbi): PersonaDao {
     val logger= logging()

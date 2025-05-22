@@ -30,7 +30,7 @@ class PersonasRepositoryImplementation(
      */
     override fun getById(id: Long): Persona? {
         logger.debug { "Getting persona by id $id" }
-        return dao.getById(id.toInt())?.toModel()
+        return dao.getById(id)?.toModel()
     }
 
     /**
@@ -42,7 +42,7 @@ class PersonasRepositoryImplementation(
     override fun update(objeto: Persona, id: Long): Persona? {
         logger.debug { "Updating persona by id $id" }
 
-        val updated = dao.update(objeto.toEntity(),id.toInt())
+        val updated = dao.update(objeto.toEntity(),id)
 
         return if (updated==1){ if(objeto is Jugador){
             objeto.copy(newId = id)
@@ -60,8 +60,8 @@ class PersonasRepositoryImplementation(
      */
     override fun delete(id: Long): Persona? {
         logger.debug { "Deleting persona by id $id" }
-        dao.getById(id.toInt())?.let {
-            if (dao.deleteById(id.toInt())==1) return it.toModel()
+        dao.getById(id)?.let {
+            if (dao.deleteById(id)==1) return it.toModel()
             else null
         }
         return null
@@ -74,11 +74,10 @@ class PersonasRepositoryImplementation(
      */
     override fun save(objeto: Persona): Persona {
         val id = dao.save(objeto.toEntity())
-        val persona: Persona
-        if (objeto is Jugador){
-            persona = objeto.copy(newId = id.toLong())
+        val persona: Persona = if (objeto is Jugador){
+            objeto.copy(newId = id.toLong())
         }else{
-            persona = (objeto as Entrenador).copy(newId = id.toLong())
+            (objeto as Entrenador).copy(newId = id.toLong())
         }
         return persona
 
