@@ -1,4 +1,4 @@
-package org.example.newteamultimateedition.validator
+package org.example.newteamultimateedition.personal.validator
 
 import org.example.newteamultimateedition.personal.models.*
 import org.example.newteamultimateedition.personal.validator.PersonaValidation

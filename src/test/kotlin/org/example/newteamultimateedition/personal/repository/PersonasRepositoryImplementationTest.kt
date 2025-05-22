@@ -1,4 +1,4 @@
-package org.example.newteamultimateedition.repository
+package org.example.newteamultimateedition.personal.repository
 
 
 import org.example.newteamultimateedition.personal.dao.PersonaDao
