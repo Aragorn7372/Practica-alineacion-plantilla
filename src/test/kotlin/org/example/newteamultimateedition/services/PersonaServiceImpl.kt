@@ -13,6 +13,7 @@ import org.example.newteamultimateedition.personal.storage.EquipoStorageImpl
 import org.example.newteamultimateedition.personal.validator.PersonaValidation
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -58,8 +59,9 @@ class PersonaServiceImplTest {
         minutosJugados = 100,
         imagen = "jaskjndkjnas"
     )
-    private val lista=listOf<Persona>(persona)
-    private val file= File("xd.zip")
+
+
+        val file = File("xd.zip")
 
 
 
@@ -68,7 +70,7 @@ class PersonaServiceImplTest {
     fun importarDatosDesdeFichero() {
         whenever(repository.save(persona)) doReturn persona
         whenever(validator.validator(persona)) doReturn Ok(persona)
-        whenever(storage.fileRead(file)) doReturn Ok(lista)
+        whenever(storage.fileRead(file)) doReturn Ok(listOf(persona))
 
 
         val result= service.importarDatosDesdeFichero(Path.of("xd.zip"))
@@ -103,24 +105,24 @@ class PersonaServiceImplTest {
     @DisplayName("exportacion correctamente de jugador")
     fun exportarDatosDesdeFichero() {
         val path= Path.of("xd.zip")
-        whenever(storage.fileWrite(lista,path.toFile())) doReturn Ok(Unit)
-        whenever(repository.getAll()) doReturn lista
+        whenever(storage.fileWrite(listOf(persona),path.toFile())) doReturn Ok(Unit)
+        whenever(repository.getAll()) doReturn listOf(persona)
         val result=service.exportarDatosDesdeFichero(path)
         assertTrue(result.isOk,"debe devolver Ok")
         assertEquals(result.value,"guardado con exito","devuelve el mensaje")
         verify(repository, times(1)).getAll()
-        verify(storage, times(1)).fileWrite(lista,file)
+        verify(storage, times(1)).fileWrite(listOf(persona),file)
     }
 
     @Test
     fun getAll() {
-        whenever(repository.getAll()) doReturn lista
+        whenever(repository.getAll()) doReturn listOf(persona)
         val result = service.getAll()
 
         println(result)
         assertTrue(result.isOk)
         assertTrue(result.value.isNotEmpty(),"debe estar llena")
-        assertEquals(lista.size,result.value.size,"deben ser iguales")
+        assertEquals(1,result.value.size,"deben ser iguales")
         verify(repository, times(1)).getAll()
     }
 
