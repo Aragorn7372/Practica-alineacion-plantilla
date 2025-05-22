@@ -35,6 +35,18 @@ kotlin {
     jvmToolchain(21)
 }
 
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        freeCompilerArgs += [
+                "-Xno-call-assertions",
+                "-Xno-param-assertions",
+                "-Xno-optimize",
+                "-Xretain-kotlin-parameter-names",
+                "-Xmethod-name-suffix=" // ESTA ES LA CLAVE
+        ]
+    }
+}
+
 javafx {
     version = '21'
     modules = ['javafx.controls', 'javafx.fxml']
