@@ -1,4 +1,4 @@
-package org.example.newteamultimateedition.services
+package org.example.newteamultimateedition.personal.services
 
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.michaelbull.result.Err
