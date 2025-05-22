@@ -24,6 +24,9 @@ interface PersonaDao {
 
     @SqlUpdate("DELETE FROM empleados WHERE id=:id")
     fun deleteById(@Bind("id") id: Long): Int
+
+    @SqlUpdate("DELETE * FROM empleados")
+    fun deleteAll(): Int
 }
 fun getPersonasDao(jdbi: Jdbi): PersonaDao {
     val logger= logging()

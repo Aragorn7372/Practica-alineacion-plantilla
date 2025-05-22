@@ -7,10 +7,13 @@ import org.example.newteamultimateedition.personal.error.PersonasError
 import org.example.newteamultimateedition.personal.models.Jugador
 import org.example.newteamultimateedition.personal.models.Persona
 import org.example.newteamultimateedition.personal.models.Posicion
+import org.example.newteamultimateedition.personal.repository.PersonalRepository
 import org.example.newteamultimateedition.personal.repository.PersonasRepositoryImplementation
 import org.example.newteamultimateedition.personal.services.PersonaServiceImpl
+import org.example.newteamultimateedition.personal.storage.EquipoStorage
 import org.example.newteamultimateedition.personal.storage.EquipoStorageImpl
 import org.example.newteamultimateedition.personal.validator.PersonaValidation
+import org.example.newteamultimateedition.personal.validator.Validate
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
@@ -32,13 +35,13 @@ import java.time.LocalDate
 @ExtendWith(MockitoExtension::class)
 class PersonaServiceImplTest {
     @Mock
-    private lateinit var repository: PersonasRepositoryImplementation
+    private lateinit var repository: PersonalRepository
     @Mock
     private lateinit var cache: Cache<Long, Persona>
     @Mock
-    private lateinit var validator: PersonaValidation
+    private lateinit var validator: Validate<Persona,PersonasError>
     @Mock
-    private lateinit var storage: EquipoStorageImpl
+    private lateinit var storage: EquipoStorage
     @InjectMocks
     private lateinit var service: PersonaServiceImpl
 
@@ -119,10 +122,11 @@ class PersonaServiceImplTest {
         whenever(repository.getAll()) doReturn listOf(persona)
         val result = service.getAll()
 
-        println(result)
+        println(result.value)
         assertTrue(result.isOk)
-        assertTrue(result.value.isNotEmpty(),"debe estar llena")
         assertEquals(1,result.value.size,"deben ser iguales")
+        assertTrue(!result.value.isEmpty(),"debe estar llena")
+
         verify(repository, times(1)).getAll()
     }
 

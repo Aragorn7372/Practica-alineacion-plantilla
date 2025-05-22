@@ -11,21 +11,25 @@ import java.util.*
  * Clase que representa el JDBI, para simplificar las interacciones con la base de datos.
  * @see [Config.configProperties]
  */
-class DatabaseManager{
+class DatabaseManager(
+    private val url: String,
+    private val initData: Boolean,
+    private val initTables: Boolean,
+){
     private val logger= logging()
     val jdbi: Jdbi by lazy {
         logger.debug { "inicializando jdbi" }
 
-        Jdbi.create("jdbc:h2:./jugadores")
+        Jdbi.create(url)
 
     }
     init {
         jdbi.installPlugin(KotlinPlugin())
         jdbi.installPlugin(SqlObjectPlugin())
 
-        ejecutarScriptSql("tables.sql")
+        if(initTables) (ejecutarScriptSql("tables.sql"))
 
-        ejecutarScriptSql("data.sql")
+        if (initData) ejecutarScriptSql("data.sql")
     }
 
     private fun ejecutarScriptSql(file: String) {
@@ -46,6 +50,10 @@ fun provideDatabaseManager(): Jdbi {
         "Config.url=${config.databaseUrl}, initData=${config.databaseInitData}, initTables=${config.databaseInitTables}"
     }
 
-    val databaseManager = DatabaseManager()
+    val databaseManager = DatabaseManager(
+        config.databaseUrl,
+        config.databaseInitData,
+        config.databaseInitTables,
+    )
     return databaseManager.jdbi
 }
