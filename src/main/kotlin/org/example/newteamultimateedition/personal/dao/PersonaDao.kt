@@ -17,15 +17,15 @@ interface PersonaDao {
 
     @SqlUpdate("INSERT INTO empleados (nombre, apellidos, fecha_nacimiento, fecha_incorporacion, salario, pais, rol, especialidad, posicion, dorsal, altura, peso, goles, partidos_jugados, minutos_jugados, createdAt, updatedAt, imagen) VALUES (:nombre, :apellidos, :fechaNacimiento, :fechaIncorporacion, :salario, :pais, :rol, :especialidad, :posicion, :dorsal, :altura, :peso, :goles, :partidosJugados, :minutosJugados, :createdAt, :updatedAt, :imagen)")
     @GetGeneratedKeys("id") //Por que como el id es autonumérico y generado por la BBDD, lo necesitamos, es lo que devuelve la función
-    fun save(@BindBean("persona") persona: PersonaEntity): Int
+    fun save(@BindBean persona: PersonaEntity): Int
 
-    @SqlUpdate("UPDATE empleados SET nombre = :nombre, apellidos = :apellidos, fecha_nacimiento = :fechaNacimiento, fecha_incorporacion = :fechaIncorporacion, salario = :salario, pais = :pais, rol = :rol, especialidad = :especialidad, posicion = :posicion, dorsal = :dorsal, altura = :altura, peso = :peso, goles = :goles, partidos_jugados = :partidosJugados, minutos_jugados = :minutosJugados, createdAt = :createdAt, updatedAt = :updatedAt, imagen = :imagen WHERE id = :id")
-    fun update(@BindBean("persona") persona: PersonaEntity, @Bind("identification") identification: Long): Int
+    @SqlUpdate("UPDATE empleados SET nombre = :nombre, apellidos = :apellidos, fecha_nacimiento = :fechaNacimiento, fecha_incorporacion = :fechaIncorporacion, salario = :salario, pais = :pais, rol = :rol, especialidad = :especialidad, posicion = :posicion, dorsal = :dorsal, altura = :altura, peso = :peso, goles = :goles, partidos_jugados = :partidosJugados, minutos_jugados = :minutosJugados, createdAt = :createdAt, updatedAt = :updatedAt, imagen = :imagen WHERE id = :identification")
+    fun update(@BindBean persona: PersonaEntity, @Bind("identification") identification: Long): Int
 
-    @SqlUpdate("DELETE FROM empleados WHERE id=:id")
+    @SqlUpdate("DELETE  FROM empleados WHERE id=:id")
     fun deleteById(@Bind("id") id: Long): Int
 
-    @SqlUpdate("DELETE * FROM empleados")
+    @SqlUpdate("DELETE  FROM empleados")
     fun deleteAll(): Int
 }
 fun getPersonasDao(jdbi: Jdbi): PersonaDao {

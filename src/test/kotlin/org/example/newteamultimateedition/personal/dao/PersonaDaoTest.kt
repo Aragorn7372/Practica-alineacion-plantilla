@@ -1,4 +1,5 @@
 package org.example.newteamultimateedition.personal.dao
+
 import org.example.newteamultimateedition.common.database.DatabaseManager
 import org.example.newteamultimateedition.personal.models.Jugador
 import org.example.newteamultimateedition.personal.models.Persona
@@ -14,7 +15,7 @@ class PersonaDaoTest {
     private lateinit var personaDao: PersonaDao
     private lateinit var dao: PersonaDao
 
-    val persona= PersonaEntity(
+    val personaEntity= PersonaEntity(
         id = 1L,
         nombre = "Jugadora",
         rol = "Jugador",
@@ -44,6 +45,109 @@ class PersonaDaoTest {
         ).jdbi
         dao = getPersonasDao(jdbi)
     }
+    @AfterEach
+    fun tearDown() {
+        dao.deleteAll()
+    }
+    @Nested
+    @DisplayName("casos correctos")
+    inner class DaoTestCorrectos {
+        @Test
+        @DisplayName("insertar una persona")
+        fun savePersona() {
+            val id = dao.save(personaEntity)
+            val persona = dao.getById(id.toLong())
+            assertNotNull(persona, "no deberia ser nulo")
+            assertEquals(persona!!.nombre, personaEntity.nombre, "deberian ser iguales")
+        }
+
+        @Test
+        @DisplayName("eliminar una persona")
+        fun eliminarPersona() {
+            val id = dao.save(personaEntity)
+            val result = dao.deleteById(id.toLong())
+            val result2 = dao.getById(id.toLong())
+            assertNull(result2, "no deberia estar")
+            assertEquals(result, 1, "deberia haber cambiado a una persona")
+        }
+
+        @Test
+        @DisplayName("obtener a todas las personas")
+        fun obtenerPersonas() {
+            val id = dao.save(personaEntity)
+            val id2 = dao.save(personaEntity.copy(nombre = "Carlos"))
+            val id3 = dao.save(personaEntity.copy(peso = 200.0))
+            val todos = dao.getAll()
+            todos.forEach { println(it) }
+            val result = dao.getAll()
+            assertEquals(result.size, 3, "deberian haber tres jugadores")
+            assertTrue(result.any { it.nombre == "Jugadora" }, "deberia haber un jugador con ese nombre")
+            assertTrue(result.any { it.nombre == "Carlos" }, "Deberia haber un jugador con ese nombre")
+            assertTrue(result.any { it.peso == 200.0 }, "deberia haber alguien con ese peso")
+        }
+
+        @Test
+        @DisplayName("actualizar correctamente")
+        fun actualizarPersona() {
+            val id = dao.save(personaEntity)
+            val result = dao.getById(id.toLong())
+            val result2 = dao.update(personaEntity.copy(nombre = "Carlos"),id.toLong())
+            val result3 = dao.getById(id.toLong())
+            assertNotEquals(result!!.nombre, result3!!.nombre,"No deberian ser iguales")
+            assertTrue(result2==1)
+
+        }
+        @Test
+        @DisplayName("obtener por id estando")
+        fun obtenerPersona() {
+            val id=dao.save(personaEntity)
+            val result=dao.getById(id.toLong())
+            assertNotNull(result,"No deberia ser nulo")
+            assertEquals(result!!.nombre, personaEntity.nombre, "deberia tener el mismo nombre")
+
+        }
+        @Test
+        @DisplayName("eliminar a todos las personas")
+        fun eliminarPersonas() {
+            dao.save(personaEntity)
+            dao.save(personaEntity.copy(peso = 200.0))
+            val result = dao.deleteAll()
+            val result2 = dao.getAll()
+            assertTrue(result2.isEmpty(), "deberia ser nulo")
+            assertEquals(result,2,"deberian haberse modificado solo dos lineas")
+        }
+    }
+    @Nested
+    @DisplayName("casos incorrectos")
+    inner class DaoIncorrectos {
+        @Test
+        @DisplayName("get all vacio")
+        fun getVacio(){
+            val result = dao.getAll()
+            assertTrue(result.isEmpty(), "deberia estar vacio")
+            assertEquals(result.size,0,"deberia ser cero")
+        }
+    }
     @Test
-    @DisplayName("insertar")
+    @DisplayName("obtener id no estando")
+    fun obtenerIdNoEstando(){
+        val id = dao.save(personaEntity)
+        val result = dao.getById(565L)
+        assertNull(result, "deberia ser nulo")
+    }
+    @Test
+    @DisplayName("actualizar por id no estando")
+    fun actualizarPorIdNoEstando(){
+        val id = dao.save(personaEntity)
+        val result = dao.update(personaEntity.copy(peso = 200.0),656L)
+        assertTrue(result==0,"no deberia haber modificado alguna fila")
+    }
+    @Test
+    @DisplayName("eliminar no estando")
+    fun eliminarNoEstando(){
+        val id = dao.save(personaEntity)
+        val result = dao.deleteById(565L)
+        assertTrue(result==0,"no deberia haber modificado alguna fila")
+    }
+
 }
