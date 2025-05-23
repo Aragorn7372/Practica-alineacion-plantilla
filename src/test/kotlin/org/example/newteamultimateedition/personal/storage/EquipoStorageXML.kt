@@ -32,7 +32,7 @@ class EquipoStorageXMLTest {
         especialidad = Especialidad.ENTRENADOR_PRINCIPAL
     )
 
-    val j = Jugador(
+    private val j = Jugador(
         id = 2L,
         nombre = "Oliver",
         apellidos = "Atom",

@@ -1,12 +1,8 @@
 package org.example.newteamultimateedition.personal.dao
 
 import org.example.newteamultimateedition.common.database.DatabaseManager
-import org.example.newteamultimateedition.personal.models.Jugador
-import org.example.newteamultimateedition.personal.models.Persona
-import org.example.newteamultimateedition.personal.models.Posicion
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Assertions.assertAll
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -39,8 +35,8 @@ class PersonaDaoTest {
     fun setUp() {
         val jdbi = DatabaseManager(
             "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1",
-            true,
-            true
+            initData = true,
+            initTables = true,
         ).jdbi
         dao = getPersonasDao(jdbi)
     }
@@ -73,9 +69,9 @@ class PersonaDaoTest {
         @Test
         @DisplayName("obtener a todas las personas")
         fun obtenerPersonas() {
-            val id = dao.save(personaEntity)
-            val id2 = dao.save(personaEntity.copy(nombre = "Carlos"))
-            val id3 = dao.save(personaEntity.copy(peso = 200.0))
+            dao.save(personaEntity)
+            dao.save(personaEntity.copy(nombre = "Carlos"))
+            dao.save(personaEntity.copy(peso = 200.0))
             val todos = dao.getAll()
             todos.forEach { println(it) }
             val result = dao.getAll()
@@ -130,21 +126,21 @@ class PersonaDaoTest {
     @Test
     @DisplayName("obtener id no estando")
     fun obtenerIdNoEstando(){
-        val id = dao.save(personaEntity)
+        dao.save(personaEntity)
         val result = dao.getById(565L)
         assertNull(result, "deberia ser nulo")
     }
     @Test
     @DisplayName("actualizar por id no estando")
     fun actualizarPorIdNoEstando(){
-        val id = dao.save(personaEntity)
+        dao.save(personaEntity)
         val result = dao.update(personaEntity.copy(peso = 200.0),656L)
         assertTrue(result==0,"no deberia haber modificado alguna fila")
     }
     @Test
     @DisplayName("eliminar no estando")
     fun eliminarNoEstando(){
-        val id = dao.save(personaEntity)
+        dao.save(personaEntity)
         val result = dao.deleteById(565L)
         assertTrue(result==0,"no deberia haber modificado alguna fila")
     }

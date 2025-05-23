@@ -1,22 +1,18 @@
 package org.example.newteamultimateedition.users.repository
 
+
 import org.example.newteamultimateedition.users.dao.UsersDao
 import org.example.newteamultimateedition.users.dao.UsersEntity
 import org.example.newteamultimateedition.users.mapper.UsersMapper
 import org.example.newteamultimateedition.users.models.User
 import org.junit.jupiter.api.Assertions.*
-
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.*
-import java.time.LocalDate
-
-
-
-import org.junit.jupiter.api.DisplayName
 
 
 @ExtendWith(MockitoExtension::class)
@@ -101,9 +97,9 @@ class UsersRepositoryImplTest {
   val result=repository.update(usuario,usuario.name)
 
   assertEquals(result!!.name,usuario.name,"deberia devolver el mismo usuario")
-  assertEquals(result!!.password,usuario.password,"deberia devolver el mismo usuario")
+  assertEquals(result.password,usuario.password,"deberia devolver el mismo usuario")
   assertNotNull(result,"no deberia ser nulo")
-  assertEquals(result!!.isAdmin,usuario.isAdmin,"deberia devolver el mismo usuario")
+  assertEquals(result.isAdmin,usuario.isAdmin,"deberia devolver el mismo usuario")
 
   verify(dao,times(1)).update(usuarioEntity,usuarioEntity.name)
   verify(mapper, times(1)).toEntity(usuario)

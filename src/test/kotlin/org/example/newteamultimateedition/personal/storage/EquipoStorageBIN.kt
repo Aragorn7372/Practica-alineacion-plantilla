@@ -1,7 +1,5 @@
 package org.example.newteamultimateedition.personal.storage
 
-import com.github.michaelbull.result.onSuccess
-import org.example.newteamultimateedition.personal.extensions.copy
 import org.example.newteamultimateedition.personal.models.Entrenador
 import org.example.newteamultimateedition.personal.models.Especialidad
 import org.example.newteamultimateedition.personal.models.Jugador

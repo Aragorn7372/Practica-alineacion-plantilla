@@ -20,7 +20,7 @@ class EquipoStorageImplTest {
     private lateinit var storageBIN: EquipoStorageBIN
     private lateinit var equipoStorageImpl: EquipoStorageImpl
 
-    val e = Entrenador(
+    private val e = Entrenador(
         id = 1L,
         nombre = "Pepito",
         apellidos = "Grillo",
@@ -34,7 +34,7 @@ class EquipoStorageImplTest {
         especialidad = Especialidad.ENTRENADOR_PRINCIPAL
     )
 
-    val j = Jugador(
+    private val j = Jugador(
         id = 2L,
         nombre = "Oliver",
         apellidos = "Atom",
@@ -51,7 +51,7 @@ class EquipoStorageImplTest {
         partidosJugados = 150,
         minutosJugados = 13245
     )
-    val list = listOf(e, j)
+    private val list = listOf(e, j)
 
     @BeforeEach
     fun setUp() {

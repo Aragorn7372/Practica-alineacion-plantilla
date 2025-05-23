@@ -17,7 +17,7 @@ import java.time.LocalDateTime
 class EquipoStorageCSVTest {
 
     val storage = EquipoStorageCSV()
-    val e = Entrenador(
+    private val e = Entrenador(
         id = 1L,
         nombre = "Pepito",
         apellidos = "Grillo",
@@ -31,7 +31,7 @@ class EquipoStorageCSVTest {
         especialidad = Especialidad.ENTRENADOR_PRINCIPAL
     )
 
-    val j = Jugador(
+    private val j = Jugador(
         id = 2L,
         nombre = "Oliver",
         apellidos = "Atom",

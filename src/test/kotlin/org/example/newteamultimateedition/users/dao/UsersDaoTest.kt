@@ -18,8 +18,8 @@ class UsersDaoTest {
     fun setUp() {
         val jdbi = DatabaseManager(
             "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1",
-            true,
-            true
+            initData = true,
+            initTables = true,
         ).jdbi
         dao = provideUsersDao(jdbi)
         dao.deleteAll()
@@ -34,7 +34,7 @@ class UsersDaoTest {
         @Test
         @DisplayName("insertar una persona")
         fun savePersona() {
-            val id = dao.save(usersEntity)
+            dao.save(usersEntity)
             val users = dao.getByName("admin")
             assertNotNull(users, "no deberia ser nulo")
             assertEquals(users!!.name, usersEntity.name, "deberian ser iguales")
@@ -43,7 +43,7 @@ class UsersDaoTest {
         @Test
         @DisplayName("eliminar un usuario")
         fun eliminarPersona() {
-            val id = dao.save(usersEntity)
+            dao.save(usersEntity)
             val result = dao.delete("admin")
             val result2 = dao.getByName("admin")
             assertNull(result2, "no deberia estar")
@@ -53,9 +53,9 @@ class UsersDaoTest {
         @Test
         @DisplayName("obtener a todos los usuarios")
         fun obtenerPersonas() {
-            val id = dao.save(usersEntity)
-            val id2 = dao.save(usersEntity.copy(name = "Carlos"))
-            val id3 = dao.save(usersEntity.copy(name = "samu", password = "admin"))
+            dao.save(usersEntity)
+            dao.save(usersEntity.copy(name = "Carlos"))
+            dao.save(usersEntity.copy(name = "samu", password = "admin"))
             val todos = dao.getAll()
             todos.forEach { println(it) }
             val result = dao.getAll()
@@ -68,7 +68,7 @@ class UsersDaoTest {
         @Test
         @DisplayName("actualizar correctamente")
         fun actualizarPersona() {
-            val id = dao.save(usersEntity)
+            dao.save(usersEntity)
             val result = dao.getByName("admin")
             val result2 = dao.update(usersEntity.copy(password = "Carlos"),"admin")
             val result3 = dao.getByName("admin")
@@ -79,7 +79,7 @@ class UsersDaoTest {
         @Test
         @DisplayName("obtener por id estando")
         fun obtenerPersona() {
-            val id=dao.save(usersEntity)
+            dao.save(usersEntity)
             val result=dao.getByName("admin")
             assertNotNull(result,"No deberia ser nulo")
             assertEquals(result!!.name, usersEntity.name, "deberia tener el mismo name")
@@ -110,21 +110,21 @@ class UsersDaoTest {
     @Test
     @DisplayName("obtener id no estando")
     fun obtenerIdNoEstando(){
-        val id = dao.save(usersEntity)
+        dao.save(usersEntity)
         val result = dao.getByName("mariano")
         assertNull(result, "deberia ser nulo")
     }
     @Test
     @DisplayName("actualizar por id no estando")
     fun actualizarPorIdNoEstando(){
-        val id = dao.save(usersEntity)
+        dao.save(usersEntity)
         val result = dao.update(usersEntity.copy(admin = false),"alfonso")
         assertTrue(result==0,"no deberia haber modificado alguna fila")
     }
     @Test
     @DisplayName("eliminar no estando")
     fun eliminarNoEstando(){
-        val id = dao.save(usersEntity)
+        dao.save(usersEntity)
         val result = dao.delete("alfonso")
         assertTrue(result==0,"no deberia haber modificado alguna fila")
     }

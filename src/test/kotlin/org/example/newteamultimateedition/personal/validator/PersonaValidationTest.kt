@@ -1,12 +1,13 @@
 package org.example.newteamultimateedition.personal.validator
 
-import org.example.newteamultimateedition.personal.models.*
-import org.example.newteamultimateedition.personal.validator.PersonaValidation
+import org.example.newteamultimateedition.personal.models.Entrenador
+import org.example.newteamultimateedition.personal.models.Especialidad
+import org.example.newteamultimateedition.personal.models.Jugador
+import org.example.newteamultimateedition.personal.models.Posicion
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-
 import java.time.LocalDate
 import java.time.LocalDateTime
 
