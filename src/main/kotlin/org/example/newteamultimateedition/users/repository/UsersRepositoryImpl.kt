@@ -51,8 +51,7 @@ class UsersRepositoryImpl(
      */
     override fun delete(id: String): User? {
         val user = usersDao.getByName(id)?.let {
-            usersDao.delete(id)
-            return mapper.toModel(it)
+            if(usersDao.delete(id)==1) return mapper.toModel(it) else null
         }
         return user
     }
