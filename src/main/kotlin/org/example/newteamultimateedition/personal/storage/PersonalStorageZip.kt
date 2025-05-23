@@ -18,13 +18,13 @@ import java.util.zip.ZipEntry
 import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
 import kotlin.io.path.name
-/*
+
 class PersonalStorageZip(
 
-    private val csv: PersonalStorageCsv,
-    private val json: PersonalStorageJson,
-    private val bin: PersonalStorageBin,
-    private val xml: PersonalStorageXml,
+    private val csv: EquipoStorageCSV,
+    private val json: EquipoStorageJSON,
+    private val bin: EquipoStorageBIN,
+    private val xml: EquipoStorageXML,
 ) {
     private val config = Config
 
@@ -66,10 +66,10 @@ class PersonalStorageZip(
                     it.toFile()
                 }.toList()
             return when (personas.first().extension) {
-                "csv" -> csv.leerDelArchivo(personas.first())
-                "json" -> json.leerDelArchivo(personas.first())
-                "bin" -> bin.leerDelArchivo(personas.first())
-                "xml" -> xml.leerDelArchivo(personas.first())
+                "csv" -> csv.fileRead(personas.first())
+                "json" -> json.fileRead(personas.first())
+                "bin" -> bin.fileRead(personas.first())
+                "xml" -> xml.fileRead(personas.first())
 
                 else -> {
                     return Err(PersonasError.PersonasStorageError("tipo invalido"))
@@ -100,10 +100,10 @@ class PersonalStorageZip(
             }
 
             val datafile = when (tipe) {
-                Tipo.CSV -> csv.escribirAUnArchivo(File("$tempDirName/data.csv"), persona)
-                Tipo.JSON -> json.escribirAUnArchivo(File("$tempDirName/json.json"), persona)
-                Tipo.XML -> xml.escribirAUnArchivo(File("$tempDirName/xml.json"), persona)
-                Tipo.BIN -> bin.escribirAUnArchivo(File("$tempDirName/bin.csv"), persona)
+                Tipo.CSV -> csv.fileWrite(persona, File("$tempDirName/data.csv"))
+                Tipo.JSON -> json.fileWrite(persona,File("$tempDirName/data.json"))
+                Tipo.XML -> xml.fileWrite(persona,File("$tempDirName/data.xml"))
+                Tipo.BIN -> bin.fileWrite(persona, File("$tempDirName/data.bin"))
             }
             if (datafile.isOk) {
                 val archivos = Files.walk(tempDir).filter { Files.isRegularFile(it) }.toList()
@@ -129,4 +129,3 @@ enum class Tipo {
 }
 
 
- */

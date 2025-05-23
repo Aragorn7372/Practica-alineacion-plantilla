@@ -35,18 +35,6 @@ kotlin {
     jvmToolchain(21)
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
-    kotlinOptions {
-        freeCompilerArgs += [
-                "-Xno-call-assertions",
-                "-Xno-param-assertions",
-                "-Xno-optimize",
-                "-Xretain-kotlin-parameter-names",
-                "-Xmethod-name-suffix=" // ESTA ES LA CLAVE
-        ]
-    }
-}
-
 javafx {
     version = '21'
     modules = ['javafx.controls', 'javafx.fxml']
@@ -89,9 +77,7 @@ dependencies {
     implementation("com.github.ben-manes.caffeine:caffeine:3.2.0")
 
     // Koin
-    constraints {
-        implementation("io.insert-koin:koin-core:3.5.6")
-    }
+    implementation(platform("io.insert-koin:koin-bom:3.5.6"))
     implementation("io.insert-koin:koin-core")
 
     // JUnit
