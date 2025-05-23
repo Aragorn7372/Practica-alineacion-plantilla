@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
+import org.mockito.Mockito.mock
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.whenever
@@ -73,15 +74,14 @@ class UsersServiceImplTest {
     }
 
     @Test
-    @DisplayName("getByID falla si no existe el usuario")
-    fun getByIdError() {
-        whenever(repository.getById(userId)) doReturn null
+    @DisplayName("getByID lanza excepción y devuelve DatabaseException")
+    fun getByIDLanzaExcepcionDevuelveDatabaseException() {
+        whenever(repository.getById("123")).thenThrow(RuntimeException("Error"))
 
-        val result = service.getByID(userId)
+        val result = service.getByID("123")
 
         assertTrue(result.isErr)
-        assertTrue(result.error is UsersException.UsersNotFoundException)
-        verify(repository, times(1)).getById(userId)
+        assertTrue((result.error is UsersException.DatabaseException))
     }
 
     @Test
@@ -135,6 +135,17 @@ class UsersServiceImplTest {
     }
 
     @Test
+    @DisplayName("delete lanza excepción y devuelve DatabaseException")
+    fun deleteLanzaExcepcionDevuelveDatabaseException() {
+        whenever(repository.delete("123")).thenThrow(RuntimeException("Error"))
+
+        val result = service.delete("123")
+
+        assertTrue(result.isErr)
+        assertTrue((result.error is UsersException.DatabaseException))
+    }
+
+    @Test
     @DisplayName("update actualiza usuario correctamente")
     fun updateCorrecto() {
         whenever(repository.update(user, userId)) doReturn user
@@ -157,4 +168,17 @@ class UsersServiceImplTest {
         assertTrue(result.error is UsersException.UsersNotFoundException)
         verify(repository, times(1)).update(user, userId)
     }
+
+    @Test
+    @DisplayName("update lanza excepción y devuelve DatabaseException")
+    fun updateLanzaExcepcionDevuelveDatabaseException() {
+        val user = mock<User>()
+        whenever(repository.update(user, "123")).thenThrow(RuntimeException("Error"))
+
+        val result = service.update("123", user)
+
+        assertTrue(result.isErr)
+        assertTrue((result.error is UsersException.DatabaseException))
+    }
+
 }
