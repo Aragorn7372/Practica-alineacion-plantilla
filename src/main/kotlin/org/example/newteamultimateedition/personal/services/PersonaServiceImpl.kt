@@ -2,6 +2,8 @@ package org.example.newteamultimateedition.personal.services
 
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.michaelbull.result.*
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
 import org.example.newteamultimateedition.common.database.provideDatabaseManager
 import org.example.newteamultimateedition.personal.cache.darPersonasCache
 import org.example.newteamultimateedition.personal.dao.getPersonasDao
@@ -23,16 +25,16 @@ class PersonaServiceImpl(
     private val logger= logging()
     override fun importarDatosDesdeFichero(fichero: Path): Result<List<Persona>, PersonasError> {
         logger.debug { "importando desde fichero" }
-        val archivo= fichero.toFile()
+        val file= fichero.toFile()
         try {
-            val lista = storage.fileRead(archivo)
+            val lista = storage.fileRead(file)
             if (lista.isOk) {
                 lista.value.forEach {
                     val validado = validator.validator(it)
-                    if (validado.isOk) repositorio.save(it)
+                    if (validado.isOk) repositorio.save(it) else return Err(validado.error)
                 }
             } else return Err(lista.error)
-            return lista
+            return Ok(lista.value)
         }catch (e:Exception){
             return Err(PersonasError.PersonaDatabaseError(e.message.toString()))
         }

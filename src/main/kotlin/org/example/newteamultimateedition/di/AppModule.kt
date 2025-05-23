@@ -65,9 +65,12 @@ val appModule = module {
     }
      */
 
+    /*
     singleOf(::EquipoStorageImpl) {
         bind<EquipoStorageImpl>()
     }
+
+     */
 
     singleOf(::PersonasRepositoryImplementation) {
         bind<PersonasRepositoryImplementation>()
