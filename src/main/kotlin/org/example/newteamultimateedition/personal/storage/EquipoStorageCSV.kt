@@ -27,7 +27,9 @@ class EquipoStorageCSV: EquipoStorage {
     override fun fileRead(file: File): Result<List<Persona>, PersonasError> {
         logger.debug { "Leyendo fichero CSV" }
 
-        if (!file.exists() || !file.isFile || !file.canRead()) return Err(PersonasError.PersonasStorageError("El fichero no existe, la ruta especificada no es un fichero o no se tienen permisos de lectura"))
+        if (!file.exists() || !file.isFile || !file.canRead()) {
+            return Err(PersonasError.PersonasStorageError("El fichero no existe, la ruta especificada no es un fichero o no se tienen permisos de lectura"))
+        }
 
         return Ok( file.readLines()
             .drop(1)
@@ -67,7 +69,7 @@ class EquipoStorageCSV: EquipoStorage {
             return Err(PersonasError.PersonasStorageError("El directorio padre del fichero no existe"))
         }
 
-        file.writeText("id,nombre,apellidos,fecha_nacimiento,fecha_incorporacion,salario,pais,rol,especialidad,posicion,dorsal,altura,peso,goles,partidos_jugados\n")
+        file.writeText("id,nombre,apellidos,fecha_nacimiento,fecha_incorporacion,salario,pais,rol,especialidad,posicion,dorsal,altura,peso,goles,partidos_jugados,minutos_jugados,imagen\n")
 
         equipo.map {
             if (it is Jugador) {

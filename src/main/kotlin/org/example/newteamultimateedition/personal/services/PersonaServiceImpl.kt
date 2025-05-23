@@ -55,10 +55,10 @@ class PersonaServiceImpl(
     }
 
     override fun getAll(): Result<List<Persona>,PersonasError> {
-        try {
-            return Ok(repositorio.getAll())
+        return try {
+            Ok(repositorio.getAll())
         }catch (e:Exception){
-            return Err(PersonasError.PersonaDatabaseError(e.message.toString()))
+            Err(PersonasError.PersonaDatabaseError(e.message.toString()))
         }
     }
 

@@ -20,11 +20,14 @@ interface UsersDao {
     @SqlUpdate("INSERT INTO users (nombre_usuario, contraseña, admin) VALUES (:name, :password, :admin)")
     fun save(@BindBean user: UsersEntity): Int
 
-    @SqlUpdate("UPDATE users SET contraseña = :password, admin = :admin WHERE nombre_usuario = :name")
-    fun update(@BindBean user: UsersEntity, @Bind("name") name: String): Int
+    @SqlUpdate("UPDATE users SET contraseña = :password, admin = :admin WHERE nombre_usuario = :nameuser")
+    fun update(@BindBean user: UsersEntity, @Bind("nameuser") nameuser: String): Int
 
     @SqlUpdate("DELETE FROM users WHERE nombre_usuario = :name")
     fun delete(@Bind("name") name: String): Int
+
+    @SqlUpdate("DELETE FROM users")
+    fun deleteAll(): Int
 }
 
 fun provideUsersDao(jdbi: Jdbi): UsersDao {
