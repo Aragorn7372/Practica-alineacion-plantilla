@@ -10,13 +10,13 @@ import org.lighthousegames.logging.logging
 
 
 interface CodigoDao {
-    @SqlQuery("SELECT * FROM codigo")
+    @SqlQuery("SELECT uuid AS id, id_persona AS personalId, id_alineacion AS alineacionId, posicion AS posicion  FROM codigo")
     fun getAll(): List<CodigoAlineacionEntity>
 
-    @SqlQuery("SELECT * FROM codigo where uuid = :id")
+    @SqlQuery("SELECT uuid AS id, id_persona AS personalId, id_alineacion AS alineacionId, posicion AS posicion  FROM codigo where uuid = :id")
     fun getById(@Bind("id") id: String): CodigoAlineacionEntity?
 
-    @SqlQuery("SELECT * FROM codigo where id_alineacion = :alinecionId ")
+    @SqlQuery("SELECT uuid AS id, id_persona AS personalId, id_alineacion AS alineacionId, posicion AS posicion  FROM codigo where id_alineacion = :alinecionId ")
     fun getByAlineacionId(@Bind("alinecionId") alinecionId: Long): List<CodigoAlineacionEntity>
 
     @SqlUpdate("DELETE FROM codigo WHERE id = :alinecionId")
@@ -25,7 +25,7 @@ interface CodigoDao {
     @SqlUpdate("INSERT INTO codigo (uuid,id_persona,id_alineacion,posicion) VALUES (:id, :personalId,:alineacionId,:posicion) ")
     fun save(@BindBean codigo: CodigoAlineacionEntity): Int
 
-    @SqlUpdate("UPDATE codigo SET posicion=:posicion WHERE id = :identificacion")
+    @SqlUpdate("UPDATE codigo SET posicion=:posicion WHERE uuid = :identificacion")
     fun updateById(@BindBean codigo: CodigoAlineacionEntity, @Bind("identificacion") identificador:String): Int
 
 
@@ -40,3 +40,15 @@ fun provideCodigoDao(jdbi: Jdbi): CodigoDao {
     logger.info { "obteniendo personas dao" }
     return jdbi.onDemand(CodigoDao::class.java)
 }
+/*
+ uuid VARCHAR NOT NULL PRIMARY KEY,
+    id_persona BIGINT NOT NULL,
+    id_alineacion BIGINT NOT NULL,
+    posicion INT NOT NULL
+ */
+/*
+ val id: String,
+    val personalId: Long,
+    val alineacionId: Long,
+    val posicion: Int,
+ */
