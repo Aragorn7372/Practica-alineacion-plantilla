@@ -1,4 +1,4 @@
-package org.example.newteamultimateedition.personal.validator
+package org.example.newteamultimateedition.common.validator
 
 import com.github.michaelbull.result.Result
 
