@@ -8,12 +8,14 @@ import org.example.newteamultimateedition.alineacion.error.AlineacionError
 import org.example.newteamultimateedition.alineacion.model.Alineacion
 import org.example.newteamultimateedition.alineacion.repository.AlineacionRepositoryImpl
 import org.example.newteamultimateedition.alineacion.validador.AlineacionValidate
+import org.example.newteamultimateedition.personal.repository.PersonalRepository
 import java.time.LocalDate
-
+/*
 class AlineacionServiceImpl(
     private val validator: AlineacionValidate,
     private val cache: Cache<Long, Alineacion>,
-    private val repository: AlineacionRepositoryImpl
+    private val repository: AlineacionRepositoryImpl,
+    private val personalRepository: PersonalRepository
 ): AlineacionService {
     override fun getByFecha(fecha: LocalDate): Result<Alineacion, AlineacionError> {
         return try {
@@ -90,4 +92,4 @@ class AlineacionServiceImpl(
         }
         return Err(validado.error)
     }
-}
+}*/
