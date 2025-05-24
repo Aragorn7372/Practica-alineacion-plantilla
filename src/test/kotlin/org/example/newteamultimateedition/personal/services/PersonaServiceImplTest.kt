@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
+import java.nio.file.Paths
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -84,6 +85,9 @@ class PersonaServiceImplTest {
 
     private val equipo = listOf(entrenador, jugador)
 
+    private val uri = javaClass.classLoader.getResource("test.csv")?.toURI()
+    private val filePath = Paths.get(uri)
+
     @BeforeEach
     fun setUp(){
         validator = mock()
@@ -96,6 +100,20 @@ class PersonaServiceImplTest {
     @Nested
     @DisplayName("Tests correctos")
     inner class TestsCorrectos{
+
+        @Test
+        @DisplayName("Exportar a fichero")
+        fun exportOk(){
+            whenever(repository.getAll()).thenReturn(equipo)
+            whenever(storage.fileWrite(equipo, filePath.toFile())).thenReturn(Ok(Unit))
+
+            val result = service.exportarDatosDesdeFichero(filePath)
+
+            assertTrue(result.isOk)
+
+            verify(repository, times(1)).getAll()
+            verify(storage, times(1)).fileWrite(equipo, filePath.toFile())
+        }
 
         @Test
         @DisplayName("Eliminar persona (también de caché)")
@@ -247,6 +265,24 @@ class PersonaServiceImplTest {
             )
 
             verify(repository, times(1)).getAll()
+        }
+
+        @Test
+        @DisplayName("Importar de fichero")
+        fun importOk(){
+            whenever(storage.fileRead(filePath.toFile())).thenReturn(Ok(equipo))
+            whenever(validator.validator(jugador)).thenReturn(Ok(jugador))
+            whenever(validator.validator(entrenador)).thenReturn(Ok(entrenador))
+            whenever(repository.save(jugador)).thenReturn(jugador)
+            whenever(repository.save(entrenador)).thenReturn(entrenador)
+
+            val result = service.importarDatosDesdeFichero(filePath)
+
+            assertAll(
+                { assertTrue(result.isOk) },
+                { assertEquals(result.value.size, equipo.size) },
+                { assertEquals(result.value, equipo) },
+            )
         }
     }
 
@@ -429,6 +465,102 @@ class PersonaServiceImplTest {
             verify(cache, times(0)).getIfPresent(jugador.id)
             verify(cache, times(0)).invalidate(jugador.id)
             verify(cache, times(0)).put(jugador.id, jugador)
+        }
+
+        @Test
+        @DisplayName("Falla bbdd al importar de fichero")
+        fun bbddFailureImport(){
+
+            whenever(storage.fileRead(filePath.toFile())).thenThrow(RuntimeException("Error en la base de datos"))
+
+            val result = service.importarDatosDesdeFichero(filePath)
+
+            assertAll(
+                { assertTrue(result.isErr) },
+                { assertTrue(result.error is PersonasError.PersonaDatabaseError) }
+            )
+
+            verify(storage, times(1)).fileRead(filePath.toFile())
+            verify(validator, times(0)).validator(entrenador)
+            verify(validator, times(0)).validator(jugador)
+            verify(repository, times(0)).save(entrenador)
+            verify(repository, times(0)).save(jugador)
+        }
+
+        @Test
+        @DisplayName("Falla bbdd al exportar a fichero")
+        fun bbddFailureExport(){
+
+            whenever(repository.getAll()).thenThrow(RuntimeException("Error en la base de datos"))
+
+            val result = service.exportarDatosDesdeFichero(filePath)
+
+            assertAll(
+                { assertTrue(result.isErr) },
+                { assertTrue(result.error is PersonasError.PersonaDatabaseError) }
+            )
+
+            verify(repository, times(1)).getAll()
+            verify(storage, times(0)).fileWrite(equipo, filePath.toFile())
+        }
+
+        @Test
+        @DisplayName("Error en storage al importar")
+        fun storageFailureImport(){
+            whenever(storage.fileRead(filePath.toFile())).thenReturn(Err(PersonasError.PersonasStorageError("No se ha podido importar")))
+
+            val result = service.importarDatosDesdeFichero(filePath)
+
+            assertAll(
+                { assertTrue(result.isErr) },
+                { assertTrue(result.error is PersonasError.PersonasStorageError) }
+            )
+
+            verify(storage, times(1)).fileRead(filePath.toFile())
+            verify(validator, times(0)).validator(entrenador)
+            verify(validator, times(0)).validator(jugador)
+            verify(repository, times(0)).save(entrenador)
+            verify(repository, times(0)).save(jugador)
+        }
+
+        @Test
+        @DisplayName("Error en storage al exportar")
+        fun storageFailureExport(){
+            whenever(repository.getAll()).thenReturn(equipo)
+            whenever(storage.fileWrite(equipo, filePath.toFile())).thenReturn(Err(PersonasError.PersonasStorageError("No se ha podido exportar")))
+
+            val result = service.exportarDatosDesdeFichero(filePath)
+
+            assertAll(
+                { assertTrue(result.isErr) },
+                { assertTrue(result.error is PersonasError.PersonasStorageError) }
+            )
+
+            verify(repository, times(1)).getAll()
+            verify(storage, times(1)).fileWrite(equipo, filePath.toFile())
+        }
+
+        @Test
+        @DisplayName("Error en validación al importar")
+        fun validatorFailureImport(){
+            whenever(storage.fileRead(filePath.toFile())).thenReturn(Ok(equipo))
+            whenever(validator.validator(jugador)).thenReturn(Err(PersonasError.PersonasInvalidoError("Datos no válidos")))
+            whenever(validator.validator(entrenador)).thenReturn(Err(PersonasError.PersonasInvalidoError("Datos no válidos")))
+
+
+            val result = service.importarDatosDesdeFichero(filePath)
+
+            assertAll(
+                { assertTrue(result.isErr) },
+                { assertTrue(result.error is PersonasError.PersonasInvalidoError) }
+            )
+
+            verify(storage, times(1)).fileRead(filePath.toFile())
+            verify(validator, times(1)).validator(entrenador)
+            verify(validator, times(0)).validator(jugador) // no llega a intentar validar el jugador porque,
+            // al estar primero el entrenador en la lista y ya devuelve el error
+            verify(repository, times(0)).save(entrenador)
+            verify(repository, times(0)).save(jugador)
         }
 
     }
