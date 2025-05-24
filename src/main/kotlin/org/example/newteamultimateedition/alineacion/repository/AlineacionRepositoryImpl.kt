@@ -8,7 +8,7 @@ import java.time.LocalDate
 
 class AlineacionRepositoryImpl(
     private val alineacionDao: AlineacionDao,
-    private val codigoDao: CodigoDao
+    private val codigoDao: CodigoDao,
     private val mapper: AlineacionMapper
 ):AlineacioRepository {
     override fun getByDate(date: LocalDate): Alineacion? {
@@ -40,13 +40,20 @@ class AlineacionRepositoryImpl(
     }
 
     override fun delete(id: Long): Alineacion? {
-        return alineacionDao.getById(id)?.let {
-            if (alineacionDao.deleteById(id)==1) mapper.toDatabaseModel(it) else null
+        return getById(id)?.let {
+            if (alineacionDao.deleteById(it.id)==1) {
+                if(codigoDao.deleteByAlinecionId(it.id)==18) {
+                it
+                }else null
+            } else null
         }
     }
 
     override fun save(objeto: Alineacion): Alineacion {
-        val identificator = alineacionDao.save(mapper.toEntity(objeto))
-        return objeto.copy(id=identificator.toLong())
+        val identificator= alineacionDao.save(mapper.toEntity(objeto)).toLong()
+        val alineacion=objeto.copy(id=identificator)
+        alineacion.personalList.map { it.copy(idAlineacion = alineacion.id) }
+            .forEach { codigoDao.save(mapper.toEntity(it)) }
+        return alineacion
     }
 }

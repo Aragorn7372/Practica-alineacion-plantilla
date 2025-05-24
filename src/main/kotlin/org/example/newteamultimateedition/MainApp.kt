@@ -34,7 +34,6 @@ class MainApp : Application(), KoinComponent {
             especialidad = Especialidad.ENTRENADOR_PORTEROS
         )
         val service = PersonaServiceImpl()
-
         val p = service.save(persona)
         if(p.isOk) println(p.value)
         else println(p.error.messager)
