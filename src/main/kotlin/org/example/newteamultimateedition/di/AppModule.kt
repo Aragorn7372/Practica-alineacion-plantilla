@@ -1,8 +1,11 @@
 package org.example.newteamultimateedition.di
 
 import com.github.benmanes.caffeine.cache.Cache
+import org.example.newteamultimateedition.alineacion.dao.AlineacionDao
 import org.example.newteamultimateedition.alineacion.dao.CodigoDao
+import org.example.newteamultimateedition.alineacion.dao.provideAlineacionDao
 import org.example.newteamultimateedition.alineacion.dao.provideCodigoDao
+import org.example.newteamultimateedition.alineacion.validador.AlineacionValidate
 import org.example.newteamultimateedition.common.database.provideDatabaseManager
 import org.example.newteamultimateedition.personal.cache.darPersonasCache
 import org.example.newteamultimateedition.personal.dao.PersonaDao
@@ -40,6 +43,13 @@ val appModule = module {
     singleOf(::provideCodigoDao) {
         bind<CodigoDao>()
     }
+    singleOf(::provideAlineacionDao) {
+        bind<AlineacionDao>()
+    }
+    singleOf(::AlineacionValidate) {
+        bind<AlineacionValidate>()
+    }
+
 
     // Repository: depende de DAO
     singleOf(::UsersRepositoryImpl) {

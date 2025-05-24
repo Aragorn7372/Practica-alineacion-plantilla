@@ -11,14 +11,14 @@ abstract class AlineacionError(mensaje: String): Errors(mensaje) {
      *
      * @param id Identificador personal de la persona que no se ha podido encontrar.
      */
-    class AlineacionNotFoundError(id: String): AlineacionError("Persona no encontrada con id: $id")
+    class AlineacionNotFoundError(id: String): AlineacionError("Alineacion no encontrada con id: $id")
 
     /**
      * Excepción que indica que los datos de la persona no son válidos
      *
      * @param message Mensaje de error
      */
-    class AlineacionInvalidoError(message: String): AlineacionError("Persona no válida: $message")
+    class AlineacionInvalidoError(message: String): AlineacionError("Alineacion no válida: $message")
 
 
     /**
