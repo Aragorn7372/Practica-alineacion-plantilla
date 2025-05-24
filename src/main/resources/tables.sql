@@ -36,21 +36,7 @@ CREATE TABLE IF NOT EXISTS alineacion (
     fecha_creacion DATE NOT NULL,
     fecha_actualizacion DATE NOT NULL,
     fecha_juego DATE NOT NULL,
-    uuid_primero VARCHAR NOT NULL,
-    uuid_segundo VARCHAR NOT NULL,
-    uuid_tercero VARCHAR NOT NULL,
-    uuid_cuarto VARCHAR NOT NULL,
-    uuid_quinto VARCHAR NOT NULL,
-    uuid_sexto VARCHAR NOT NULL,
-    uuid_septimo VARCHAR NOT NULL,
-    uuid_octavo VARCHAR NOT NULL,
-    uuid_noveno VARCHAR NOT NULL,
-    uuid_decimo VARCHAR NOT NULL,
-    uuid_onceavo VARCHAR NOT NULL,
-    uuid_doceavo VARCHAR NOT NULL,
-    uuid_treceavo VARCHAR NOT NULL,
-    uuid_catorceavo VARCHAR NOT NULL,
-    uuid_entrenador VARCHAR NOT NULL
+
 );
 
 CREATE TABLE IF NOT EXISTS codigo (
@@ -72,48 +58,3 @@ ALTER TABLE codigo
             ON DELETE CASCADE;
 
 
--- 3. Relacionar cada uuid_* en 'alineacion' con 'codigo(uuid)'
-ALTER TABLE alineacion
-    ADD CONSTRAINT fk_uuid_primero FOREIGN KEY (uuid_primero) REFERENCES codigo(uuid);
-
-ALTER TABLE alineacion
-    ADD CONSTRAINT fk_uuid_segundo FOREIGN KEY (uuid_segundo) REFERENCES codigo(uuid);
-
-ALTER TABLE alineacion
-    ADD CONSTRAINT fk_uuid_tercero FOREIGN KEY (uuid_tercero) REFERENCES codigo(uuid);
-
-ALTER TABLE alineacion
-    ADD CONSTRAINT fk_uuid_cuarto FOREIGN KEY (uuid_cuarto) REFERENCES codigo(uuid);
-
-ALTER TABLE alineacion
-    ADD CONSTRAINT fk_uuid_quinto FOREIGN KEY (uuid_quinto) REFERENCES codigo(uuid);
-
-ALTER TABLE alineacion
-    ADD CONSTRAINT fk_uuid_sexto FOREIGN KEY (uuid_sexto) REFERENCES codigo(uuid);
-
-ALTER TABLE alineacion
-    ADD CONSTRAINT fk_uuid_septimo FOREIGN KEY (uuid_septimo) REFERENCES codigo(uuid);
-
-ALTER TABLE alineacion
-    ADD CONSTRAINT fk_uuid_octavo FOREIGN KEY (uuid_octavo) REFERENCES codigo(uuid);
-
-ALTER TABLE alineacion
-    ADD CONSTRAINT fk_uuid_noveno FOREIGN KEY (uuid_noveno) REFERENCES codigo(uuid);
-
-ALTER TABLE alineacion
-    ADD CONSTRAINT fk_uuid_decimo FOREIGN KEY (uuid_decimo) REFERENCES codigo(uuid);
-
-ALTER TABLE alineacion
-    ADD CONSTRAINT fk_uuid_onceavo FOREIGN KEY (uuid_onceavo) REFERENCES codigo(uuid);
-
-ALTER TABLE alineacion
-    ADD CONSTRAINT fk_uuid_doceavo FOREIGN KEY (uuid_doceavo) REFERENCES codigo(uuid);
-
-ALTER TABLE alineacion
-    ADD CONSTRAINT fk_uuid_treceavo FOREIGN KEY (uuid_treceavo) REFERENCES codigo(uuid);
-
-ALTER TABLE alineacion
-    ADD CONSTRAINT fk_uuid_catorceavo FOREIGN KEY (uuid_catorceavo) REFERENCES codigo(uuid);
-
-ALTER TABLE alineacion
-    ADD CONSTRAINT fk_uuid_entrenador FOREIGN KEY (uuid_entrenador) REFERENCES codigo(uuid);-- 3. Relacionar cada uuid_* en 'alineacion' con 'codigo(uuid)'

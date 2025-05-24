@@ -7,7 +7,7 @@ import java.util.*
 
 data class Alineacion(
     val id: Long,
-    val personalList: List<UUID>,
+    val personalList: List<Codigo>,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime = LocalDateTime.now(),
     val juegoDate: LocalDate

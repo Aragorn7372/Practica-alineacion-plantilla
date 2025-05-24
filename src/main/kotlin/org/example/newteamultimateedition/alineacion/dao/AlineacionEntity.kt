@@ -5,56 +5,10 @@ import java.time.LocalDateTime
 
 data class AlineacionEntity(
     val id: Long,
-    val uuidPrimero: String,
-    val uuidSegundo: String,
-    val uuidTercero: String,
-    val uuidCuarto: String,
-    val uuidQuinto: String,
-    val uuidSexto: String,
-    val uuidSeptimo: String,
-    val uuidOctavo: String,
-    val uuidNoveno: String,
-    val uuidDecimo: String,
-    val uuidOnceavo: String,
-    val uuidDoceavo: String,
-    val uuidTreceavo: String,
-    val uuidCatorceavo: String,
-    val uuidEntrenador: String,
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime,
     val juegoDate: LocalDate
 ) {
-    companion object {
-        fun fromList(
-            id: Long,
-            uuidList: List<String>,
-            createdAt: LocalDateTime,
-            updatedAt: LocalDateTime,
-            juegoDate: LocalDate
-        ): AlineacionEntity {
-            return AlineacionEntity(
-                id = id,
-                uuidPrimero = uuidList[0],
-                uuidSegundo = uuidList[1],
-                uuidTercero = uuidList[2],
-                uuidCuarto = uuidList[3],
-                uuidQuinto = uuidList[4],
-                uuidSexto = uuidList[5],
-                uuidSeptimo = uuidList[6],
-                uuidOctavo = uuidList[7],
-                uuidNoveno = uuidList[8],
-                uuidDecimo = uuidList[9],
-                uuidOnceavo = uuidList[10],
-                uuidDoceavo = uuidList[11],
-                uuidTreceavo = uuidList[12],
-                uuidCatorceavo = uuidList[13],
-                uuidEntrenador = uuidList[14],
-                createdAt = createdAt,
-                updatedAt = updatedAt,
-                juegoDate = juegoDate
-            )
-        }
-    }
 }
 /*
  uuid_primero VARCHAR NOT NULL,

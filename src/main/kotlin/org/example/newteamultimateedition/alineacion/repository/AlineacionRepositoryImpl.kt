@@ -1,38 +1,52 @@
 package org.example.newteamultimateedition.alineacion.repository
 
 import org.example.newteamultimateedition.alineacion.dao.AlineacionDao
+import org.example.newteamultimateedition.alineacion.dao.CodigoDao
 import org.example.newteamultimateedition.alineacion.mapper.AlineacionMapper
 import org.example.newteamultimateedition.alineacion.model.Alineacion
 import java.time.LocalDate
 
 class AlineacionRepositoryImpl(
-    private val dao: AlineacionDao,
+    private val alineacionDao: AlineacionDao,
+    private val codigoDao: CodigoDao
     private val mapper: AlineacionMapper
 ):AlineacioRepository {
     override fun getByDate(date: LocalDate): Alineacion? {
-        return dao.getbyFechaJuego(date)?.let { mapper.toDatabaseModel(it) }
+        val lista= alineacionDao.getByFechaJuego(date)?.let {
+            val posiciones=codigoDao.getByAlineacionId(it.id)
+            if(posiciones.isNotEmpty()){
+                mapper.toDatabaseModel(it,posiciones.map { mapper.toModel(it) })
+            } else null
+        }
+        return lista
     }
 
     override fun getAll(): List<Alineacion> {
-        return dao.getAll().map { mapper.toDatabaseModel(it) }
+
     }
 
     override fun getById(id: Long): Alineacion? {
-        return dao.getById(id)?.let { mapper.toDatabaseModel(it) }
+        val lista= alineacionDao.getById(id)?.let {
+            val posiciones=codigoDao.getByAlineacionId(it.id)
+            if(posiciones.isNotEmpty()){
+                mapper.toDatabaseModel(it,posiciones.map { mapper.toModel(it) })
+            } else null
+        }
+        return lista
     }
 
     override fun update(objeto: Alineacion, id: Long): Alineacion? {
-        return if (dao.updateById(mapper.toEntity(objeto),id)==1) objeto else null
+        return if (alineacionDao.updateById(mapper.toEntity(objeto),id)==1) objeto else null
     }
 
     override fun delete(id: Long): Alineacion? {
-        return dao.getById(id)?.let {
-            if (dao.deleteById(id)==1) mapper.toDatabaseModel(it) else null
+        return alineacionDao.getById(id)?.let {
+            if (alineacionDao.deleteById(id)==1) mapper.toDatabaseModel(it) else null
         }
     }
 
     override fun save(objeto: Alineacion): Alineacion {
-        val identificator = dao.save(mapper.toEntity(objeto))
+        val identificator = alineacionDao.save(mapper.toEntity(objeto))
         return objeto.copy(id=identificator.toLong())
     }
 }
