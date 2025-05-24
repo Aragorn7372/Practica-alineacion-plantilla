@@ -7,7 +7,7 @@ import org.example.newteamultimateedition.alineacion.model.CodigoAlineacion
 import java.util.*
 
 class AlineacionMapper {
-    fun toDatabaseModel(alineacionEntity: AlineacionEntity,list:List<CodigoAlineacion>): Alineacion {
+    fun toModel(alineacionEntity: AlineacionEntity, list:List<CodigoAlineacion>): Alineacion {
 
         return Alineacion(
             id = alineacionEntity.id,

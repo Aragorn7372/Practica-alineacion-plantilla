@@ -40,7 +40,7 @@ class AlineacionMapperTest {
  )
 @Test
  fun toDatabaseModel() {
-  val result= mapper.toDatabaseModel(alineacionEntity, listOf())
+  val result= mapper.toModel(alineacionEntity, listOf())
   assertTrue(result is Alineacion,"debe ser una alineacion")
   assertEquals(result,alineacion, "deberian ser iguales")
  }
