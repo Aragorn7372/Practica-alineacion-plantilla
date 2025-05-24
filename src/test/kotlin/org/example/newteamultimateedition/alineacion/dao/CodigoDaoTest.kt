@@ -1,8 +1,6 @@
 package org.example.newteamultimateedition.alineacion.dao
 
 import org.example.newteamultimateedition.common.database.DatabaseManager
-
-import org.example.newteamultimateedition.personal.dao.PersonaEntity
 import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
 
@@ -10,7 +8,7 @@ import org.junit.jupiter.api.Assertions.*
 class CodigoDaoTest {
     private lateinit var dao: CodigoDao
 
-    val codigoEntity= CodigoAlineacionEntity(
+    private val codigoEntity= CodigoAlineacionEntity(
         id= "ash",
         personalId = 1,
         alineacionId = 1,
@@ -36,7 +34,7 @@ class CodigoDaoTest {
         @Test
         @DisplayName("insertar una codigo")
         fun savePersona() {
-            val id = dao.save(codigoEntity)
+            dao.save(codigoEntity)
             val codigo = dao.getById("ash")
             assertNotNull(codigo, "no deberia ser nulo")
             assertEquals(codigo!!.personalId, codigoEntity.personalId, "deberian ser iguales")
@@ -45,7 +43,7 @@ class CodigoDaoTest {
         @Test
         @DisplayName("eliminar un codigo")
         fun eliminarPersona() {
-            val id = dao.save(codigoEntity)
+            dao.save(codigoEntity)
             val result = dao.deleteById("ash")
             val result2 = dao.getById("ash")
             assertNull(result2, "no deberia estar")
@@ -70,7 +68,7 @@ class CodigoDaoTest {
         @Test
         @DisplayName("actualizar correctamente")
         fun actualizarPersona() {
-            val id = dao.save(codigoEntity)
+            dao.save(codigoEntity)
             val result = dao.getById("ash")
             val result2 = dao.updateById(codigoEntity.copy(posicion = 3),"ash")
             val result3 = dao.getById("ash")
@@ -81,7 +79,7 @@ class CodigoDaoTest {
         @Test
         @DisplayName("obtener por id estando")
         fun obtenerPersona() {
-            val id=dao.save(codigoEntity)
+            dao.save(codigoEntity)
             val result=dao.getById("ash")
             assertNotNull(result,"No deberia ser nulo")
             assertEquals(result!!.id, codigoEntity.id, "deberia tener el mismo nombre")

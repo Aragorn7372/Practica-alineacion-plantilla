@@ -13,7 +13,7 @@ import java.util.UUID
 
 class AlineacionMapperTest {
   private val mapper = AlineacionMapper()
-  val alineacionEntity= AlineacionEntity(
+  private val alineacionEntity= AlineacionEntity(
    id= 1L,
    createdAt = LocalDateTime.now(),
    updatedAt = LocalDateTime.now(),
@@ -25,14 +25,14 @@ class AlineacionMapperTest {
   idPersona = 1L,
   posicion = 1
  )
- val alineacion= Alineacion(
+ private val alineacion= Alineacion(
   1L,
   personalList = listOf(),
   juegoDate =alineacionEntity.juegoDate,
   updatedAt = alineacionEntity.updatedAt,
   createdAt = alineacionEntity.createdAt
  )
- val codigoEntity= CodigoAlineacionEntity(
+ private val codigoEntity= CodigoAlineacionEntity(
   id= "7fa10f96-a0fc-4ccd-8aa5-5238a2642488",
   personalId = 1L,
   alineacionId = 1L,
