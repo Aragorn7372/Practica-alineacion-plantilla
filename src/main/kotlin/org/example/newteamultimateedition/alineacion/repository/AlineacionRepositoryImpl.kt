@@ -19,7 +19,7 @@ class AlineacionRepositoryImpl(
         val lista= alineacionDao.getByFechaJuego(date)?.let {
             val posiciones=codigoDao.getByAlineacionId(it.id)
             if(posiciones.isNotEmpty()){
-                mapper.toDatabaseModel(it,posiciones.map { mapper.toModel(it) })
+                mapper.toModel(it,posiciones.map { mapper.toModel(it) })
             } else null
         }
         return lista
@@ -32,7 +32,7 @@ class AlineacionRepositoryImpl(
         //Si no esta vacia devolvemos la lista de alineacinoes filtrada por las que estan vacias
         return alineacionesEntity.map {
             val codigoAlineaciones = codigoDao.getByAlineacionId(it.id).map { codigo -> mapper.toModel(codigo) }
-            mapper.toDatabaseModel(it, codigoAlineaciones)
+            mapper.toModel(it, codigoAlineaciones)
         }.filter { it.personalList.isNotEmpty() }
     }
 
@@ -41,7 +41,7 @@ class AlineacionRepositoryImpl(
         val lista= alineacionDao.getById(id)?.let {
             val posiciones=codigoDao.getByAlineacionId(it.id)
             if(posiciones.isNotEmpty()){
-                mapper.toDatabaseModel(it,posiciones.map { mapper.toModel(it) })
+                mapper.toModel(it,posiciones.map { mapper.toModel(it) })
             } else null
         }
         return lista
@@ -53,7 +53,7 @@ class AlineacionRepositoryImpl(
                 val newAlineacion = mapper.toEntity(objeto.copy(id = id))
                 val codigoAlineaciones = codigoDao.getByAlineacionId(it.id).map { codigo -> mapper.toModel(codigo) }
                 alineacionDao.updateById(newAlineacion, it.id)
-                return mapper.toDatabaseModel(newAlineacion, codigoAlineaciones)
+                return mapper.toModel(newAlineacion, codigoAlineaciones)
             }
         return null
     }
