@@ -16,14 +16,14 @@ class AlineacionServiceImpl(
     private val repository: AlineacionRepositoryImpl
 ): AlineacionService {
     override fun getByFecha(fecha: LocalDate): Result<Alineacion, AlineacionError> {
-       try {
-           return repository.getByDate(fecha)?.let {
-               cache.getIfPresent(it.id)?:run { cache.put(it.id, it) }
-               Ok(it)
-           }?:run { Err(AlineacionError.AlineacionNotFoundError(fecha.toString())) }
-       }catch (e: Exception) {
-           return Err(AlineacionError.AlineacionDatabaseError(e.message.toString()))
-       }
+        return try {
+            repository.getByDate(fecha)?.let {
+                cache.getIfPresent(it.id)?:run { cache.put(it.id, it) }
+                Ok(it)
+            }?:run { Err(AlineacionError.AlineacionNotFoundError(fecha.toString())) }
+        }catch (e: Exception) {
+            Err(AlineacionError.AlineacionDatabaseError(e.message.toString()))
+        }
     }
     override fun getAll(): Result<List<Alineacion>, AlineacionError> {
         return try {
