@@ -96,7 +96,7 @@ class PersonaValidationTest {
         val result = validator.validator(jugador)
 
         assertTrue(result.isErr)
-        assertEquals("Persona no válida: Nombre inválido, este campo no puede estar vacío.", result.error.messager)
+        assertEquals("Persona no válida: Nombre inválido, este campo no puede estar vacío.", result.error.message)
     }
 
     @Test
@@ -126,7 +126,7 @@ class PersonaValidationTest {
         )
         val result = validator.validator(jugador)
         assertTrue(result.isErr)
-        assertEquals("Persona no válida: Nombre inválido, el nombre es demasiado corto.", result.error.messager)
+        assertEquals("Persona no válida: Nombre inválido, el nombre es demasiado corto.", result.error.message)
     }
 
     @Test
@@ -158,7 +158,7 @@ class PersonaValidationTest {
         val result = validator.validator(jugador)
 
         assertTrue(result.isErr)
-        assertEquals("Persona no válida: Apellidos inválidos, este campo no puede estar vacío.", result.error.messager)
+        assertEquals("Persona no válida: Apellidos inválidos, este campo no puede estar vacío.", result.error.message)
     }
 
     @Test
@@ -190,7 +190,7 @@ class PersonaValidationTest {
         val result = validator.validator(jugador)
 
         assertTrue(result.isErr)
-        assertEquals("Persona no válida: Apellidos inválidos, los apellidos son demasiado cortos.", result.error.messager)
+        assertEquals("Persona no válida: Apellidos inválidos, los apellidos son demasiado cortos.", result.error.message)
     }
 
     @Test
@@ -222,7 +222,7 @@ class PersonaValidationTest {
         val result = validator.validator(jugador)
 
         assertTrue(result.isErr)
-        assertEquals("Persona no válida: Salario inválido, el salario no puede ser igual o menor a 0.", result.error.messager)
+        assertEquals("Persona no válida: Salario inválido, el salario no puede ser igual o menor a 0.", result.error.message)
     }
 
     @Test
@@ -254,7 +254,7 @@ class PersonaValidationTest {
         val result = validator.validator(jugador)
 
         assertTrue(result.isErr)
-        assertEquals("Persona no válida: País inválido, este campo no puede estar vacío.", result.error.messager)
+        assertEquals("Persona no válida: País inválido, este campo no puede estar vacío.", result.error.message)
     }
 
     @Test
@@ -286,7 +286,7 @@ class PersonaValidationTest {
         val result = validator.validator(jugador)
 
         assertTrue(result.isErr)
-        assertEquals("Persona no válida: País inválido, el país es demasiado corto.", result.error.messager)
+        assertEquals("Persona no válida: País inválido, el país es demasiado corto.", result.error.message)
     }
 
     @Test
@@ -318,7 +318,7 @@ class PersonaValidationTest {
         val result = validator.validator(jugador)
 
         assertTrue(result.isErr)
-        assertEquals("Persona no válida: Dorsal inválido, el dorsal no puede ser igual o inferior a 0.", result.error.messager)
+        assertEquals("Persona no válida: Dorsal inválido, el dorsal no puede ser igual o inferior a 0.", result.error.message)
     }
 
     @Test
@@ -350,7 +350,7 @@ class PersonaValidationTest {
         val result = validator.validator(jugador)
 
         assertTrue(result.isErr)
-        assertEquals("Persona no válida: Dorsal inválido, el dorsal no puede ser mayor a 99.", result.error.messager)
+        assertEquals("Persona no válida: Dorsal inválido, el dorsal no puede ser mayor a 99.", result.error.message)
     }
 
     @Test
@@ -382,7 +382,7 @@ class PersonaValidationTest {
         val result = validator.validator(jugador)
 
         assertTrue(result.isErr)
-        assertEquals("Persona no válida: Altura inválida, el jugador no puede ser tan bajo.", result.error.messager)
+        assertEquals("Persona no válida: Altura inválida, el jugador no puede ser tan bajo.", result.error.message)
     }
 
     @Test
@@ -414,7 +414,7 @@ class PersonaValidationTest {
         val result = validator.validator(jugador)
 
         assertTrue(result.isErr)
-        assertEquals("Persona no válida: Altura inválida, el jugador no puede ser tan alto.", result.error.messager)
+        assertEquals("Persona no válida: Altura inválida, el jugador no puede ser tan alto.", result.error.message)
     }
 
     @Test
@@ -446,7 +446,7 @@ class PersonaValidationTest {
         val result = validator.validator(jugador)
 
         assertTrue(result.isErr)
-        assertEquals("Persona no válida: Peso inválido, necesita comer más.", result.error.messager)
+        assertEquals("Persona no válida: Peso inválido, necesita comer más.", result.error.message)
     }
 
     @Test
@@ -478,7 +478,7 @@ class PersonaValidationTest {
         val result = validator.validator(jugador)
 
         assertTrue(result.isErr)
-        assertEquals("Persona no válida: Peso inválido, necesita comer menos.", result.error.messager)
+        assertEquals("Persona no válida: Peso inválido, necesita comer menos.", result.error.message)
     }
 
     @Test
@@ -510,7 +510,7 @@ class PersonaValidationTest {
         val result = validator.validator(jugador)
 
         assertTrue(result.isErr)
-        assertEquals("Persona no válida: Goles inválido, no puede tener goles negativos.", result.error.messager)
+        assertEquals("Persona no válida: Goles inválido, no puede tener goles negativos.", result.error.message)
     }
 
     @Test
@@ -542,6 +542,6 @@ class PersonaValidationTest {
         val result = validator.validator(jugador)
 
         assertTrue(result.isErr)
-        assertEquals("Persona no válida: Partidos jugados inválidos, no puede jugar partidos negativos.", result.error.messager)
+        assertEquals("Persona no válida: Partidos jugados inválidos, no puede jugar partidos negativos.", result.error.message)
     }
 }

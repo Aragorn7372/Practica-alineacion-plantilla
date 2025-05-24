@@ -1,5 +1,8 @@
 package org.example.newteamultimateedition.personal.error
-abstract class PersonasError (val messager: String){
+
+import org.example.newteamultimateedition.common.error.Errors
+
+abstract class PersonasError (messager: String):Errors(message=messager) {
     /**
     * Error que indica un problema con el almacenamiento de personas.
     *

@@ -13,7 +13,7 @@ interface CodigoDao {
     @SqlQuery("SELECT * FROM codigo")
     fun getAll(): List<CodigoAlineacionEntity>
 
-    @SqlQuery("SELECT * FROM codigo where id = :id")
+    @SqlQuery("SELECT * FROM codigo where uuid = :id")
     fun getById(@Bind("id") id: String): CodigoAlineacionEntity?
 
     @SqlQuery("SELECT * FROM codigo where id_alineacion = :alinecionId ")
@@ -29,13 +29,13 @@ interface CodigoDao {
     fun updateById(@BindBean codigo: CodigoAlineacionEntity, @Bind("identificacion") identificador:String): Int
 
 
-    @SqlUpdate("DELETE  FROM codigo WHERE id=:id")
+    @SqlUpdate("DELETE  FROM codigo WHERE uuid=:id")
     fun deleteById(@Bind("id") id: String): Int
 
     @SqlUpdate("DELETE  FROM codigo")
     fun deleteAll(): Int
 }
-fun provideCodigoonDao(jdbi: Jdbi): CodigoDao {
+fun provideCodigoDao(jdbi: Jdbi): CodigoDao {
     val logger= logging()
     logger.info { "obteniendo personas dao" }
     return jdbi.onDemand(CodigoDao::class.java)

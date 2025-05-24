@@ -36,7 +36,7 @@ class MainApp : Application(), KoinComponent {
         val service = PersonaServiceImpl()
         val p = service.save(persona)
         if(p.isOk) println(p.value)
-        else println(p.error.messager)
+        else println(p.error.message)
 
         println(LocalDateTime.now().toString())
         // creamos Koin

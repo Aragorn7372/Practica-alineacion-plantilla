@@ -10,8 +10,8 @@ import java.time.LocalDate
 
 class AlineacionValidate: Validate<Alineacion,AlineacionError> {
     override fun validator(item: Alineacion): Result<Alineacion, AlineacionError> {
-        if (item.personalList.size!=15){
-            return Err(AlineacionError.AlineacionInvalidoError("no pueden ser menos o mas de 15 personas"))
+        if (item.personalList.size!=18){
+            return Err(AlineacionError.AlineacionInvalidoError("no pueden ser menos o mas de 18 personas"))
         }
         if (item.juegoDate.isBefore(LocalDate.now())){
             return Err(AlineacionError.AlineacionInvalidoError("no puedes asignar una alineacion para una fecha anterior"))

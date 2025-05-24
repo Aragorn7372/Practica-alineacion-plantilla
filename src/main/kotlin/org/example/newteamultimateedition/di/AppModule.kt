@@ -1,6 +1,8 @@
 package org.example.newteamultimateedition.di
 
 import com.github.benmanes.caffeine.cache.Cache
+import org.example.newteamultimateedition.alineacion.dao.CodigoDao
+import org.example.newteamultimateedition.alineacion.dao.provideCodigoDao
 import org.example.newteamultimateedition.common.database.provideDatabaseManager
 import org.example.newteamultimateedition.personal.cache.darPersonasCache
 import org.example.newteamultimateedition.personal.dao.PersonaDao
@@ -34,6 +36,9 @@ val appModule = module {
     // DAO: depende de Jdbi
     singleOf(::provideUsersDao) {
         bind<UsersDao>()
+    }
+    singleOf(::provideCodigoDao) {
+        bind<CodigoDao>()
     }
 
     // Repository: depende de DAO

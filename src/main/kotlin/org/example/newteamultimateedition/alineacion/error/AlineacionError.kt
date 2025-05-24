@@ -1,9 +1,9 @@
 package org.example.newteamultimateedition.alineacion.error
 
+import org.example.newteamultimateedition.common.error.Errors
 
 
-
-abstract class AlineacionError(val mensaje: String) {
+abstract class AlineacionError(mensaje: String): Errors(mensaje) {
 
 
     /**
