@@ -2,7 +2,7 @@
 
 Gestión digital de plantilla y convocatorias del club deportivo New Team
 
-![app-icon](https://github.com/user-attachments/assets/a8527b0f-5b5c-45f6-9c88-1d0fc65f5341)
+![app-icon](src/main/resources/org/example/newteamultimateedition/media/logo.png)
 
 
 

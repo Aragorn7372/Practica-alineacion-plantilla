@@ -11,19 +11,19 @@ import org.lighthousegames.logging.logging
 
 interface CodigoDao {
     @SqlQuery("SELECT * FROM codigo")
-    fun getAll(): List<CodigoEntity>
+    fun getAll(): List<CodigoAlineacionEntity>
 
     @SqlQuery("SELECT * FROM codigo where id = :id")
-    fun getById(@Bind("id") id: String): CodigoEntity?
+    fun getById(@Bind("id") id: String): CodigoAlineacionEntity?
 
     @SqlQuery("SELECT * FROM codigo where id_alineacion = :alinecionId ")
-    fun getByAlineacionId(@Bind("alinecionId") alinecionId: Long): List<CodigoEntity>
+    fun getByAlineacionId(@Bind("alinecionId") alinecionId: Long): List<CodigoAlineacionEntity>
 
     @SqlUpdate("INSERT INTO codigo (uuid,id_persona,id_alineacion,posicion) VALUES (:id, :personalId,:alineacionId,:posicion) ")
-    fun save(@BindBean codigo: CodigoEntity): Int
+    fun save(@BindBean codigo: CodigoAlineacionEntity): Int
 
     @SqlUpdate("UPDATE codigo SET posicion=:posicion WHERE id = :identificacion")
-    fun updateById(@BindBean codigo: CodigoEntity, @Bind("identificacion") identificador:String): Int
+    fun updateById(@BindBean codigo: CodigoAlineacionEntity, @Bind("identificacion") identificador:String): Int
 
 
     @SqlUpdate("DELETE  FROM codigo WHERE id=:id")

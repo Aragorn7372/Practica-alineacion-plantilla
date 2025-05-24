@@ -1,13 +1,13 @@
 package org.example.newteamultimateedition.alineacion.mapper
 
 import org.example.newteamultimateedition.alineacion.dao.AlineacionEntity
-import org.example.newteamultimateedition.alineacion.dao.CodigoEntity
+import org.example.newteamultimateedition.alineacion.dao.CodigoAlineacionEntity
 import org.example.newteamultimateedition.alineacion.model.Alineacion
-import org.example.newteamultimateedition.alineacion.model.Codigo
+import org.example.newteamultimateedition.alineacion.model.CodigoAlineacion
 import java.util.*
 
 class AlineacionMapper {
-    fun toDatabaseModel(alineacionEntity: AlineacionEntity,list:List<Codigo>): Alineacion {
+    fun toDatabaseModel(alineacionEntity: AlineacionEntity,list:List<CodigoAlineacion>): Alineacion {
 
         return Alineacion(
             id = alineacionEntity.id,
@@ -26,16 +26,16 @@ class AlineacionMapper {
             juegoDate = model.juegoDate,
         )
     }
-    fun toEntity(model: Codigo): CodigoEntity {
-        return CodigoEntity(
+    fun toEntity(model: CodigoAlineacion): CodigoAlineacionEntity {
+        return CodigoAlineacionEntity(
             id = model.id.toString(),
             personalId = model.idPersona,
             alineacionId = model.idAlineacion,
             posicion = model.posicion
         )
     }
-    fun toModel(model: CodigoEntity): Codigo {
-        return Codigo(
+    fun toModel(model: CodigoAlineacionEntity): CodigoAlineacion {
+        return CodigoAlineacion(
             id = UUID.fromString(model.id),
             idPersona = model.personalId,
             idAlineacion = model.alineacionId,

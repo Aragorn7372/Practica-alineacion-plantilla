@@ -2,7 +2,7 @@ package org.example.newteamultimateedition.alineacion.model
 
 import java.util.UUID
 
-data class Codigo(
+data class CodigoAlineacion(
     val id: UUID,
     val idAlineacion: Long,
     val idPersona: Long,
