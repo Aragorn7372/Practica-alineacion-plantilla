@@ -4,15 +4,18 @@ import org.example.newteamultimateedition.alineacion.dao.AlineacionDao
 import org.example.newteamultimateedition.alineacion.dao.CodigoDao
 import org.example.newteamultimateedition.alineacion.mapper.AlineacionMapper
 import org.example.newteamultimateedition.alineacion.model.Alineacion
+import org.lighthousegames.logging.logging
 import java.time.LocalDate
-import java.time.LocalDateTime
+
 
 class AlineacionRepositoryImpl(
     private val alineacionDao: AlineacionDao,
     private val codigoDao: CodigoDao,
     private val mapper: AlineacionMapper
 ):AlineacioRepository {
+    private val logger = logging()
     override fun getByDate(date: LocalDate): Alineacion? {
+        logger.debug { "getByDate: $date" }
         val lista= alineacionDao.getByFechaJuego(date)?.let {
             val posiciones=codigoDao.getByAlineacionId(it.id)
             if(posiciones.isNotEmpty()){
@@ -23,7 +26,7 @@ class AlineacionRepositoryImpl(
     }
 
     override fun getAll(): List<Alineacion> {
-        // logger.debug { "Obteniendo todas las alineaciones ... " }
+        logger.debug { "Obteniendo todas las alineaciones ... " }
         val alineacionesEntity = alineacionDao.getAll()
         if ( alineacionesEntity.isEmpty() ) return listOf()
         //Si no esta vacia devolvemos la lista de alineacinoes filtrada por las que estan vacias
@@ -34,6 +37,7 @@ class AlineacionRepositoryImpl(
     }
 
     override fun getById(id: Long): Alineacion? {
+        logger.debug { "getById: $id" }
         val lista= alineacionDao.getById(id)?.let {
             val posiciones=codigoDao.getByAlineacionId(it.id)
             if(posiciones.isNotEmpty()){
@@ -44,6 +48,7 @@ class AlineacionRepositoryImpl(
     }
 
     override fun update(objeto: Alineacion, id: Long): Alineacion? {
+        logger.debug { "update: $objeto" }
             alineacionDao.getById(id)?.let{
                 val newAlineacion = mapper.toEntity(objeto.copy(id = id))
                 val codigoAlineaciones = codigoDao.getByAlineacionId(it.id).map { codigo -> mapper.toModel(codigo) }
@@ -54,6 +59,7 @@ class AlineacionRepositoryImpl(
     }
 
     override fun delete(id: Long): Alineacion? {
+        logger.debug { "delete: $id" }
         return getById(id)?.let {
             if (alineacionDao.deleteById(it.id)==1) {
                 if(codigoDao.deleteByAlinecionId(it.id)==18) {
@@ -64,6 +70,7 @@ class AlineacionRepositoryImpl(
     }
 
     override fun save(objeto: Alineacion): Alineacion {
+        logger.debug { "save: $objeto" }
         val identificator= alineacionDao.save(mapper.toEntity(objeto)).toLong()
         val alineacion=objeto.copy(id=identificator)
         alineacion.personalList.map { it.copy(idAlineacion = alineacion.id) }
