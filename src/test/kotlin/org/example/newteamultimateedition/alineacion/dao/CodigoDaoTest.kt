@@ -72,9 +72,9 @@ class CodigoDaoTest {
         fun actualizarPersona() {
             val id = dao.save(codigoEntity)
             val result = dao.getById("ash")
-            val result2 = dao.updateById(codigoEntity.copy(personalId = 3),"ash")
+            val result2 = dao.updateById(codigoEntity.copy(posicion = 3),"ash")
             val result3 = dao.getById("ash")
-            assertNotEquals(result!!.personalId, result3!!.personalId,"No deberian ser iguales")
+            assertNotEquals(result!!.posicion, result3!!.posicion,"No deberian ser iguales")
             assertEquals(result.id, result3.id,"deberian ser iguales")
             assertTrue(result2==1)
         }
