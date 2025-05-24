@@ -1,5 +1,6 @@
 package org.example.newteamultimateedition.personal.storage
 
+import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import org.example.newteamultimateedition.personal.error.PersonasError
@@ -68,6 +69,8 @@ class EquipoStorageImpl(
             }
             file.name.endsWith(".bin") -> {
                 storageBIN.fileWrite(equipo,file)
+            } else -> {
+                return Err(PersonasError.PersonasStorageError("Extensión inválida."))
             }
         }
         return Ok(Unit)
