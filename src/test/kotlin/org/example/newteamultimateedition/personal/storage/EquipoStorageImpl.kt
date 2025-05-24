@@ -1,9 +1,13 @@
 package org.example.newteamultimateedition.personal.storage
 
 import com.github.michaelbull.result.Ok
+import org.example.newteamultimateedition.personal.error.PersonasError
 import org.example.newteamultimateedition.personal.models.*
+import org.junit.jupiter.api.Assertions.assertAll
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.kotlin.mock
@@ -62,171 +66,196 @@ class EquipoStorageImplTest {
         equipoStorageImpl = EquipoStorageImpl(storageCSV, storageXML, storageJSON, storageBIN)
     }
 
-    @Test
-    @DisplayName("Leer de CSV exitoso")
-    fun readFromCSV() {
-        val csvFile = File( "resources", "test.csv")
-        val jsonFile = File ("resources", "test.json")
-        val xmlFile = File( "resources", "test.xml")
-        val binFile = File( "resources", "test.bin")
+    @Nested
+    @DisplayName("Tests correctos")
+    inner class TestsCorrectos {
+        @Test
+        @DisplayName("Leer de CSV exitoso")
+        fun readFromCSV() {
+            val csvFile = File("resources", "test.csv")
+            val jsonFile = File("resources", "test.json")
+            val xmlFile = File("resources", "test.xml")
+            val binFile = File("resources", "test.bin")
 
-        whenever(storageCSV.fileRead(csvFile)).thenReturn(Ok(list))
-        whenever(storageJSON.fileRead(jsonFile)).thenReturn(Ok(list))
-        whenever(storageXML.fileRead(xmlFile)).thenReturn(Ok(list))
-        whenever(storageBIN.fileRead(binFile)).thenReturn(Ok(list))
+            whenever(storageCSV.fileRead(csvFile)).thenReturn(Ok(list))
+            whenever(storageJSON.fileRead(jsonFile)).thenReturn(Ok(list))
+            whenever(storageXML.fileRead(xmlFile)).thenReturn(Ok(list))
+            whenever(storageBIN.fileRead(binFile)).thenReturn(Ok(list))
 
-        equipoStorageImpl.fileRead(csvFile)
+            equipoStorageImpl.fileRead(csvFile)
 
-        verify(storageCSV, times(1)).fileRead(csvFile)
-        verify(storageJSON, times(0)).fileRead(jsonFile)
-        verify(storageXML, times(0)).fileRead(xmlFile)
-        verify(storageBIN, times(0)).fileRead(binFile)
+            verify(storageCSV, times(1)).fileRead(csvFile)
+            verify(storageJSON, times(0)).fileRead(jsonFile)
+            verify(storageXML, times(0)).fileRead(xmlFile)
+            verify(storageBIN, times(0)).fileRead(binFile)
+        }
+
+        @Test
+        @DisplayName("Escribir en CSV exitoso")
+        fun writeOnCSV() {
+            val csvFile = File("resources", "test.csv")
+            val jsonFile = File("resources", "test.json")
+            val xmlFile = File("resources", "test.xml")
+            val binFile = File("resources", "test.bin")
+
+            whenever(storageCSV.fileRead(csvFile)).thenReturn(Ok(list))
+            whenever(storageJSON.fileRead(jsonFile)).thenReturn(Ok(list))
+            whenever(storageXML.fileRead(xmlFile)).thenReturn(Ok(list))
+            whenever(storageBIN.fileRead(binFile)).thenReturn(Ok(list))
+
+            equipoStorageImpl.fileWrite(list, csvFile)
+
+            verify(storageCSV, times(1)).fileWrite(list, csvFile)
+            verify(storageJSON, times(0)).fileWrite(list, jsonFile)
+            verify(storageXML, times(0)).fileWrite(list, xmlFile)
+            verify(storageBIN, times(0)).fileWrite(list, binFile)
+        }
+
+        @Test
+        @DisplayName("Leer de JSON exitoso")
+        fun readFromJSON() {
+            val csvFile = File("resources", "test.csv")
+            val jsonFile = File("resources", "test.json")
+            val xmlFile = File("resources", "test.xml")
+            val binFile = File("resources", "test.bin")
+
+            whenever(storageCSV.fileRead(csvFile)).thenReturn(Ok(list))
+            whenever(storageJSON.fileRead(jsonFile)).thenReturn(Ok(list))
+            whenever(storageXML.fileRead(xmlFile)).thenReturn(Ok(list))
+            whenever(storageBIN.fileRead(binFile)).thenReturn(Ok(list))
+
+            equipoStorageImpl.fileRead(jsonFile)
+
+            verify(storageCSV, times(0)).fileRead(csvFile)
+            verify(storageJSON, times(1)).fileRead(jsonFile)
+            verify(storageXML, times(0)).fileRead(xmlFile)
+            verify(storageBIN, times(0)).fileRead(binFile)
+        }
+
+        @Test
+        @DisplayName("Escribir en JSON exitoso")
+        fun writeOnJSON() {
+            val csvFile = File("resources", "test.csv")
+            val jsonFile = File("resources", "test.json")
+            val xmlFile = File("resources", "test.xml")
+            val binFile = File("resources", "test.bin")
+
+            whenever(storageCSV.fileRead(csvFile)).thenReturn(Ok(list))
+            whenever(storageJSON.fileRead(jsonFile)).thenReturn(Ok(list))
+            whenever(storageXML.fileRead(xmlFile)).thenReturn(Ok(list))
+            whenever(storageBIN.fileRead(binFile)).thenReturn(Ok(list))
+
+            equipoStorageImpl.fileWrite(list, jsonFile)
+
+            verify(storageCSV, times(0)).fileWrite(list, csvFile)
+            verify(storageJSON, times(1)).fileWrite(list, jsonFile)
+            verify(storageXML, times(0)).fileWrite(list, xmlFile)
+            verify(storageBIN, times(0)).fileWrite(list, binFile)
+        }
+
+        @Test
+        @DisplayName("Leer de XML exitoso")
+        fun readFromXML() {
+            val csvFile = File("resources", "test.csv")
+            val jsonFile = File("resources", "test.json")
+            val xmlFile = File("resources", "test.xml")
+            val binFile = File("resources", "test.bin")
+
+            whenever(storageCSV.fileRead(csvFile)).thenReturn(Ok(list))
+            whenever(storageJSON.fileRead(jsonFile)).thenReturn(Ok(list))
+            whenever(storageXML.fileRead(xmlFile)).thenReturn(Ok(list))
+            whenever(storageBIN.fileRead(binFile)).thenReturn(Ok(list))
+
+            equipoStorageImpl.fileRead(xmlFile)
+
+            verify(storageCSV, times(0)).fileRead(csvFile)
+            verify(storageJSON, times(0)).fileRead(jsonFile)
+            verify(storageXML, times(1)).fileRead(xmlFile)
+            verify(storageBIN, times(0)).fileRead(binFile)
+        }
+
+        @Test
+        @DisplayName("Escribir en XML exitoso")
+        fun writeOnXML() {
+            val csvFile = File("resources", "test.csv")
+            val jsonFile = File("resources", "test.json")
+            val xmlFile = File("resources", "test.xml")
+            val binFile = File("resources", "test.bin")
+
+            whenever(storageCSV.fileRead(csvFile)).thenReturn(Ok(list))
+            whenever(storageJSON.fileRead(jsonFile)).thenReturn(Ok(list))
+            whenever(storageXML.fileRead(xmlFile)).thenReturn(Ok(list))
+            whenever(storageBIN.fileRead(binFile)).thenReturn(Ok(list))
+
+            equipoStorageImpl.fileWrite(list, xmlFile)
+
+            verify(storageCSV, times(0)).fileWrite(list, csvFile)
+            verify(storageJSON, times(0)).fileWrite(list, jsonFile)
+            verify(storageXML, times(1)).fileWrite(list, xmlFile)
+            verify(storageBIN, times(0)).fileWrite(list, binFile)
+        }
+
+        @Test
+        @DisplayName("Leer de BIN exitoso")
+        fun readFromBIN() {
+            val csvFile = File("resources", "test.csv")
+            val jsonFile = File("resources", "test.json")
+            val xmlFile = File("resources", "test.xml")
+            val binFile = File("resources", "test.bin")
+
+            whenever(storageCSV.fileRead(csvFile)).thenReturn(Ok(list))
+            whenever(storageJSON.fileRead(jsonFile)).thenReturn(Ok(list))
+            whenever(storageXML.fileRead(xmlFile)).thenReturn(Ok(list))
+            whenever(storageBIN.fileRead(binFile)).thenReturn(Ok(list))
+
+            equipoStorageImpl.fileRead(binFile)
+
+            verify(storageCSV, times(0)).fileRead(csvFile)
+            verify(storageJSON, times(0)).fileRead(jsonFile)
+            verify(storageXML, times(0)).fileRead(xmlFile)
+            verify(storageBIN, times(1)).fileRead(binFile)
+        }
+
+        @Test
+        @DisplayName("Escribir en BIN exitoso")
+        fun writeOnBIN() {
+            val csvFile = File("resources", "test.csv")
+            val jsonFile = File("resources", "test.json")
+            val xmlFile = File("resources", "test.xml")
+            val binFile = File("resources", "test.bin")
+
+            whenever(storageCSV.fileRead(csvFile)).thenReturn(Ok(list))
+            whenever(storageJSON.fileRead(jsonFile)).thenReturn(Ok(list))
+            whenever(storageXML.fileRead(xmlFile)).thenReturn(Ok(list))
+            whenever(storageBIN.fileRead(binFile)).thenReturn(Ok(list))
+
+            equipoStorageImpl.fileWrite(list, binFile)
+
+            verify(storageCSV, times(0)).fileWrite(list, csvFile)
+            verify(storageJSON, times(0)).fileWrite(list, jsonFile)
+            verify(storageXML, times(0)).fileWrite(list, xmlFile)
+            verify(storageBIN, times(1)).fileWrite(list, binFile)
+        }
     }
 
-    @Test
-    @DisplayName("Escribir en CSV exitoso")
-    fun writeOnCSV() {
-        val csvFile = File( "resources", "test.csv")
-        val jsonFile = File ("resources", "test.json")
-        val xmlFile = File( "resources", "test.xml")
-        val binFile = File( "resources", "test.bin")
+    @Nested
+    @DisplayName("Tests incorrectos")
+    inner class TestsIncorrectos {
+        @Test
+        @DisplayName("Extensión de archivo no soportada")
+        fun invalidFile(){
+            val pngFile = File("resources", "test.png")
+            val result = equipoStorageImpl.fileWrite(list, pngFile)
 
-        whenever(storageCSV.fileRead(csvFile)).thenReturn(Ok(list))
-        whenever(storageJSON.fileRead(jsonFile)).thenReturn(Ok(list))
-        whenever(storageXML.fileRead(xmlFile)).thenReturn(Ok(list))
-        whenever(storageBIN.fileRead(binFile)).thenReturn(Ok(list))
+            assertAll(
+                {assertTrue(result.isErr)},
+                {assertTrue(result.error is PersonasError.PersonasStorageError)}
+            )
+            verify(storageCSV, times(0)).fileWrite(list, pngFile)
+            verify(storageJSON, times(0)).fileWrite(list, pngFile)
+            verify(storageXML, times(0)).fileWrite(list, pngFile)
+            verify(storageBIN, times(0)).fileWrite(list, pngFile)
+        }
 
-        equipoStorageImpl.fileWrite(list, csvFile)
-
-        verify(storageCSV, times(1)).fileWrite(list, csvFile)
-        verify(storageJSON, times(0)).fileWrite(list, jsonFile)
-        verify(storageXML, times(0)).fileWrite(list, xmlFile)
-        verify(storageBIN, times(0)).fileWrite(list, binFile)
-    }
-
-    @Test
-    @DisplayName("Leer de JSON exitoso")
-    fun readFromJSON() {
-        val csvFile = File( "resources", "test.csv")
-        val jsonFile = File ("resources", "test.json")
-        val xmlFile = File( "resources", "test.xml")
-        val binFile = File( "resources", "test.bin")
-
-        whenever(storageCSV.fileRead(csvFile)).thenReturn(Ok(list))
-        whenever(storageJSON.fileRead(jsonFile)).thenReturn(Ok(list))
-        whenever(storageXML.fileRead(xmlFile)).thenReturn(Ok(list))
-        whenever(storageBIN.fileRead(binFile)).thenReturn(Ok(list))
-
-        equipoStorageImpl.fileRead(jsonFile)
-
-        verify(storageCSV, times(0)).fileRead(csvFile)
-        verify(storageJSON, times(1)).fileRead(jsonFile)
-        verify(storageXML, times(0)).fileRead(xmlFile)
-        verify(storageBIN, times(0)).fileRead(binFile)
-    }
-
-    @Test
-    @DisplayName("Escribir en JSON exitoso")
-    fun writeOnJSON() {
-        val csvFile = File( "resources", "test.csv")
-        val jsonFile = File ("resources", "test.json")
-        val xmlFile = File( "resources", "test.xml")
-        val binFile = File( "resources", "test.bin")
-
-        whenever(storageCSV.fileRead(csvFile)).thenReturn(Ok(list))
-        whenever(storageJSON.fileRead(jsonFile)).thenReturn(Ok(list))
-        whenever(storageXML.fileRead(xmlFile)).thenReturn(Ok(list))
-        whenever(storageBIN.fileRead(binFile)).thenReturn(Ok(list))
-
-        equipoStorageImpl.fileWrite(list, jsonFile)
-
-        verify(storageCSV, times(0)).fileWrite(list, csvFile)
-        verify(storageJSON, times(1)).fileWrite(list, jsonFile)
-        verify(storageXML, times(0)).fileWrite(list, xmlFile)
-        verify(storageBIN, times(0)).fileWrite(list, binFile)
-    }
-
-    @Test
-    @DisplayName("Leer de XML exitoso")
-    fun readFromXML() {
-        val csvFile = File( "resources", "test.csv")
-        val jsonFile = File ("resources", "test.json")
-        val xmlFile = File( "resources", "test.xml")
-        val binFile = File( "resources", "test.bin")
-
-        whenever(storageCSV.fileRead(csvFile)).thenReturn(Ok(list))
-        whenever(storageJSON.fileRead(jsonFile)).thenReturn(Ok(list))
-        whenever(storageXML.fileRead(xmlFile)).thenReturn(Ok(list))
-        whenever(storageBIN.fileRead(binFile)).thenReturn(Ok(list))
-
-        equipoStorageImpl.fileRead(xmlFile)
-
-        verify(storageCSV, times(0)).fileRead(csvFile)
-        verify(storageJSON, times(0)).fileRead(jsonFile)
-        verify(storageXML, times(1)).fileRead(xmlFile)
-        verify(storageBIN, times(0)).fileRead(binFile)
-    }
-
-    @Test
-    @DisplayName("Escribir en XML exitoso")
-    fun writeOnXML() {
-        val csvFile = File( "resources", "test.csv")
-        val jsonFile = File ("resources", "test.json")
-        val xmlFile = File( "resources", "test.xml")
-        val binFile = File( "resources", "test.bin")
-
-        whenever(storageCSV.fileRead(csvFile)).thenReturn(Ok(list))
-        whenever(storageJSON.fileRead(jsonFile)).thenReturn(Ok(list))
-        whenever(storageXML.fileRead(xmlFile)).thenReturn(Ok(list))
-        whenever(storageBIN.fileRead(binFile)).thenReturn(Ok(list))
-
-        equipoStorageImpl.fileWrite(list, xmlFile)
-
-        verify(storageCSV, times(0)).fileWrite(list, csvFile)
-        verify(storageJSON, times(0)).fileWrite(list, jsonFile)
-        verify(storageXML, times(1)).fileWrite(list, xmlFile)
-        verify(storageBIN, times(0)).fileWrite(list, binFile)
-    }
-
-    @Test
-    @DisplayName("Leer de BIN exitoso")
-    fun readFromBIN() {
-        val csvFile = File( "resources", "test.csv")
-        val jsonFile = File ("resources", "test.json")
-        val xmlFile = File( "resources", "test.xml")
-        val binFile = File( "resources", "test.bin")
-
-        whenever(storageCSV.fileRead(csvFile)).thenReturn(Ok(list))
-        whenever(storageJSON.fileRead(jsonFile)).thenReturn(Ok(list))
-        whenever(storageXML.fileRead(xmlFile)).thenReturn(Ok(list))
-        whenever(storageBIN.fileRead(binFile)).thenReturn(Ok(list))
-
-        equipoStorageImpl.fileRead(binFile)
-
-        verify(storageCSV, times(0)).fileRead(csvFile)
-        verify(storageJSON, times(0)).fileRead(jsonFile)
-        verify(storageXML, times(0)).fileRead(xmlFile)
-        verify(storageBIN, times(1)).fileRead(binFile)
-    }
-
-    @Test
-    @DisplayName("Escribir en BIN exitoso")
-    fun writeOnBIN() {
-        val csvFile = File( "resources", "test.csv")
-        val jsonFile = File ("resources", "test.json")
-        val xmlFile = File( "resources", "test.xml")
-        val binFile = File( "resources", "test.bin")
-
-        whenever(storageCSV.fileRead(csvFile)).thenReturn(Ok(list))
-        whenever(storageJSON.fileRead(jsonFile)).thenReturn(Ok(list))
-        whenever(storageXML.fileRead(xmlFile)).thenReturn(Ok(list))
-        whenever(storageBIN.fileRead(binFile)).thenReturn(Ok(list))
-
-        equipoStorageImpl.fileWrite(list, binFile)
-
-        verify(storageCSV, times(0)).fileWrite(list, csvFile)
-        verify(storageJSON, times(0)).fileWrite(list, jsonFile)
-        verify(storageXML, times(0)).fileWrite(list, xmlFile)
-        verify(storageBIN, times(1)).fileWrite(list, binFile)
     }
 }
