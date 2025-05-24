@@ -19,6 +19,9 @@ interface CodigoDao {
     @SqlQuery("SELECT * FROM codigo where id_alineacion = :alinecionId ")
     fun getByAlineacionId(@Bind("alinecionId") alinecionId: Long): List<CodigoAlineacionEntity>
 
+    @SqlUpdate("DELETE FROM codigo WHERE id = :alinecionId")
+    fun deleteByAlinecionId(@Bind("alinecionId") alinecionId: Long):Int
+
     @SqlUpdate("INSERT INTO codigo (uuid,id_persona,id_alineacion,posicion) VALUES (:id, :personalId,:alineacionId,:posicion) ")
     fun save(@BindBean codigo: CodigoAlineacionEntity): Int
 
@@ -27,7 +30,7 @@ interface CodigoDao {
 
 
     @SqlUpdate("DELETE  FROM codigo WHERE id=:id")
-    fun deleteById(@Bind("id") id: Long): Int
+    fun deleteById(@Bind("id") id: String): Int
 
     @SqlUpdate("DELETE  FROM codigo")
     fun deleteAll(): Int

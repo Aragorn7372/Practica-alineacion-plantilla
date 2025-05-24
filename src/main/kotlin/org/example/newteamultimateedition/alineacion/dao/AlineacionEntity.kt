@@ -8,4 +8,5 @@ data class AlineacionEntity(
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime,
     val juegoDate: LocalDate
-)
+) {
+}
