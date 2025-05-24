@@ -51,7 +51,11 @@ class AlineacionServiceImpl(
             val list= lista.map { personalService.getByID(it.idPersona) }
             return if(list.count { it.isOk } == lista.size){
                 Ok(list.map { it.value })
-            }else Err(PersonasError.PersonaDatabaseError(list.map { it.error }.toString()))
+            }else {
+                Err(PersonasError.PersonaDatabaseError(list.filter { it.isErr }.map {
+                    it.error.message
+                }.joinToString(",")))
+            }
         }catch (e: Exception) {
             return Err(PersonasError.PersonaDatabaseError(e.message.toString()))
         }
@@ -64,7 +68,11 @@ class AlineacionServiceImpl(
                 val lista=alineacion.personalList.map { personalService.getByID(it.idPersona) }
                 return if (lista.count { it.isOk } == lista.size){
                     Ok(lista.map { it.value })
-                }else Err(PersonasError.PersonaDatabaseError(lista.map { it.error }.toString()))
+                }else {
+                        Err(PersonasError.PersonaDatabaseError(lista.filter { it.isErr }.map {
+                        it.error.message
+                    }.joinToString(",")))
+                }
             }
             return Err(alineacion.error)
         }catch (e:Exception){
