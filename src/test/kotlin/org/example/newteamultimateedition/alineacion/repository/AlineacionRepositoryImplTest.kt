@@ -159,6 +159,72 @@ class AlineacionRepositoryImplTest {
    verify(mapper, times(1)).toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))
    verify(mapper, times(1)).toModel(alineacionEntity2, listOf(codigoModel3))
   }
+
+  @Test
+  @DisplayName("Buscar por id")
+  fun getByIdOk(){
+   whenever(alineacionDao.getById(alineacionModel1.id)).thenReturn(alineacionEntity1)
+   whenever(codigoDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
+   whenever(mapper.toModel(codigoEntity1)).thenReturn(codigoModel1)
+   whenever(mapper.toModel(codigoEntity2)).thenReturn(codigoModel2)
+   whenever(mapper.toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))).thenReturn(alineacionModel1)
+
+   val expected = alineacionModel1
+   val actual = repository.getById(alineacionEntity1.id)
+
+   assertEquals(expected, actual)
+
+   verify(alineacionDao, times(1)).getById(alineacionModel1.id)
+   verify(codigoDao, times(1)).getByAlineacionId(alineacionEntity1.id)
+   verify(mapper, times(1)).toModel(codigoEntity1)
+   verify(mapper, times(1)).toModel(codigoEntity2)
+   verify(mapper, times(1)).toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))
+  }
+
+  @Test
+  @DisplayName("Buscar por fecha")
+  fun getByDateOk(){
+   whenever(alineacionDao.getByFechaJuego(alineacionModel1.juegoDate)).thenReturn(alineacionEntity1)
+   whenever(codigoDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
+   whenever(mapper.toModel(codigoEntity1)).thenReturn(codigoModel1)
+   whenever(mapper.toModel(codigoEntity2)).thenReturn(codigoModel2)
+   whenever(mapper.toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))).thenReturn(alineacionModel1)
+
+   val expected = alineacionModel1
+   val actual = repository.getByDate(alineacionModel1.juegoDate)
+
+   assertEquals(expected, actual)
+
+   verify(alineacionDao, times(1)).getByFechaJuego(alineacionModel1.juegoDate)
+   verify(codigoDao, times(1)).getByAlineacionId(alineacionEntity1.id)
+   verify(mapper, times(1)).toModel(codigoEntity1)
+   verify(mapper, times(1)).toModel(codigoEntity2)
+   verify(mapper, times(1)).toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))
+  }
+
+  @Test
+  @DisplayName("Borrar por id")
+  fun deleteByIdOk(){
+   //Funciones que lleva dentro getById()
+   whenever(alineacionDao.getById(alineacionModel1.id)).thenReturn(alineacionEntity1)
+   whenever(codigoDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
+   whenever(mapper.toModel(codigoEntity1)).thenReturn(codigoModel1)
+   whenever(mapper.toModel(codigoEntity2)).thenReturn(codigoModel2)
+   whenever(mapper.toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))).thenReturn(alineacionModel1)
+
+   //Funciones propias de delete()
+   whenever(alineacionDao.deleteById(alineacionModel1.id)).thenReturn(1)
+   whenever(codigoDao.deleteByAlinecionId(alineacionModel1.id)).thenReturn(18)
+
+   val expected = alineacionModel1
+   val actual = repository.delete(alineacionModel1.id)
+
+   assertEquals(expected, actual)
+
+   verify(alineacionDao, times(1)).deleteById(alineacionModel1.id)
+   verify(codigoDao, times(1)).deleteByAlinecionId(alineacionModel1.id)
+  }
+
   @Test
   @DisplayName("update good alineacion")
   fun updateGoodAlineacion() {
@@ -244,6 +310,136 @@ class AlineacionRepositoryImplTest {
    verify(mapper, times(0)).toModel(alineacionEntity2, listOf(codigoModel3))
 
   }
+
+  @Test
+  @DisplayName("Buscar por id (no existe)")
+  fun getByIdNotExists(){
+   whenever(alineacionDao.getById(alineacionModel1.id)).thenReturn(null)
+
+   val expected = null
+   val actual = repository.getById(alineacionModel1.id)
+
+   assertEquals(expected, actual)
+
+   verify(alineacionDao, times(1)).getById(alineacionModel1.id)
+   verify(codigoDao, times(0)).getByAlineacionId(alineacionEntity1.id)
+   verify(mapper, times(0)).toModel(codigoEntity1)
+   verify(mapper, times(0)).toModel(codigoEntity2)
+   verify(mapper, times(0)).toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))
+
+  }
+
+  @Test
+  @DisplayName("Buscar por id (lista de códigos de alineacion vacía)")
+  fun getByIdEmptyListOfCodes(){
+   whenever(alineacionDao.getById(alineacionModelEmptyPersonalList.id)).thenReturn(alineacionEntityEmptyPersonalList)
+   whenever(codigoDao.getByAlineacionId(alineacionEntityEmptyPersonalList.id)).thenReturn(emptyListCodigosAlineacionEntity)
+
+   val expected = null
+   val actual = repository.getById(alineacionModelEmptyPersonalList.id)
+
+   assertEquals(expected, actual)
+
+   verify(alineacionDao, times(1)).getById(alineacionModelEmptyPersonalList.id)
+   verify(codigoDao, times(1)).getByAlineacionId(alineacionEntityEmptyPersonalList.id)
+   verify(mapper, times(0)).toModel(alineacionEntityEmptyPersonalList, emptyListCodigosAlineacionModel)
+
+  }
+
+  @Test
+  @DisplayName("Borrar por id (DAO devuelve 0 líneas borradas)")
+  fun deleteByIdDAOFailure(){
+   //Funciones que lleva dentro getById()
+   whenever(alineacionDao.getById(alineacionModel1.id)).thenReturn(alineacionEntity1)
+   whenever(codigoDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
+   whenever(mapper.toModel(codigoEntity1)).thenReturn(codigoModel1)
+   whenever(mapper.toModel(codigoEntity2)).thenReturn(codigoModel2)
+   whenever(mapper.toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))).thenReturn(alineacionModel1)
+
+   //Funciones propias de delete()
+   whenever(alineacionDao.deleteById(alineacionModel1.id)).thenReturn(0)
+
+   val expected = null
+   val actual = repository.delete(alineacionModel1.id)
+
+   assertEquals(expected, actual)
+
+   verify(alineacionDao, times(1)).deleteById(alineacionModel1.id)
+   verify(codigoDao, times(0)).deleteByAlinecionId(alineacionModel1.id)
+  }
+
+  @Test
+  @DisplayName("Borrar por id (nº incorrecto de códigos de alineación)")
+  fun deleteByIdNotEnoughCodigosAlineacion(){
+   //Funciones que lleva dentro getById()
+   whenever(alineacionDao.getById(alineacionModel1.id)).thenReturn(alineacionEntity1)
+   whenever(codigoDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
+   whenever(mapper.toModel(codigoEntity1)).thenReturn(codigoModel1)
+   whenever(mapper.toModel(codigoEntity2)).thenReturn(codigoModel2)
+   whenever(mapper.toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))).thenReturn(alineacionModel1)
+
+   //Funciones propias de delete()
+   whenever(alineacionDao.deleteById(alineacionModel1.id)).thenReturn(1)
+   whenever(codigoDao.deleteByAlinecionId(alineacionModel1.id)).thenReturn(9)
+
+   val expected = null
+   val actual = repository.delete(alineacionModel1.id)
+
+   assertEquals(expected, actual)
+
+   verify(alineacionDao, times(1)).deleteById(alineacionModel1.id)
+   verify(codigoDao, times(1)).deleteByAlinecionId(alineacionModel1.id)
+  }
+
+  @Test
+  @DisplayName("Borrar por id (no se encuentra en el repositorio)")
+  fun deleteByIdNotFound(){
+   //Funciones que lleva dentro getById()
+   whenever(alineacionDao.getById(alineacionModel1.id)).thenReturn(null)
+
+   val expected = null
+   val actual = repository.delete(alineacionModel1.id)
+
+   assertEquals(expected, actual)
+
+   verify(alineacionDao, times(0)).deleteById(alineacionModel1.id)
+   verify(codigoDao, times(0)).deleteByAlinecionId(alineacionModel1.id)
+  }
+
+  @Test
+  @DisplayName("Buscar por fecha (no existe)")
+  fun getByDateNotExists(){
+   whenever(alineacionDao.getByFechaJuego(alineacionModel1.juegoDate)).thenReturn(null)
+
+   val expected = null
+   val actual = repository.getByDate(alineacionModel1.juegoDate)
+
+   assertEquals(expected, actual)
+
+   verify(alineacionDao, times(1)).getByFechaJuego(alineacionModel1.juegoDate)
+   verify(codigoDao, times(0)).getByAlineacionId(alineacionEntity1.id)
+   verify(mapper, times(0)).toModel(codigoEntity1)
+   verify(mapper, times(0)).toModel(codigoEntity2)
+   verify(mapper, times(0)).toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))
+  }
+
+  @Test
+  @DisplayName("Buscar por fecha (lista de códigos de alineacion vacía)")
+  fun getByDateEmptyListOfCodes(){
+   whenever(alineacionDao.getByFechaJuego(alineacionModelEmptyPersonalList.juegoDate)).thenReturn(alineacionEntityEmptyPersonalList)
+   whenever(codigoDao.getByAlineacionId(alineacionEntityEmptyPersonalList.id)).thenReturn(emptyListCodigosAlineacionEntity)
+
+   val expected = null
+   val actual = repository.getByDate(alineacionModelEmptyPersonalList.juegoDate)
+
+   assertEquals(expected, actual)
+
+   verify(alineacionDao, times(1)).getByFechaJuego(alineacionModelEmptyPersonalList.juegoDate)
+   verify(codigoDao, times(1)).getByAlineacionId(alineacionEntityEmptyPersonalList.id)
+   verify(mapper, times(0)).toModel(alineacionEntityEmptyPersonalList, emptyListCodigosAlineacionModel)
+
+  }
+
   @Test
   @DisplayName("update bad NotFound")
   fun updateNodFoundAlineacion() {
