@@ -1,14 +1,19 @@
 package org.example.newteamultimateedition.viewmodels
-/*
+
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.onSuccess
 import javafx.beans.property.SimpleObjectProperty
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
+import org.example.newteamultimateedition.common.config.Config
+import org.example.newteamultimateedition.personal.error.PersonasError
 import org.example.newteamultimateedition.personal.extensions.redondearA2Decimales
+import org.example.newteamultimateedition.personal.mapper.toEntrenadorModel
+import org.example.newteamultimateedition.personal.mapper.toJugadorModel
 import org.example.newteamultimateedition.personal.models.Entrenador
 import org.example.newteamultimateedition.personal.models.Jugador
 import org.example.newteamultimateedition.personal.models.Persona
+import org.example.newteamultimateedition.personal.services.PersonaServiceImpl
 import org.lighthousegames.logging.logging
 import java.io.File
 import java.nio.file.Files
@@ -23,7 +28,7 @@ import java.time.LocalDate
  * @see [EquipoServiceImpl]
  */
 class EquipoViewModel (
-    private val service: EquipoServiceImpl = Dependencies.getIntegrantesService()
+    private val service: PersonaServiceImpl
 ) {
     private val logger = logging()
 
@@ -32,14 +37,14 @@ class EquipoViewModel (
     val state: SimpleObjectProperty<GeneralState> = SimpleObjectProperty(GeneralState())
 
     data class GeneralState(
-        var integrantes: ObservableList<Persona> = FXCollections.observableArrayList(), //lista de todos los integrantes
-        val integrante: IntegranteState = IntegranteState(), //el integrante seleccionado
+        var personas: ObservableList<Persona> = FXCollections.observableArrayList(), //lista de todos los integrantes
+        val persona: PersonalState = PersonalState(), //el integrante seleccionado
         val goalAvg: String = "0.0", //goles promedio
         val minutesAvg: String = "0.0", //minutos jugados promedio
         val totalCost: String = "0.0" // Coste total de la plantilla
     )
 
-    data class IntegranteState(
+    data class PersonalState(
         val id: Long = 0L,
         val nombre: String = "",
         val apellidos: String = "",
@@ -60,12 +65,12 @@ class EquipoViewModel (
 
     /**
      * Guarda un integrante
-     * @param integrante el integrante a guardar
+     * @param persona el integrante a guardar
      * @see updateState
      */
-    fun saveIntegrante(integrante: Persona) {
-        service.save(integrante).onSuccess {
-            state.value.integrantes.addAll(it)
+    fun saveIntegrante(persona: Persona) {
+        service.save(persona).onSuccess {
+            state.value.personas.addAll(it)
         }
         updateState()
     }
@@ -75,9 +80,9 @@ class EquipoViewModel (
      * @param id el id del integrante a eliminar
      * @see updateState
      */
-    fun deleteIntegrante(id: Long) {
+    fun deletePersonas(id: Long) {
         service.delete(id).onSuccess {
-            state.value.integrantes.removeIf { it.id == id }
+            state.value.personas.removeIf { it.id == id }
         }
         updateState()
     }
@@ -87,10 +92,10 @@ class EquipoViewModel (
      * @see [EquipoServiceImpl.getAll]
      * @see updateState
      */
-    fun loadAllIntegrantes() {
+    fun loadAllPersonas() {
         logger.debug { "Cargando los integrantes en el estado" }
-        val newIntegrantes = service.getAll()
-        state.value.integrantes.setAll(newIntegrantes)
+        val newIntegrantes = service.getAll().value
+        state.value.personas.setAll(newIntegrantes)
         updateState()
     }
 
@@ -99,9 +104,9 @@ class EquipoViewModel (
      * @see redondearA2Decimales
      */
     private fun updateState() {
-        val goalAvg = state.value.integrantes.filterIsInstance<Jugador>().map { it.goles }.average().redondearA2Decimales().toString()
-        val minutesAvg = state.value.integrantes.filterIsInstance<Jugador>().map { it.minutosJugados }.average().redondearA2Decimales().toString()
-        val totalCost = state.value.integrantes.sumOf { it.salario }.redondearA2Decimales().toString()
+        val goalAvg = state.value.personas.filterIsInstance<Jugador>().map { it.goles }.average().redondearA2Decimales().toString()
+        val minutesAvg = state.value.personas.filterIsInstance<Jugador>().map { it.minutosJugados }.average().redondearA2Decimales().toString()
+        val totalCost = state.value.personas.sumOf { it.salario }.redondearA2Decimales().toString()
 
         state.value = state.value.copy(
             goalAvg = goalAvg,
@@ -114,34 +119,34 @@ class EquipoViewModel (
      * Guarda en el estado los integrantes ordenados
      * @see updateState
      */
-    fun sortIntegrantes(integrantesOrdenados: List<Persona>) {
+    fun sortPersonas(personasOrdenados: List<Persona>) {
         logger.debug { "Ordenando la lista de integrantes" }
 
-        state.value.integrantes.setAll(integrantesOrdenados)
+        state.value.personas.setAll(personasOrdenados)
     }
 
     /**
      * Guarda en el estado los integrantes filtrados
      * @see updateState
      */
-    fun filterIntegrantes(integrantesFiltrados: List<Persona>) {
+    fun filterPersonas(personasFiltrados: List<Persona>) {
         logger.debug { "Filtrando la lista de integrantes" }
 
-        state.value.integrantes.setAll(integrantesFiltrados)
+        state.value.personas.setAll(personasFiltrados)
         updateState()
 
     }
 
     /**
      * Elimina todos los filtros
-     * @see filterIntegrantes
+     * @see filterPersonas
      * @see updateState
      */
     fun quitarFiltros() {
         logger.debug { "Quitando filtros" }
 
-        allIntegrantes = service.getAll()
-        filterIntegrantes(allIntegrantes)
+        allIntegrantes = service.getAll().value
+        filterPersonas(allIntegrantes)
         updateState()
     }
 
@@ -150,9 +155,9 @@ class EquipoViewModel (
      * @param file el fichero
      * @return un [Result] de [Unit] en caso de exportar correctamente o de [GestionErrors.StorageError] en caso contrario
      */
-    fun exportIntegrantestoFile(file: File) : Result<Unit, GestionErrors> {
+    fun exportIntegrantestoFile(file: File) : Result<Unit, PersonasError> {
         logger.debug { "Exportando integrantes a fichero $file"}
-        return service.exportToFile(file.path)
+        return service.exportarDatosDesdeFichero(file.toPath())
     }
 
     /**
@@ -160,56 +165,56 @@ class EquipoViewModel (
      * @param file el fichero
      * @return un [Result] de una lista de [Integrante] en caso de importar correctamente o de [GestionErrors.StorageError] en caso contrario
      */
-    fun loadIntegrantesFromFile(file: File) : Result<List<Integrante>, GestionErrors> {
+    fun loadIntegrantesFromFile(file: File) : Result<List<Persona>, PersonasError> {
         logger.debug { "Cargando integrantes desde fichero $file"}
-        return service.importFromFile(file.path).also { loadAllIntegrantes() }
+        return service.importarDatosDesdeFichero(file.toPath()).also { loadAllPersonas() }
     }
 
     /**
      * Crea un integrante vacío
      */
-    fun createEmptyIntegrante(emptyIntegrante: IntegranteState) {
-        state.value = state.value.copy(integrante = emptyIntegrante)
+    fun createEmptyPersona(emptyIntegrante: PersonalState) {
+        state.value = state.value.copy(persona = emptyIntegrante)
     }
 
     /**
      * Actualiza el integrante seleccionado con los datos del integrante que le entra por parámetro
-     * @param integrante integrante cuyos datos queremos guardar en el integrante seleccionado
+     * @param persona integrante cuyos datos queremos guardar en el integrante seleccionado
      */
-    fun updateIntegranteSelected(integrante: Integrante) {
-        if (integrante is Jugador){
+    fun updatePersonalSelected(persona: Persona) {
+        if (persona is Jugador){
             state.value = state.value.copy(
-                integrante = IntegranteState(
-                    id = integrante.id,
-                    nombre = integrante.nombre,
-                    apellidos = integrante.apellidos,
-                    fechaNacimiento = integrante.fecha_nacimiento,
-                    fechaIncorporacion = integrante.fecha_incorporacion,
-                    salario = integrante.salario,
-                    pais = integrante.pais,
-                    imagen = integrante.imagen,
-                    posicion = integrante.posicion.toString(),
-                    dorsal = integrante.dorsal,
-                    altura = integrante.altura,
-                    peso = integrante.peso,
-                    goles = integrante.goles,
-                    partidosJugados = integrante.partidos_jugados,
-                    minutosJugados = integrante.minutos_jugados
+                persona = PersonalState(
+                    id = persona.id,
+                    nombre = persona.nombre,
+                    apellidos = persona.apellidos,
+                    fechaNacimiento = persona.fechaNacimiento,
+                    fechaIncorporacion = persona.fechaIncorporacion,
+                    salario = persona.salario,
+                    pais = persona.pais,
+                    imagen = persona.imagen,
+                    posicion = persona.posicion.toString(),
+                    dorsal = persona.dorsal,
+                    altura = persona.altura,
+                    peso = persona.peso,
+                    goles = persona.goles,
+                    partidosJugados = persona.partidosJugados,
+                    minutosJugados = persona.minutosJugados
                 )
             )
         }
-        else if (integrante is Entrenador){
+        else if (persona is Entrenador){
             state.value = state.value.copy(
-                integrante = IntegranteState(
-                    id = integrante.id,
-                    nombre = integrante.nombre,
-                    apellidos = integrante.apellidos,
-                    fechaNacimiento = integrante.fecha_nacimiento,
-                    fechaIncorporacion = integrante.fecha_incorporacion,
-                    salario = integrante.salario,
-                    pais = integrante.pais,
-                    imagen = integrante.imagen,
-                    especialidad = integrante.especialidad.toString()
+                persona = PersonalState(
+                    id = persona.id,
+                    nombre = persona.nombre,
+                    apellidos = persona.apellidos,
+                    fechaNacimiento = persona.fechaNacimiento,
+                    fechaIncorporacion = persona.fechaIncorporacion,
+                    salario = persona.salario,
+                    pais = persona.pais,
+                    imagen = persona.imagen,
+                    especialidad = persona.especialidad.toString()
                 )
             )
         }
@@ -224,25 +229,25 @@ class EquipoViewModel (
         logger.debug { "Guardando imagen $fileName" }
 
         val newName = getImagenName(fileName)
-        val newFileImage = File(Configuration.configurationProperties.imagesDirectory, newName)
+        val newFileImage = File(Config.configProperties.imagesDirectory, newName)
 
         logger.debug { "Copiando a: ${newFileImage.absolutePath}" }
 
         Files.copy(fileName.toPath(), newFileImage.toPath(), StandardCopyOption.REPLACE_EXISTING)
 
         state.value = state.value.copy(
-            integrante = state.value.integrante.copy(
+            persona = state.value.persona.copy(
                 imagen = newFileImage.toURI().toString()
             )
         )
-        val id = state.value.integrante.id
-        if (state.value.integrante.especialidad == "") {
-            service.update(id, state.value.integrante.toJugadorModel()).onSuccess {
-                state.value.integrantes.find { it.id == id }?.let {it.imagen = newFileImage.toURI().toString()}
+        val id = state.value.persona.id
+        if (state.value.persona.especialidad == "") {
+            service.update(id, state.value.persona.toJugadorModel()).onSuccess {
+                state.value.personas.find { it.id == id }?.let {it.imagen = newFileImage.toURI().toString()}
             }
         }
-        else service.update(id, state.value.integrante.toEntrenadorModel()).onSuccess {
-            state.value.integrantes.find { it.id == id }?.let {it.imagen = newFileImage.toURI().toString()}
+        else service.update(id, state.value.persona.toEntrenadorModel()).onSuccess {
+            state.value.personas.find { it.id == id }?.let {it.imagen = newFileImage.toURI().toString()}
         }
     }
 
@@ -258,5 +263,5 @@ class EquipoViewModel (
     }
 
 }
-*/
+
  

@@ -13,7 +13,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="background" prefHeight="265.0" prefWidth="535.0" stylesheets="@../styles/about_styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newteam.gestion.controllers.AboutController">
+<AnchorPane id="background" prefHeight="265.0" prefWidth="535.0" stylesheets="@../styles/about_styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newteamultimateedition.common.controller.AboutController">
    <children>
       <ImageView fitHeight="296.0" fitWidth="567.0">
          <image>

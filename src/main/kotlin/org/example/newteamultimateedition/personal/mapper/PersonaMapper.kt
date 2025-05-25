@@ -4,6 +4,7 @@ import org.example.newteamultimateedition.personal.dao.PersonaEntity
 import org.example.newteamultimateedition.personal.dto.IntegranteDTO
 import org.example.newteamultimateedition.personal.dto.IntegranteXmlDTO
 import org.example.newteamultimateedition.personal.models.*
+import org.example.newteamultimateedition.viewmodels.EquipoViewModel
 import java.time.LocalDate
 
     /**
@@ -301,11 +302,10 @@ fun Persona.toEntity(): PersonaEntity {
         )
     }
 
-/*
 /**
  * Convierte un [EquipoViewModel.IntegranteState] en un [Jugador]
  */
-fun EquipoViewModel.IntegranteState.toJugadorModel(): Persona {
+fun EquipoViewModel.PersonalState.toJugadorModel(): Persona {
     return Jugador(
         nombre = this.nombre,
         apellidos = this.apellidos,
@@ -326,7 +326,7 @@ fun EquipoViewModel.IntegranteState.toJugadorModel(): Persona {
 /**
  * Convierte un [EquipoViewModel.IntegranteState] en un [Entrenador]
  */
-fun EquipoViewModel.IntegranteState.toEntrenadorModel(): Persona {
+fun EquipoViewModel.PersonalState.toEntrenadorModel(): Persona {
     return Entrenador(
         nombre = this.nombre,
         apellidos = this.apellidos,
@@ -339,4 +339,4 @@ fun EquipoViewModel.IntegranteState.toEntrenadorModel(): Persona {
     )
 }
 
- */
+

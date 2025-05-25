@@ -25,7 +25,9 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import org.koin.core.module.dsl.bind
 import org.example.newteamultimateedition.users.models.User
-
+import org.example.newteamultimateedition.viewmodels.EquipoViewModel
+import org.example.newteamultimateedition.personal.services.PersonaServiceImpl
+import org.example.newteamultimateedition.personal.storage.*
 
 /**
  * Koin module for the application.
@@ -67,24 +69,28 @@ val appModule = module {
         bind<UsersMapper>()
     }
 
-
-    // Tu ViewModel que puede depender de UsersService o repositorio
-
-
-
-    // Otros binds que tengas para Personas, cache, validación...
-    /*
-    singleOf(::PersonalStorageZip) {
-        bind<PersonalStorageZip>()
+    singleOf(::PersonaServiceImpl) {
+        bind<PersonaServiceImpl>()
     }
-     */
 
-    /*
+    //storages
     singleOf(::EquipoStorageImpl) {
         bind<EquipoStorageImpl>()
     }
+    singleOf(::EquipoStorageCSV) {
+        bind<EquipoStorageCSV>()
+    }
+    singleOf(::EquipoStorageJSON) {
+        bind<EquipoStorageJSON>()
+    }
+    singleOf(::EquipoStorageBIN) {
+        bind<EquipoStorageBIN>()
+    }
+    singleOf(::EquipoStorageXML) {
+        bind<EquipoStorageXML>()
+    }
 
-     */
+
 
     singleOf(::PersonasRepositoryImplementation) {
         bind<PersonasRepositoryImplementation>()
@@ -104,6 +110,7 @@ val appModule = module {
     singleOf(::darUsersCache) {
         bind<Cache<Long, User>>()
     }
+    singleOf(::EquipoViewModel)
 }
 
 

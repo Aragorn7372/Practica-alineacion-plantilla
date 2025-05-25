@@ -1,6 +1,6 @@
 
 package org.example.newteamultimateedition.personal.controllers
-/*
+
 import com.github.michaelbull.result.*
 import javafx.application.Platform
 import javafx.fxml.FXML
@@ -13,9 +13,18 @@ import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.stage.FileChooser
 import javafx.stage.Stage
+import org.example.newteamultimateedition.personal.error.PersonasError
+import org.example.newteamultimateedition.personal.mapper.toEntrenadorModel
+import org.example.newteamultimateedition.personal.mapper.toJugadorModel
+import org.example.newteamultimateedition.personal.models.Entrenador
+import org.example.newteamultimateedition.personal.models.Especialidad
+import org.example.newteamultimateedition.personal.models.Jugador
+import org.example.newteamultimateedition.personal.models.Persona
 
 import org.example.newteamultimateedition.routes.RoutesManager
+import org.example.newteamultimateedition.viewmodels.EquipoViewModel
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import org.lighthousegames.logging.logging
 import java.time.LocalDate
 
@@ -27,7 +36,7 @@ import java.time.LocalDate
 class NewTeamAdminController(): KoinComponent {
 
     private val logger = logging()
-    private var viewModel: EquipoViewModel by inject()
+    private val viewModel: EquipoViewModel by inject()
 
     /* Menu */
     @FXML
@@ -105,15 +114,15 @@ class NewTeamAdminController(): KoinComponent {
 
     /* Main */
     @FXML
-    lateinit var colSalario: TableColumn<Integrante, Double>
+    lateinit var colSalario: TableColumn<Persona, Double>
     @FXML
-    lateinit var colEspecialidad: TableColumn<Integrante, Especialidad>
+    lateinit var colEspecialidad: TableColumn<Persona, Especialidad>
     @FXML
-    lateinit var colRol: TableColumn<Integrante, String>
+    lateinit var colRol: TableColumn<Persona, String>
     @FXML
-    lateinit var colNombre: TableColumn<Integrante, String>
+    lateinit var colNombre: TableColumn<Persona, String>
     @FXML
-    lateinit var listIntegrantes: TableView<Integrante>
+    lateinit var listIntegrantes: TableView<Persona>
     @FXML
     lateinit var sortBySalario: MenuItem
     @FXML
@@ -166,7 +175,7 @@ class NewTeamAdminController(): KoinComponent {
         disableAll()
         
         //Tabla
-        listIntegrantes.items = viewModel.state.value.integrantes
+        listIntegrantes.items = viewModel.state.value.personas
         //Columnas, ya se bindean solas en base al contenido de la tabla
         colNombre.cellValueFactory =PropertyValueFactory("nombreCompleto")
         colSalario.cellValueFactory =PropertyValueFactory("salario")
@@ -190,44 +199,44 @@ class NewTeamAdminController(): KoinComponent {
         //Comunes
         // De interfaz a ViewModel
 
-        /*paisField.textProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.integrante.pais) viewModel.state.value = viewModel.state.value.copy(integrante = EquipoViewModel.IntegranteState(pais = newvalue))
+        paisField.textProperty().addListener{_,_,newvalue ->
+            if(newvalue != viewModel.state.value.persona.pais) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(pais = newvalue))
         }
         salarioField.textProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.integrante.salario.toString()) viewModel.state.value = viewModel.state.value.copy(integrante = EquipoViewModel.IntegranteState(salario = newvalue.toDoubleOrNull() ?: 0.0))
+            if(newvalue != viewModel.state.value.persona.salario.toString()) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(salario = newvalue.toDoubleOrNull() ?: 0.0))
         }
         incorporacionDP.valueProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.integrante.fecha_incorporacion) viewModel.state.value = viewModel.state.value.copy(integrante = EquipoViewModel.IntegranteState(fecha_incorporacion = newvalue))
+            if(newvalue != viewModel.state.value.persona.fechaIncorporacion) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(fechaIncorporacion = newvalue))
         }
         nacimientoDP.valueProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.integrante.fecha_nacimiento) viewModel.state.value = viewModel.state.value.copy(integrante = EquipoViewModel.IntegranteState(fecha_nacimiento = newvalue))
+            if(newvalue != viewModel.state.value.persona.fechaNacimiento) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(fechaNacimiento = newvalue))
         }
         apellidosField.textProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.integrante.apellidos) viewModel.state.value = viewModel.state.value.copy(integrante = EquipoViewModel.IntegranteState(apellidos = newvalue))
+            if(newvalue != viewModel.state.value.persona.apellidos) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(apellidos = newvalue))
         }
         nombreField.textProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.integrante.nombre) viewModel.state.value = viewModel.state.value.copy(integrante = EquipoViewModel.IntegranteState(nombre = newvalue))
+            if(newvalue != viewModel.state.value.persona.nombre) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(nombre = newvalue))
         }
 
         //Jugador
         minutosField.textProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.integrante.minutos_jugados.toString()) viewModel.state.value = viewModel.state.value.copy(integrante = EquipoViewModel.IntegranteState(minutos_jugados = newvalue.toIntOrNull() ?: 0))
+            if(newvalue != viewModel.state.value.persona.minutosJugados.toString()) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(minutosJugados = newvalue.toIntOrNull() ?: 0))
         }
         partidosField.textProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.integrante.partidos_jugados.toString()) viewModel.state.value = viewModel.state.value.copy(integrante = EquipoViewModel.IntegranteState(partidos_jugados = newvalue.toIntOrNull() ?: 0))
+            if(newvalue != viewModel.state.value.persona.partidosJugados.toString()) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(partidosJugados = newvalue.toIntOrNull() ?: 0))
         }
         golesField.textProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.integrante.goles.toString()) viewModel.state.value = viewModel.state.value.copy(integrante = EquipoViewModel.IntegranteState(goles = newvalue.toIntOrNull() ?: 0))
+            if(newvalue != viewModel.state.value.persona.goles.toString()) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(goles = newvalue.toIntOrNull() ?: 0))
         }
         minutosField.textProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.integrante.minutos_jugados.toString()) viewModel.state.value = viewModel.state.value.copy(integrante = EquipoViewModel.IntegranteState(minutos_jugados = newvalue.toIntOrNull() ?: 0))
+            if(newvalue != viewModel.state.value.persona.minutosJugados.toString()) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(minutosJugados = newvalue.toIntOrNull() ?: 0))
         }
         alturaField.textProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.integrante.altura.toString()) viewModel.state.value = viewModel.state.value.copy(integrante = EquipoViewModel.IntegranteState(altura = newvalue.toDoubleOrNull() ?: 0.0))
+            if(newvalue != viewModel.state.value.persona.altura.toString()) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(altura = newvalue.toDoubleOrNull() ?: 0.0))
         }
         dorsalField.textProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.integrante.dorsal.toString()) viewModel.state.value = viewModel.state.value.copy(integrante = EquipoViewModel.IntegranteState(dorsal = newvalue.toIntOrNull() ?: 0))
-        }*/
+            if(newvalue != viewModel.state.value.persona.dorsal.toString()) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(dorsal = newvalue.toIntOrNull() ?: 0))
+        }
 
         //Barra de búqueda
         searchBar.textProperty().addListener { _, _, newValue ->
@@ -238,48 +247,50 @@ class NewTeamAdminController(): KoinComponent {
         viewModel.state.addListener { _, _, newValue ->
 
             //Comunes
-            if(newValue.integrante.imagen != profilePicture.image.url) profilePicture.image =
-                if(isExternalImage(newValue.integrante.imagen)){
-                    Image(newValue.integrante.imagen)
+            if(newValue.persona.imagen != profilePicture.image.url) profilePicture.image =
+                if(isExternalImage(newValue.persona.imagen)){
+                    Image(newValue.persona.imagen)
                 } else {
-                    Image(RoutesManager.getResourceAsStream(newValue.integrante.imagen))
+                    Image(RoutesManager.getResourceAsStream(newValue.persona.imagen))
                 }
-            if (newValue.integrante.nombre != nombreField.text) nombreField.text = newValue.integrante.nombre
-            if (newValue.integrante.apellidos != apellidosField.text) apellidosField.text = newValue.integrante.apellidos
-            if (newValue.integrante.pais != paisField.text) paisField.text = newValue.integrante.pais
-            if (newValue.integrante.salario.toString() != salarioField.text) salarioField.text = newValue.integrante.salario.toString()
-            if (newValue.integrante.fecha_incorporacion != incorporacionDP.value) incorporacionDP.value = newValue.integrante.fecha_incorporacion
-            if (newValue.integrante.fecha_nacimiento != nacimientoDP.value) nacimientoDP.value = newValue.integrante.fecha_nacimiento
 
-            //Jugador
-            if (newValue.integrante.minutos_jugados.toString() != minutosField.text) minutosField.text = newValue.integrante.minutos_jugados.toString()
-            if (newValue.integrante.partidos_jugados.toString() != partidosField.text) partidosField.text = newValue.integrante.partidos_jugados.toString()
-            if (newValue.integrante.goles.toString() != golesField.text) golesField.text = newValue.integrante.goles.toString()
-            if (newValue.integrante.peso.toString() != pesoField.text) pesoField.text = newValue.integrante.peso.toString()
-            if (newValue.integrante.altura.toString() != alturaField.text) alturaField.text = newValue.integrante.altura.toString()
-            if (newValue.integrante.dorsal.toString() != dorsalField.text) dorsalField.text = newValue.integrante.dorsal.toString()
-            if (newValue.integrante.posicion == "CENTROCAMPISTA") {
+            if (newValue.persona.nombre != nombreField.text) nombreField.text = newValue.persona.nombre
+            if (newValue.persona.apellidos != apellidosField.text) apellidosField.text = newValue.persona.apellidos
+            if (newValue.persona.pais != paisField.text) paisField.text = newValue.persona.pais
+            if (newValue.persona.salario.toString() != salarioField.text) salarioField.text = newValue.persona.salario.toString()
+            if (newValue.persona.fechaIncorporacion != incorporacionDP.value) incorporacionDP.value = newValue.persona.fechaIncorporacion
+            if (newValue.persona.fechaNacimiento != nacimientoDP.value) nacimientoDP.value = newValue.persona.fechaNacimiento
+
+// Jugador
+            if (newValue.persona.minutosJugados.toString() != minutosField.text) minutosField.text = newValue.persona.minutosJugados.toString()
+            if (newValue.persona.partidosJugados.toString() != partidosField.text) partidosField.text = newValue.persona.partidosJugados.toString()
+            if (newValue.persona.goles.toString() != golesField.text) golesField.text = newValue.persona.goles.toString()
+            if (newValue.persona.peso.toString() != pesoField.text) pesoField.text = newValue.persona.peso.toString()
+            if (newValue.persona.altura.toString() != alturaField.text) alturaField.text = newValue.persona.altura.toString()
+            if (newValue.persona.dorsal.toString() != dorsalField.text) dorsalField.text = newValue.persona.dorsal.toString()
+            if (newValue.persona.posicion == "CENTROCAMPISTA") {
                 radioCentro.isSelected = true
                 desmarcarEspecialidadesEntrenador()
-            } else if (newValue.integrante.posicion == "DELANTERO") {
+            } else if (newValue.persona.posicion == "DELANTERO") {
                 radioDelantero.isSelected = true
                 desmarcarEspecialidadesEntrenador()
-            } else if (newValue.integrante.posicion == "DEFENSA") {
+            } else if (newValue.persona.posicion == "DEFENSA") {
                 radioDefensa.isSelected = true
                 desmarcarEspecialidadesEntrenador()
-            } else if (newValue.integrante.posicion == "PORTERO") {
+            } else if (newValue.persona.posicion == "PORTERO") {
                 radioPortero.isSelected = true
                 desmarcarEspecialidadesEntrenador()
             }
 
+
             //Entrenador
-            if (newValue.integrante.especialidad == "ENTRENADOR_ASISTENTE") {
+            if (newValue.persona.especialidad == "ENTRENADOR_ASISTENTE") {
                 radioAsistente.isSelected = true
                 desmarcarPosicionesJugador()
-            } else if (newValue.integrante.especialidad == "ENTRENADOR_PORTEROS") {
+            } else if (newValue.persona.especialidad == "ENTRENADOR_PORTEROS") {
                 radioPorteros.isSelected = true
                 desmarcarPosicionesJugador()
-            } else if (newValue.integrante.especialidad == "ENTRENADOR_PRINCIPAL") {
+            } else if (newValue.persona.especialidad == "ENTRENADOR_PRINCIPAL") {
                 radioPrincipal.isSelected = true
                 desmarcarPosicionesJugador()
             }
@@ -314,11 +325,11 @@ class NewTeamAdminController(): KoinComponent {
      * @param newValue el integrante seleccionado
      * @see [EquipoViewModel.updateIntegranteSelected]
      */
-    private fun onTablaSelected(newValue: Integrante) {
+    private fun onTablaSelected(newValue: Persona) {
         logger.debug { " Integrante seleccionado en la tabla: $newValue " }
         disableAll()
-        viewModel.updateIntegranteSelected(newValue)
-        logger.debug { "IntegranteState selected: ${viewModel.state.value.integrante}" }
+        viewModel.updatePersonalSelected(newValue)
+        logger.debug { "IntegranteState selected: ${viewModel.state.value.persona}" }
     }
 
     /**
@@ -418,8 +429,8 @@ class NewTeamAdminController(): KoinComponent {
 
         viewModel.quitarFiltros()
 
-        val integrantesFiltradosPorNombre = viewModel.state.value.integrantes.filter { it.nombreCompleto.lowercase().contains(cadena.lowercase()) }
-        viewModel.filterIntegrantes(integrantesFiltradosPorNombre)
+        val integrantesFiltradosPorNombre = viewModel.state.value.personas.filter { it.nombreCompleto.lowercase().contains(cadena.lowercase()) }
+        viewModel.filterPersonas(integrantesFiltradosPorNombre)
     }
 
     /**
@@ -442,10 +453,10 @@ class NewTeamAdminController(): KoinComponent {
     private fun onFilterByEntrenadoresAction() {
         logger.debug { "Filtrando los jugadores" }
 
-        if (alreadyFiltered) viewModel.loadAllIntegrantes()
+        if (alreadyFiltered) viewModel.loadAllPersonas()
 
-        val entrenadoresFiltrados: List<Integrante> = viewModel.state.value.integrantes.filterIsInstance<Entrenador>()
-        viewModel.filterIntegrantes(entrenadoresFiltrados)
+        val entrenadoresFiltrados: List<Persona> = viewModel.state.value.personas.filterIsInstance<Entrenador>()
+        viewModel.filterPersonas(entrenadoresFiltrados)
         alreadyFiltered = true
     }
     /**
@@ -456,10 +467,10 @@ class NewTeamAdminController(): KoinComponent {
     private fun onFilterByJugadoresAction() {
         logger.debug { "Filtrando los jugadores" }
 
-        if (alreadyFiltered) viewModel.loadAllIntegrantes()
+        if (alreadyFiltered) viewModel.loadAllPersonas()
 
-        val jugadoresFiltrados: List<Integrante> = viewModel.state.value.integrantes.filterIsInstance<Jugador>()
-        viewModel.filterIntegrantes(jugadoresFiltrados)
+        val jugadoresFiltrados: List<Persona> = viewModel.state.value.personas.filterIsInstance<Jugador>()
+        viewModel.filterPersonas(jugadoresFiltrados)
         alreadyFiltered = true
     }
 
@@ -470,9 +481,9 @@ class NewTeamAdminController(): KoinComponent {
     private fun onSortByNothingAction() {
         logger.debug { "Quitando filtros de ordenación" }
 
-        val integrantesSinOrden: List<Integrante> = viewModel.state.value.integrantes.shuffled()
+        val integrantesSinOrden: List<Persona> = viewModel.state.value.personas.shuffled()
 
-        viewModel.sortIntegrantes(integrantesSinOrden)
+        viewModel.sortPersonas(integrantesSinOrden)
 
     }
 
@@ -483,17 +494,17 @@ class NewTeamAdminController(): KoinComponent {
     private fun onSortBySalarioAction(){
         logger.debug { "Ordenando integrantes por salario" }
 
-        val integrantesOrdenados: List<Integrante>
+        val integrantesOrdenados: List<Persona>
 
         if (salarioAscending) {
-            integrantesOrdenados = viewModel.state.value.integrantes.sortedBy { it.salario }
+            integrantesOrdenados = viewModel.state.value.personas.sortedBy { it.salario }
             salarioAscending = false
         } else {
-            integrantesOrdenados = viewModel.state.value.integrantes.sortedByDescending { it.salario }
+            integrantesOrdenados = viewModel.state.value.personas.sortedByDescending { it.salario }
             salarioAscending = true
         }
 
-        viewModel.sortIntegrantes(integrantesOrdenados)
+        viewModel.sortPersonas(integrantesOrdenados)
     }
 
     /**
@@ -503,17 +514,17 @@ class NewTeamAdminController(): KoinComponent {
     private fun onSortByNombreAction() {
         logger.debug { "Ordenando integrantes por nombre" }
 
-        val integrantesOrdenados: List<Integrante>
+        val integrantesOrdenados: List<Persona>
 
         if (nombreAscending) {
-            integrantesOrdenados = viewModel.state.value.integrantes.sortedBy { it.apellidos }
+            integrantesOrdenados = viewModel.state.value.personas.sortedBy { it.apellidos }
             nombreAscending = false
         } else {
-            integrantesOrdenados = viewModel.state.value.integrantes.sortedByDescending { it.apellidos }
+            integrantesOrdenados = viewModel.state.value.personas.sortedByDescending { it.apellidos }
             nombreAscending = true
         }
 
-        viewModel.sortIntegrantes(integrantesOrdenados)
+        viewModel.sortPersonas(integrantesOrdenados)
     }
 
     /**
@@ -539,8 +550,8 @@ class NewTeamAdminController(): KoinComponent {
      * @see [EquipoViewModel.deleteIntegrante]
      */
     private fun onDeleteIntegranteAction() {
-        val id = viewModel.state.value.integrante.id
-        viewModel.deleteIntegrante(id)
+        val id = viewModel.state.value.persona.id
+        viewModel.deletePersonas(id)
     }
 
     /**
@@ -550,7 +561,7 @@ class NewTeamAdminController(): KoinComponent {
      */
     private fun onCheckEditState() {
         if (isEditButton) editFunction()
-        else saveFunction(viewModel.state.value.integrante.especialidad == "") // Si no tiene especialidad, es Jugador
+        else saveFunction(viewModel.state.value.persona.especialidad == "") // Si no tiene especialidad, es Jugador
     }
 
     /**
@@ -587,7 +598,7 @@ class NewTeamAdminController(): KoinComponent {
     private fun editFunction(){
         styleToSaveButton()
         styleToCancelButton()
-        if(viewModel.state.value.integrante.especialidad == "") enableJugador()
+        if(viewModel.state.value.persona.especialidad == "") enableJugador()
         else enableEntrenador()
         isEditButton = false
     }
@@ -737,8 +748,8 @@ class NewTeamAdminController(): KoinComponent {
         logger.debug { "Creando Entrenador" }
         enableEntrenador()
         disableJugador()
-        val emptyEntrenador = EquipoViewModel.IntegranteState(especialidad = "ENTRENADOR_PORTEROS")
-        viewModel.createEmptyIntegrante(emptyEntrenador)
+        val emptyEntrenador = EquipoViewModel.PersonalState(especialidad = "ENTRENADOR_PORTEROS")
+        viewModel.createEmptyPersona(emptyEntrenador)
     }
 
     /**
@@ -751,8 +762,8 @@ class NewTeamAdminController(): KoinComponent {
         logger.debug { "Creando Jugador" }
         enableJugador()
         disableEntrenador()
-        val emptyJugador = EquipoViewModel.IntegranteState()
-        viewModel.createEmptyIntegrante(emptyJugador)
+        val emptyJugador = EquipoViewModel.PersonalState()
+        viewModel.createEmptyPersona(emptyJugador)
     }
 
     /**
@@ -765,10 +776,10 @@ class NewTeamAdminController(): KoinComponent {
         logger.debug { "Guardando nuevo jugador" }
         validarJugador()
         parseViewToIntegrante(esJugador) // Actualizamos el integrante seleccionado con los datos de la vista
-        val newIntegrante: Integrante
+        val newIntegrante: Persona
         logger.debug { "Mapeando integrante" }
-        if (esJugador) newIntegrante = viewModel.state.value.integrante.toJugadorModel()
-        else newIntegrante = viewModel.state.value.integrante.toEntrenadorModel()
+        if (esJugador) newIntegrante = viewModel.state.value.persona.toJugadorModel()
+        else newIntegrante = viewModel.state.value.persona.toEntrenadorModel()
 
         viewModel.saveIntegrante(newIntegrante)
 
@@ -783,11 +794,11 @@ class NewTeamAdminController(): KoinComponent {
     private fun parseViewToIntegrante(esJugador: Boolean) {
         if (esJugador) {
             viewModel.state.value = viewModel.state.value.copy(
-                integrante = EquipoViewModel.IntegranteState(
+                persona = EquipoViewModel.PersonalState(
                     nombre = nombreField.text,
                     apellidos = apellidosField.text,
-                    fecha_nacimiento = nacimientoDP.value,
-                    fecha_incorporacion = incorporacionDP.value,
+                    fechaNacimiento = nacimientoDP.value,
+                    fechaIncorporacion = incorporacionDP.value,
                     salario = salarioField.text.toDoubleOrNull() ?: 0.0,
                     pais = paisField.text,
                     imagen = profilePicture.image.url,
@@ -796,18 +807,18 @@ class NewTeamAdminController(): KoinComponent {
                     altura = alturaField.text.toDoubleOrNull() ?: 0.0,
                     peso = pesoField.text.toDoubleOrNull() ?: 0.0,
                     goles = golesField.text.toIntOrNull() ?: 0,
-                    partidos_jugados = partidosField.text.toIntOrNull() ?: 0,
-                    minutos_jugados = minutosField.text.toIntOrNull() ?: 0,
+                    partidosJugados = partidosField.text.toIntOrNull() ?: 0,
+                    minutosJugados = minutosField.text.toIntOrNull() ?: 0,
                 )
             )
         }
         else {
             viewModel.state.value = viewModel.state.value.copy(
-                integrante = EquipoViewModel.IntegranteState(
+                persona = EquipoViewModel.PersonalState(
                     nombre = nombreField.text,
                     apellidos = apellidosField.text,
-                    fecha_nacimiento = nacimientoDP.value,
-                    fecha_incorporacion = incorporacionDP.value,
+                    fechaNacimiento = nacimientoDP.value,
+                    fechaIncorporacion = incorporacionDP.value,
                     salario = salarioField.text.toDoubleOrNull() ?: 0.0,
                     pais = paisField.text,
                     imagen = profilePicture.image.url,
@@ -815,7 +826,7 @@ class NewTeamAdminController(): KoinComponent {
                 )
             )
         }
-        logger.debug { "Integrante parseado al estado: ${viewModel.state.value.integrante}" }
+        logger.debug { "Integrante parseado al estado: ${viewModel.state.value.persona}" }
     }
 
     /**
@@ -845,55 +856,55 @@ class NewTeamAdminController(): KoinComponent {
      * Valida los datos de un [Jugador]
      * @return un [Result] de [Unit] en caso de ser correctos o de [GestionErrors.InvalidoError] en el caso contrario
      */
-    private fun validarJugador (): Result<Unit, GestionErrors.InvalidoError> {
+    private fun validarJugador (): Result<Unit, PersonasError.PersonasInvalidoError> {
         logger.debug { "Validando jugador" }
 
         if (nombreField.text.isBlank()){
-            return Err(GestionErrors.InvalidoError("El nombre no puede estar vacío"))
+            return Err(PersonasError.PersonasInvalidoError("El nombre no puede estar vacío"))
         }
 
         if (apellidosField.text.isBlank()){
-            return Err(GestionErrors.InvalidoError("Los apellidos no pueden estar vacíos"))
+            return Err(PersonasError.PersonasInvalidoError("Los apellidos no pueden estar vacíos"))
         }
 
         if (nacimientoDP.value > LocalDate.now()){
-            return Err(GestionErrors.InvalidoError("La fecha de nacimiento no puede ser posterior a la fecha actual"))
+            return Err(PersonasError.PersonasInvalidoError("La fecha de nacimiento no puede ser posterior a la fecha actual"))
         }
 
         if (incorporacionDP.value > LocalDate.now()){
-            return Err(GestionErrors.InvalidoError("La fecha de incorporación no puede ser posterior a la fecha actual"))
+            return Err(PersonasError.PersonasInvalidoError("La fecha de incorporación no puede ser posterior a la fecha actual"))
         }
 
         if (incorporacionDP.value < nacimientoDP.value) {
-            return Err(GestionErrors.InvalidoError("La fecha de incorporación no puede ser anterior a la fecha de nacimiento"))
+            return Err(PersonasError.PersonasInvalidoError("La fecha de incorporación no puede ser anterior a la fecha de nacimiento"))
         }
 
         if (salarioField.text.toDouble() < 0.0){
-            return Err(GestionErrors.InvalidoError("El salario no puede ser negativo"))
+            return Err(PersonasError.PersonasInvalidoError("El salario no puede ser negativo"))
         }
 
         if (paisField.text.isBlank()){
-            return Err(GestionErrors.InvalidoError("El país de origen no puede estar en blanco"))
+            return Err(PersonasError.PersonasInvalidoError("El país de origen no puede estar en blanco"))
         }
 
         if (dorsalField.text.toInt() !in 1..99) {
-            return Err(GestionErrors.InvalidoError("El dorsal no puede ser menor a 1 ni mayor a 99"))
+            return Err(PersonasError.PersonasInvalidoError("El dorsal no puede ser menor a 1 ni mayor a 99"))
         }
 
         if (alturaField.text.toDouble() !in 0.0..3.0){
-            return Err(GestionErrors.InvalidoError("La altura no puede ser negativa ni superar los 3 metros"))
+            return Err(PersonasError.PersonasInvalidoError("La altura no puede ser negativa ni superar los 3 metros"))
         }
 
         if (pesoField.text.toDouble() < 0.0) {
-            return Err(GestionErrors.InvalidoError("El peso no puede ser negativo"))
+            return Err(PersonasError.PersonasInvalidoError("El peso no puede ser negativo"))
         }
 
         if (golesField.text.toInt() < 0) {
-            return Err(GestionErrors.InvalidoError("El número de goles no puede ser negativo"))
+            return Err(PersonasError.PersonasInvalidoError("El número de goles no puede ser negativo"))
         }
 
         if (partidosField.text.toInt() < 0){
-            return Err(GestionErrors.InvalidoError("El número de partidos jugados no puede ser negativo"))
+            return Err(PersonasError.PersonasInvalidoError("El número de partidos jugados no puede ser negativo"))
         }
 
         return Ok(Unit)
@@ -903,34 +914,34 @@ class NewTeamAdminController(): KoinComponent {
      * Valida los datos de un [Entrenador]
      * @return un [Result] de [Unit] en caso de ser correctos o de [GestionErrors.InvalidoError] en el caso contrario
      */
-    private fun validarEntrenador (): Result<Unit, GestionErrors.InvalidoError> {
+    private fun validarEntrenador (): Result<Unit, PersonasError> {
         logger.debug { "Validando entrenador" }
         if (nombreField.text.isBlank()){
-            return Err(GestionErrors.InvalidoError("El nombre no puede estar vacío"))
+            return Err(PersonasError.PersonasInvalidoError("El nombre no puede estar vacío"))
         }
 
         if (apellidosField.text.isBlank()){
-            return Err(GestionErrors.InvalidoError("Los apellidos no pueden estar vacíos"))
+            return Err(PersonasError.PersonasInvalidoError("Los apellidos no pueden estar vacíos"))
         }
 
         if (nacimientoDP.value > LocalDate.now()){
-            return Err(GestionErrors.InvalidoError("La fecha de nacimiento no puede ser posterior a la fecha actual"))
+            return Err(PersonasError.PersonasInvalidoError("La fecha de nacimiento no puede ser posterior a la fecha actual"))
         }
 
         if (incorporacionDP.value > LocalDate.now()){
-            return Err(GestionErrors.InvalidoError("La fecha de incorporación no puede ser posterior a la fecha actual"))
+            return Err(PersonasError.PersonasInvalidoError("La fecha de incorporación no puede ser posterior a la fecha actual"))
         }
 
         if (incorporacionDP.value < nacimientoDP.value) {
-            return Err(GestionErrors.InvalidoError("La fecha de incorporación no puede ser anterior a la fecha de nacimiento"))
+            return Err(PersonasError.PersonasInvalidoError("La fecha de incorporación no puede ser anterior a la fecha de nacimiento"))
         }
 
         if (salarioField.text.toDouble() < 0.0){
-            return Err(GestionErrors.InvalidoError("El salario no puede ser negativo"))
+            return Err(PersonasError.PersonasInvalidoError("El salario no puede ser negativo"))
         }
 
         if (paisField.text.isBlank()){
-            return Err(GestionErrors.InvalidoError("El país de origen no puede estar en blanco"))
+            return Err(PersonasError.PersonasInvalidoError("El país de origen no puede estar en blanco"))
         }
 
         return Ok(Unit)
@@ -961,7 +972,7 @@ class NewTeamAdminController(): KoinComponent {
                             title = "Datos exportados",
                             mensaje = "Se han exportado los Integrantes."
                         )
-                    }.onFailure { error: GestionErrors->
+                    }.onFailure { error: PersonasError->
                         showAlertOperation(alerta = AlertType.ERROR, title = "Error al exportar", mensaje = error.message)
                     }
                 RoutesManager.activeStage.scene.cursor = DEFAULT
@@ -992,7 +1003,7 @@ class NewTeamAdminController(): KoinComponent {
                             title = "Datos importados",
                             mensaje = "Se han importado los Integrantes."
                         )
-                    }.onFailure { error: GestionErrors->
+                    }.onFailure { error: PersonasError->
                         showAlertOperation(alerta = AlertType.ERROR, title = "Error al importar", mensaje = error.message)
                     }
                 RoutesManager.activeStage.scene.cursor = DEFAULT
@@ -1018,8 +1029,7 @@ class NewTeamAdminController(): KoinComponent {
             this.title = "Cerrar sesión"
             this.contentText = "Si cierras la sesión perderás todos los datos no guardados. ¿Estás seguro de querer continuar?"
         }.showAndWait().ifPresent { opcion ->
-            if (opcion == ButtonType.OK) Session.toLogin(paisField.scene.window as Stage)
+            if (opcion == ButtonType.OK) RoutesManager.initLoginStage(searchBar.scene.window as Stage)
         }
     }
 }
-*/
