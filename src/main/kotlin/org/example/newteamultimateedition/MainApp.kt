@@ -19,26 +19,6 @@ import java.time.LocalDateTime
 
 class MainApp : Application(), KoinComponent {
     init {
-
-        var persona = Entrenador(
-            id = 1L,
-            nombre = "Carlos",
-            apellidos = "Ramírez Gómez",
-            fechaNacimiento = LocalDate.of(1980, 5, 15),
-            fechaIncorporacion = LocalDate.of(2020, 8, 1),
-            salario = 45000.0,
-            pais = "España",
-            createdAt = LocalDateTime.of(2020, 8, 1, 9, 0),
-            updatedAt = LocalDateTime.now(),
-            imagen = "carlos_ramirez.png",
-            especialidad = Especialidad.ENTRENADOR_PORTEROS
-        )
-        val service = PersonaServiceImpl()
-        val p = service.save(persona)
-        if(p.isOk) println(p.value)
-        else println(p.error.message)
-
-        println(LocalDateTime.now().toString())
         // creamos Koin
         startKoin {
             printLogger() // Logger de Koin
@@ -48,7 +28,7 @@ class MainApp : Application(), KoinComponent {
     override fun start(primaryStage: Stage) {
         RoutesManager.apply {
             app= this@MainApp
-        }.run { initUserStage(primaryStage) }
+        }.run { initSplashStage(primaryStage) }
     }
 }
 

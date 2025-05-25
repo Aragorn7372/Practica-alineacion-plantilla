@@ -1,13 +1,16 @@
 package org.example.newteamultimateedition.users.controller
 
+import com.github.benmanes.caffeine.cache.Cache
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.github.michaelbull.result.Result
 import javafx.fxml.FXML
-import javafx.scene.control.Button
-import javafx.scene.control.Label
-import javafx.scene.control.PasswordField
-import javafx.scene.control.TextField
+import javafx.scene.control.*
 import javafx.scene.input.KeyCode
 import javafx.stage.Stage
 import org.example.newteamultimateedition.routes.RoutesManager
+import org.example.newteamultimateedition.users.exception.UsersException
+import org.example.newteamultimateedition.users.models.User
 import org.example.newteamultimateedition.users.service.UsersServiceImpl
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -15,7 +18,7 @@ import org.koin.java.KoinJavaComponent.inject
 
 
 import org.mindrot.jbcrypt.BCrypt
-/*
+
 /**
  * Controlador de Registro de usuarios
  * @property dao DAO que interviene con la base de datos
@@ -26,8 +29,11 @@ import org.mindrot.jbcrypt.BCrypt
  * @property resgisterButton [Button] boton que procesa el inicio de sesion
  */
 
-class RegisterController {
+class RegisterController: KoinComponent {
+
+
     private val dao: UsersServiceImpl by inject()
+    private val cache: Cache<Long,User> by inject()
     @FXML
     lateinit var acercaDeButton: Button
     @FXML
@@ -37,7 +43,13 @@ class RegisterController {
     @FXML
     lateinit var userText: TextField
     @FXML
-    lateinit var loginButton: Button
+    lateinit var registerButton: Button
+    @FXML
+    lateinit var passwordConfirmationText: PasswordField
+    @FXML
+    lateinit var passwordMatches: Label
+    @FXML
+    lateinit var toLogin: Hyperlink
 
     @FXML
     fun initialize() {
@@ -45,18 +57,6 @@ class RegisterController {
     }
 
     private fun initEvents() {
-        acercaDeButton.setOnAction {
-            RoutesManager.initAboutStage()
-        }
-
-        loginButton.setOnAction {
-            handleLogin()
-        }
-
-        loginButton.setOnKeyTyped { event ->
-            if(event.code == KeyCode.ENTER) handleLogin()
-        }
-
         userText.textProperty().addListener { _, oldValue, newValue ->
             if (oldValue != newValue) {
                 errorMessage.text = ""
@@ -72,16 +72,47 @@ class RegisterController {
                 passwordText.style = "-fx-border-color: rgba(0,0,0,0);"
             }
         }
+        passwordConfirmationText.textProperty().addListener { _, _, _ ->
+            if(passwordConfirmationText.text != passwordText.text) {
+                passwordMatches.style = "-fx-text-fill: #cea300;"
+                passwordMatches.text = "Las contraseñas no coinciden"
+            }
+            else {
+                passwordMatches.text = ""
+            }
+        }
+        registerButton.setOnAction {
+            registerUser()
+        }
+
+        toLogin.setOnAction {
+            RoutesManager.initLoginStage(toLogin.scene.window as Stage)
+        }
     }
 
-    private fun handleLogin() {
-        if (!validateForm(userText.text, passwordText.text)) showUserError()
-        if (userText.text == "admin" && BCrypt.checkpw(passwordText.text, dao.getPassword(userText.text))) Session.launchAdmin(userText.text, passwordText.text, userText.scene.window as Stage)
-        else if (userText.text == "user" && BCrypt.checkpw(passwordText.text, dao.getPassword(userText.text))) Session.launchUser(userText.text, passwordText.text, userText.scene.window as Stage)
-        showUserError()
+    private fun registerUser(){
+        val result = validation(userText.text.toString(), passwordText.text.toString(), passwordConfirmationText.text)
+        if (result.isErr) showUserError(result.error.message)
+        else {
+            if (dao.save(result.value).isErr){
+                showUserError("La base de datos ha explotado por favor reinicie la aplicacion")
+            }else{
+                cache.put(1L,result.value)
+            }
+        }
+    }
+    private fun validation(userName: String, password: String, passwordConfirmation: String) : Result<User,UsersException> {
+        val encrypt= BCrypt.hashpw(password, BCrypt.gensalt(12))
+        if (userName.isEmpty() || userName.isEmpty() || password.isEmpty() || passwordConfirmation.isEmpty()){
+            return Err(UsersException.ContraseniaEquivocadaException("Por favor, rellena los campos"))
+        }
+        if (password!= passwordConfirmation){
+            return Err(UsersException.ContraseniaEquivocadaException("Las contraseñas no son iguales, aprende a escribir"))
+        }
+        return Ok(User(userName, encrypt))
     }
 
-    private fun showUserError() {
+    private fun showUserError(error: String) {
         errorMessage.style = "-fx-text-fill: #FF2C2C;"
         userText.style = "-fx-border-color: #FF2C2C;" +
                 "-fx-border-width: 2px;" +
@@ -89,16 +120,7 @@ class RegisterController {
         passwordText.style = "-fx-border-color: #FF2C2C;" +
                 "-fx-border-width: 2px;" +
                 "-fx-border-radius: 3"
-        errorMessage.text = "El usuario o la contraseña son incorrectos"
-    }
-
-    private fun validateForm(username: String, password: String): Boolean {
-        val regex = """^[a-zA-Z0-9_@]+$""".toRegex()
-        if (!username.matches(regex) || !password.matches(regex)) return false
-        return true
+        errorMessage.text = error
     }
 }
-
-
- */
 

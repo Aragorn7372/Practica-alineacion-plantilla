@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="648.0" prefWidth="400.0" stylesheets="@../styles/login.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newteamultimateedition.users.controller.LoginController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="648.0" prefWidth="400.0" stylesheets="@../styles/login.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newteamultimateedition.users.controller.RegisterController">
    <children>
       <ImageView id="image" fitHeight="130.0" fitWidth="130.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -69,7 +69,7 @@
                      <font>
                         <Font size="11.0" />
                      </font></Label>
-                  <Label fx:id="errorMessage1" contentDisplay="CENTER" layoutX="45.0" layoutY="251.0" prefHeight="29.0" prefWidth="98.0" text="¿Ya tienes cuenta?">
+                  <Label contentDisplay="CENTER" layoutX="45.0" layoutY="251.0" prefHeight="29.0" prefWidth="98.0" text="¿Ya tienes cuenta?">
                      <font>
                         <Font size="11.0" />
                      </font>

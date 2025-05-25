@@ -2,7 +2,7 @@ package org.example.newteamultimateedition.users.exception
 
 
 
-abstract class UsersException (val messager: String) {
+abstract class UsersException (val message: String) {
 
     /**
      * Excepción que indica que no se ha encontrado el usuario buscado.
@@ -17,4 +17,5 @@ abstract class UsersException (val messager: String) {
      * @param messager Mensaje de error.
      */
     class DatabaseException(messager: String): UsersException(messager)
+    class ContraseniaEquivocadaException(messager: String): UsersException(messager)
 }

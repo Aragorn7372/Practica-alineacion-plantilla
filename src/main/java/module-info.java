@@ -42,6 +42,7 @@ module org.example.newteamultimateedition {
     opens org.example.newteamultimateedition.routes to javafx.fxml;
     opens org.example.newteamultimateedition.users.dao to javafx.fxml;
     opens org.example.newteamultimateedition.users.models to org.jdbi.v3.core, javafx.fxml, javafx.base;
+    opens org.example.newteamultimateedition.users.controller to javafx.fxml;
 
     // Exportar los paquetes públicos si son utilizados en otros módulos\
     exports org.example.newteamultimateedition.alineacion.dao;
@@ -50,4 +51,5 @@ module org.example.newteamultimateedition {
     exports org.example.newteamultimateedition.personal.models;
     exports org.example.newteamultimateedition.common.controller;
     exports org.example.newteamultimateedition.routes;
+    exports org.example.newteamultimateedition.users.controller;
 }

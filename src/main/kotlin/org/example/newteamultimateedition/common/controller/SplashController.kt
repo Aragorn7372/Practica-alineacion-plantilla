@@ -19,8 +19,7 @@ class SplashController {
     @FXML
     lateinit var mensajeCarga: Label
 
-    var isFinished: Boolean = false
-
+    private var isFinished = false
     /**
      * Método automáticamente llamado por JavaFX cuando se crea el [SplashController] asociado al correspondiente .fxml
      * @see initEvents
@@ -36,9 +35,7 @@ class SplashController {
      */
     private fun initEvents(){
         progressBar.progressProperty().addListener { _, _, newValue ->
-            if(newValue == 1.0)
-                mensajeCarga.text = "¡Listo!"
-                RoutesManager.initLoginStage(progressBar.scene.window as Stage)
+            if (newValue == 1.0) RoutesManager.initRegisterStage(progressBar.scene.window as Stage)
         }
     }
 
@@ -52,12 +49,12 @@ class SplashController {
         for (i in 0..100){
             val progress = i / 100.0
             Platform.runLater {
-                progressBar.progress
-                mensajeCarga.text = "Cargando... $i"
+                progressBar.progress = progress
+                mensajeCarga.text = "Cargando... $i %"
 
             }
             Thread.sleep(50)
         }
         return true
     }
-}
+} //contraseñasegura
