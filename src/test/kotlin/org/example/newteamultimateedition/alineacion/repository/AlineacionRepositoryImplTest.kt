@@ -7,12 +7,13 @@ import org.example.newteamultimateedition.alineacion.dao.CodigoDao
 import org.example.newteamultimateedition.alineacion.mapper.AlineacionMapper
 import org.example.newteamultimateedition.alineacion.model.Alineacion
 import org.example.newteamultimateedition.alineacion.model.CodigoAlineacion
+import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -31,14 +32,14 @@ class AlineacionRepositoryImplTest {
   alineacionId = 1L,
   posicion = 1
  )
-
+ 
  private val codigoModel1 = CodigoAlineacion(
      id = UUID.fromString("fccfcf50-e184-4aaa-acde-e7388fe623cf"),
      idAlineacion = 1L,
      idPersona = 101L,
      posicion = 1
  )
-
+ 
  private val codigoEntity2 = CodigoAlineacionEntity(
      id = "2c2ac9d7-1bd0-4ebf-8b61-cf1e019272e0",
      personalId = 102L,
@@ -66,7 +67,7 @@ class AlineacionRepositoryImplTest {
   idPersona = 201L,
   posicion = 1
  )
-
+  
  private val alineacionEntity1 = AlineacionEntity(
   id = 1L,
   createdAt = LocalDateTime.of(2022, 5, 10, 14, 30),
@@ -194,8 +195,26 @@ class AlineacionRepositoryImplTest {
   }
 
 
+  @Test
+  @DisplayName("Save")
+  fun saveTest(){
+   whenever(alineacionDao.save(alineacionEntity1)).thenReturn(1)
+   whenever(mapper.toEntity(alineacionModel1)).thenReturn(alineacionEntity1)
+   whenever(mapper.toEntity(codigoModel1)).thenReturn(codigoEntity1)
+   whenever(mapper.toEntity(codigoModel2)).thenReturn(codigoEntity2)
 
+   val result = repository.save(alineacionModel1)
 
+   assertAll(
+    { assertEquals(result, alineacionModel1) },
+    { assertEquals(result.id, 1L) }
+   )
+   verify(alineacionDao, times(1)).save(alineacionEntity1)
+   verify(mapper, times(1)).toEntity(codigoModel1)
+   verify(mapper, times(1)).toEntity(codigoModel2)
+   verify(codigoDao, times(1)).save(codigoEntity1)
+   verify(codigoDao, times(1)).save(codigoEntity2)
+  }
 
  }
  @Nested

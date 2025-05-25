@@ -7,11 +7,19 @@
 .button {
     -fx-text-fill: #fff;
     -fx-background-color: #269D54;
-    -fx-border-width: 3px;
 }
 .button:hover {
     -fx-background-color: #14733b;
 }
+
+.button#registerButton{
+    -fx-text-fill: #fff;
+    -fx-background-color: #1660d0;
+}
+.button#registerButton:hover {
+    -fx-background-color: #10489f;
+}
+
 #loginForm {
     -fx-background-color: #f0f0f0;
     -fx-border-color: #c8c8c8;
