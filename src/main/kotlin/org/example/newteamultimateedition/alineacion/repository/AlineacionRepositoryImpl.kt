@@ -14,6 +14,7 @@ class AlineacionRepositoryImpl(
     private val mapper: AlineacionMapper
 ):AlineacioRepository {
     private val logger = logging()
+
     override fun getByDate(date: LocalDate): Alineacion? {
         logger.debug { "getByDate: $date" }
         val lista= alineacionDao.getByFechaJuego(date)?.let {
