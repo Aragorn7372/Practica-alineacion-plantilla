@@ -8,6 +8,7 @@ import org.example.newteamultimateedition.alineacion.mapper.AlineacionMapper
 import org.example.newteamultimateedition.alineacion.model.Alineacion
 import org.example.newteamultimateedition.alineacion.model.CodigoAlineacion
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
@@ -30,14 +31,14 @@ class AlineacionRepositoryImplTest {
   alineacionId = 1L,
   posicion = 1
  )
- 
+
  private val codigoModel1 = CodigoAlineacion(
      id = UUID.fromString("fccfcf50-e184-4aaa-acde-e7388fe623cf"),
      idAlineacion = 1L,
      idPersona = 101L,
      posicion = 1
  )
- 
+
  private val codigoEntity2 = CodigoAlineacionEntity(
      id = "2c2ac9d7-1bd0-4ebf-8b61-cf1e019272e0",
      personalId = 102L,
@@ -65,7 +66,7 @@ class AlineacionRepositoryImplTest {
   idPersona = 201L,
   posicion = 1
  )
-  
+
  private val alineacionEntity1 = AlineacionEntity(
   id = 1L,
   createdAt = LocalDateTime.of(2022, 5, 10, 14, 30),
@@ -157,6 +158,42 @@ class AlineacionRepositoryImplTest {
    verify(mapper, times(1)).toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))
    verify(mapper, times(1)).toModel(alineacionEntity2, listOf(codigoModel3))
   }
+  @Test
+  @DisplayName("update good alineacion")
+  fun updateGoodAlineacion() {
+   whenever(alineacionDao.getById(alineacionEntity1.id)).thenReturn(alineacionEntity1)
+   whenever(alineacionDao.updateById(alineacionEntity1, alineacionEntity1.id)).thenReturn(1)
+   whenever(codigoDao.deleteByAlinecionId(alineacionEntity1.id)).thenReturn(1)
+   whenever(codigoDao.save(codigoEntity2)).thenReturn(1)
+   whenever(codigoDao.save(codigoEntity1)).thenReturn(1)
+
+   // Mapear correctamente modelos a entidades
+   whenever(mapper.toEntity(codigoModel1)).thenReturn(codigoEntity1)
+   whenever(mapper.toEntity(codigoModel2)).thenReturn(codigoEntity2)
+
+   // Mapear alineación
+   whenever(mapper.toEntity(alineacionModel1)).thenReturn(alineacionEntity1)
+   whenever(mapper.toModel(alineacionEntity1, alineacionModel1.personalList)).thenReturn(alineacionModel1)
+
+   // Ejecutar
+   val result = repository.update(alineacionModel1, alineacionEntity1.id)
+
+   // Afirmación
+   assertEquals(alineacionModel1, result, "deberían ser iguales")
+
+   // Verificaciones
+   verify(alineacionDao, times(1)).getById(alineacionEntity1.id)
+   verify(alineacionDao, times(1)).updateById(alineacionEntity1, alineacionEntity1.id)
+   verify(codigoDao, times(1)).deleteByAlinecionId(alineacionEntity1.id)
+   verify(codigoDao, times(1)).save(codigoEntity2)
+   verify(codigoDao, times(1)).save(codigoEntity1)
+   verify(mapper, times(1)).toEntity(codigoModel2)
+   verify(mapper, times(1)).toEntity(codigoModel1)
+   verify(mapper, times(1)).toEntity(alineacionModel1)
+   verify(mapper, times(1)).toModel(alineacionEntity1, alineacionModel1.personalList)
+  }
+
+
 
 
 
@@ -188,6 +225,56 @@ class AlineacionRepositoryImplTest {
    verify(mapper, times(0)).toModel(alineacionEntity2, listOf(codigoModel3))
 
   }
+  @Test
+  @DisplayName("update bad NotFound")
+  fun updateNodFoundAlineacion() {
+   whenever(alineacionDao.getById(alineacionEntity1.id)).thenReturn(null)
+
+
+
+
+
+   // Ejecutar
+   val result = repository.update(alineacionModel1, alineacionEntity1.id)
+
+   // Afirmación
+   assertNull(result,"deberia ser nulo")
+
+   // Verificaciones
+   verify(alineacionDao, times(1)).getById(alineacionEntity1.id)
+   verify(alineacionDao, times(0)).updateById(alineacionEntity1, alineacionEntity1.id)
+   verify(codigoDao, times(0)).deleteByAlinecionId(alineacionEntity1.id)
+   verify(codigoDao, times(0)).save(codigoEntity2)
+   verify(codigoDao, times(0)).save(codigoEntity1)
+   verify(mapper, times(0)).toEntity(codigoModel2)
+   verify(mapper, times(0)).toEntity(codigoModel1)
+   verify(mapper, times(0)).toEntity(alineacionModel1)
+   verify(mapper, times(0)).toModel(alineacionEntity1, alineacionModel1.personalList)
+  }
+  @Test
+  @DisplayName("update bad update failed")
+  fun updateBadUpdateAlineacion() {
+   whenever(alineacionDao.getById(alineacionEntity1.id)).thenReturn(alineacionEntity1)
+   whenever(alineacionDao.updateById(alineacionEntity1, alineacionEntity1.id)).thenReturn(0)
+   whenever(mapper.toEntity(alineacionModel1)).thenReturn(alineacionEntity1)
+   // Ejecutar
+   val result = repository.update(alineacionModel1, alineacionEntity1.id)
+
+   // Afirmación
+   assertNull(result,"deberia ser nulo")
+
+   // Verificaciones
+   verify(alineacionDao, times(1)).getById(alineacionEntity1.id)
+   verify(alineacionDao, times(1)).updateById(alineacionEntity1, alineacionEntity1.id)
+   verify(codigoDao, times(0)).deleteByAlinecionId(alineacionEntity1.id)
+   verify(codigoDao, times(0)).save(codigoEntity2)
+   verify(codigoDao, times(0)).save(codigoEntity1)
+   verify(mapper, times(0)).toEntity(codigoModel2)
+   verify(mapper, times(0)).toEntity(codigoModel1)
+   verify(mapper, times(1)).toEntity(alineacionModel1)
+   verify(mapper, times(0)).toModel(alineacionEntity1, alineacionModel1.personalList)
+  }
+
 
   @Test
   @DisplayName("getAll filtra alineaciones con lista de códigos vacía")
@@ -206,7 +293,8 @@ class AlineacionRepositoryImplTest {
 
    // Y la transformación final a modelo de alineación
    whenever(mapper.toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))).thenReturn(alineacionModel1)
-   // No se llama mapper.toModel con entity 3 porque su lista está vacía
+   // se llama a al mapper aunque este vacia debido que se filtra mas adelante
+   whenever(mapper.toModel(alineacionEntityEmptyPersonalList, emptyListCodigosAlineacionModel)).thenReturn(alineacionModelEmptyPersonalList)
 
    val expected = listOf(alineacionModel1)
    val actual = repository.getAll()
@@ -218,12 +306,8 @@ class AlineacionRepositoryImplTest {
    verify(codigoDao, times(1)).getByAlineacionId(alineacionEntity1.id)
    verify(codigoDao, times(1)).getByAlineacionId(alineacionEntityEmptyPersonalList.id)
    verify(mapper, times(1)).toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))
-
-   // No debería llamarse toModel con alineación vacía
-   verify(mapper, never()).toModel(alineacionEntityEmptyPersonalList, emptyList())
+   verify(mapper, times(1)).toModel(alineacionEntityEmptyPersonalList, emptyList())
   }
-
-
  }
 
 }

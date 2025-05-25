@@ -28,12 +28,12 @@ class AlineacionRepositoryImpl(
     override fun getAll(): List<Alineacion> {
         logger.debug { "Obteniendo todas las alineaciones ... " }
         val alineacionesEntity = alineacionDao.getAll()
-        if ( alineacionesEntity.isEmpty() ) return listOf()
+        if ( alineacionesEntity.isNullOrEmpty() ) return listOf()
         //Si no esta vacia devolvemos la lista de alineacinoes filtrada por las que estan vacias
         return alineacionesEntity.map {
             val codigoAlineaciones = codigoDao.getByAlineacionId(it.id).map { codigo -> mapper.toModel(codigo) }
             mapper.toModel(it, codigoAlineaciones)
-        }.filter { it.personalList.isNotEmpty() }
+        }.filter {  it.personalList.isNotEmpty()}
     }
 
     override fun getById(id: Long): Alineacion? {
@@ -49,10 +49,15 @@ class AlineacionRepositoryImpl(
 
     override fun update(objeto: Alineacion, id: Long): Alineacion? {
         logger.debug { "update: $objeto" }
-            alineacionDao.getById(id)?.let{
+            alineacionDao.getById(id)?.let{ entity ->
                 val newAlineacion = mapper.toEntity(objeto.copy(id = id))
-                val codigoAlineaciones = codigoDao.getByAlineacionId(it.id).map { codigo -> mapper.toModel(codigo) }
-                alineacionDao.updateById(newAlineacion, it.id)
+                val codigoAlineaciones = objeto.personalList
+                if(alineacionDao.updateById(newAlineacion, entity.id)==1){
+                    codigoDao.deleteByAlinecionId(id)
+                    codigoAlineaciones.forEach {
+                        codigoDao.save(mapper.toEntity(it))
+                    }
+                }else return null
                 return mapper.toModel(newAlineacion, codigoAlineaciones)
             }
         return null
