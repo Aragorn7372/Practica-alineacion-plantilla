@@ -9,14 +9,10 @@ import org.example.newteamultimateedition.alineacion.model.Alineacion
 import org.example.newteamultimateedition.alineacion.model.CodigoAlineacion
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.times
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
+import org.mockito.kotlin.*
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID
@@ -100,6 +96,25 @@ class AlineacionRepositoryImplTest {
   juegoDate = LocalDate.of(2000,8,20)
  )
 
+ private val alineacionEntityEmptyPersonalList = AlineacionEntity(
+  id = 3L,
+  createdAt = LocalDateTime.of(2022, 5, 10, 14, 30),
+  updatedAt = LocalDateTime.of(2022, 5, 10, 14, 30),
+  juegoDate = LocalDate.of(2000,8,20)
+ )
+
+ private val emptyListCodigosAlineacionEntity: List<CodigoAlineacionEntity> = listOf()
+
+ private val emptyListCodigosAlineacionModel: List<CodigoAlineacion> = listOf()
+
+ private val alineacionModelEmptyPersonalList = Alineacion(
+  id = 3L,
+  personalList = emptyListCodigosAlineacionModel,
+  createdAt = LocalDateTime.of(2022, 5, 10, 14, 30),
+  updatedAt = LocalDateTime.of(2022, 5, 10, 14, 30),
+  juegoDate = LocalDate.of(2000,8,20)
+ )
+
   @BeforeEach
   fun setUp(){
    mapper = mock()
@@ -143,10 +158,71 @@ class AlineacionRepositoryImplTest {
    verify(mapper, times(1)).toModel(alineacionEntity2, listOf(codigoModel3))
   }
 
+
+
  }
  @Nested
  @DisplayName("Tests incorrectos")
  inner class TestsIncorrectos {
+
+  @Test
+  @DisplayName("getAll() devuelve lista de alineaciones vacía")
+  fun daoReturnsEmptyList(){
+   whenever(alineacionDao.getAll()).thenReturn(listOf())
+
+   val expected: List<AlineacionEntity> = listOf()
+
+   val actual = repository.getAll()
+
+   assertEquals(expected, actual, "Debe devolver una lista vacía")
+
+   verify(alineacionDao, times(1)).getAll()
+
+   verify(codigoDao, times(0)).getByAlineacionId(alineacionEntity1.id)
+   verify(codigoDao, times(0)).getByAlineacionId(alineacionEntity2.id)
+
+   verify(mapper, times(0)).toModel(codigoEntity1)
+   verify(mapper, times(0)).toModel(codigoEntity2)
+   verify(mapper, times(0)).toModel(codigoEntity3)
+   verify(mapper, times(0)).toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))
+   verify(mapper, times(0)).toModel(alineacionEntity2, listOf(codigoModel3))
+
+  }
+
+  @Test
+  @DisplayName("getAll filtra alineaciones con lista de códigos vacía")
+  fun getAllEmptyCodes() {
+   // Simulamos que hay dos alineaciones en la base de datos
+   whenever(alineacionDao.getAll()).thenReturn(listOf(alineacionEntity1, alineacionEntityEmptyPersonalList))
+
+   // La primera tiene 2 códigos asociados
+   whenever(codigoDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
+   // La segunda tiene 0 códigos → será filtrada
+   whenever(codigoDao.getByAlineacionId(alineacionEntityEmptyPersonalList.id)).thenReturn(emptyListCodigosAlineacionEntity)
+
+   // También simulamos que el mapper transforma correctamente los códigos
+   whenever(mapper.toModel(codigoEntity1)).thenReturn(codigoModel1)
+   whenever(mapper.toModel(codigoEntity2)).thenReturn(codigoModel2)
+
+   // Y la transformación final a modelo de alineación
+   whenever(mapper.toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))).thenReturn(alineacionModel1)
+   // No se llama mapper.toModel con entity 3 porque su lista está vacía
+
+   val expected = listOf(alineacionModel1)
+   val actual = repository.getAll()
+
+   assertEquals(expected, actual)
+
+   // Verificaciones
+   verify(alineacionDao, times(1)).getAll()
+   verify(codigoDao, times(1)).getByAlineacionId(alineacionEntity1.id)
+   verify(codigoDao, times(1)).getByAlineacionId(alineacionEntityEmptyPersonalList.id)
+   verify(mapper, times(1)).toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))
+
+   // No debería llamarse toModel con alineación vacía
+   verify(mapper, never()).toModel(alineacionEntityEmptyPersonalList, emptyList())
+  }
+
 
  }
 
