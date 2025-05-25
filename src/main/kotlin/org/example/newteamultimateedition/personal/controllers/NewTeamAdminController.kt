@@ -13,16 +13,9 @@ import javafx.scene.image.Image
 import javafx.scene.image.ImageView
 import javafx.stage.FileChooser
 import javafx.stage.Stage
-import org.example.newteam.gestion.errors.GestionErrors
-import org.example.newteamultimateedition.personal.mapper.toEntrenadorModel
-import org.example.newteamultimateedition.personal.mapper.toJugadorModel
-import org.example.newteamultimateedition.personal.models.Entrenador
-import org.example.newteamultimateedition.personal.models.Especialidad
-import org.example.newteam.gestion.models.Integrante
-import org.example.newteamultimateedition.personal.models.Jugador
-import org.example.newteam.gestion.sesion.Session
-import org.example.newteamultimateedition.viewmodels.EquipoViewModel
+
 import org.example.newteamultimateedition.routes.RoutesManager
+import org.koin.core.component.KoinComponent
 import org.lighthousegames.logging.logging
 import java.time.LocalDate
 
@@ -31,7 +24,7 @@ import java.time.LocalDate
  * @property viewModel viewModel del programa
  * @see [EquipoViewModel]
  */
-class NewTeamAdminController () {
+class NewTeamAdminController(): KoinComponent {
 
     private val logger = logging()
     private var viewModel: EquipoViewModel by inject()
@@ -1029,4 +1022,4 @@ class NewTeamAdminController () {
         }
     }
 }
- */
+*/

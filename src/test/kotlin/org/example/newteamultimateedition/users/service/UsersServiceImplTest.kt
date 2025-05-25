@@ -57,7 +57,7 @@ class UsersServiceImplTest {
 
         assertTrue(result.isErr)
         assertTrue(result.error is UsersException.DatabaseException)
-        assertEquals(exceptionMessage, (result.error as UsersException.DatabaseException).messager)
+        assertEquals(exceptionMessage, (result.error as UsersException.DatabaseException).message)
         verify(repository, times(1)).getAll()
     }
 
@@ -106,7 +106,7 @@ class UsersServiceImplTest {
 
         assertTrue(result.isErr)
         assertTrue(result.error is UsersException.DatabaseException)
-        assertEquals(exceptionMessage, (result.error as UsersException.DatabaseException).messager)
+        assertEquals(exceptionMessage, (result.error as UsersException.DatabaseException).message)
         verify(repository, times(1)).save(user)
     }
 

@@ -13,8 +13,8 @@ import org.example.newteamultimateedition.personal.dao.getPersonasDao
 import org.example.newteamultimateedition.personal.models.Persona
 import org.example.newteamultimateedition.users.mapper.UsersMapper
 import org.example.newteamultimateedition.personal.repository.PersonasRepositoryImplementation
-import org.example.newteamultimateedition.personal.storage.EquipoStorageImpl
 import org.example.newteamultimateedition.personal.validator.PersonaValidation
+import org.example.newteamultimateedition.users.cache.darUsersCache
 import org.example.newteamultimateedition.users.service.UsersServiceImpl
 import org.example.newteamultimateedition.users.repository.UsersRepositoryImpl
 import org.example.newteamultimateedition.users.dao.provideUsersDao
@@ -24,6 +24,7 @@ import org.jdbi.v3.core.Jdbi
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import org.koin.core.module.dsl.bind
+import org.example.newteamultimateedition.users.models.User
 
 
 /**
@@ -66,12 +67,10 @@ val appModule = module {
         bind<UsersMapper>()
     }
 
-    /*
+
     // Tu ViewModel que puede depender de UsersService o repositorio
-    singleOf(::LoginViewModel) {
-        bind<LoginViewModel>()
-    }
-     */
+
+
 
     // Otros binds que tengas para Personas, cache, validación...
     /*
@@ -102,12 +101,9 @@ val appModule = module {
     singleOf(::UsersRepositoryImpl) {
         bind<UsersRepository>()
     }
-    /*
-    singleOf(::PersonasViewModel)
-    singleOf(::PersonaServiceImpl){
-        bind<PersonaServiceImpl>()
+    singleOf(::darUsersCache) {
+        bind<Cache<Long, User>>()
     }
-     */
 }
 
 

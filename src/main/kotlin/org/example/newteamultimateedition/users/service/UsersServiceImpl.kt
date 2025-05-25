@@ -87,15 +87,15 @@ class UsersServiceImpl(
             return Err(UsersException.DatabaseException(e.message.toString()))
         }
     }
-    /*
+
     fun goodLogin(username: String, password: String): Result<User, UsersException> {
-        val userResult = getUserByUsername(username)
+        val userResult = repositorio.getById(username)
         return if (userResult != null) {
             if (BCrypt.checkpw(password, userResult.password)) {
-                logger.debug { "contraseña valida" }
+                logger.debug { "Contraseña valida" }
                 Ok(userResult)
             } else {
-                logger.debug { "contraseña invalida $password ${userResult.password}" }
+                logger.debug { "Contraseña invalida $password ${userResult.password}" }
                 Err(UsersException.ContraseniaEquivocadaException("Contraseña errónea"))
             }
         } else {
@@ -104,5 +104,5 @@ class UsersServiceImpl(
         }
     }
 
-     */
+
 }

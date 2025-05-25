@@ -8,5 +8,5 @@ package org.example.newteamultimateedition.users.models
 data class User(
     val name: String,
     val password: String,
-    val isAdmin: Boolean,
+    val isAdmin: Boolean=false,
 )

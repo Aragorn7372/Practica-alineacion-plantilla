@@ -1,5 +1,5 @@
 package org.example.newteamultimateedition.viewmodels
-
+/*
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.onSuccess
 import javafx.beans.property.SimpleObjectProperty
@@ -16,7 +16,7 @@ import java.nio.file.StandardCopyOption
 import java.time.Instant
 import java.time.LocalDate
 
-/*
+
 /**
  * Clase que representa el ViewModel de la aplicación
  * @property service servicio inyectado
@@ -258,5 +258,5 @@ class EquipoViewModel (
     }
 
 }
-
- */
+*/
+ 

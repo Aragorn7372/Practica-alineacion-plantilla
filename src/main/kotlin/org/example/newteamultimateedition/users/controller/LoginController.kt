@@ -1,21 +1,22 @@
 package org.example.newteamultimateedition.users.controller
 
+import com.github.benmanes.caffeine.cache.Cache
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Result
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.control.PasswordField
 import javafx.scene.control.TextField
-import javafx.scene.input.KeyCode
 import javafx.stage.Stage
 import org.example.newteamultimateedition.routes.RoutesManager
+import org.example.newteamultimateedition.users.exception.UsersException
+import org.example.newteamultimateedition.users.models.User
 import org.example.newteamultimateedition.users.service.UsersServiceImpl
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.koin.java.KoinJavaComponent.inject
-
-
 import org.mindrot.jbcrypt.BCrypt
-/*
+
 /**
  * Controlador de Login
  * @property dao DAO que interviene con la base de datos
@@ -26,8 +27,10 @@ import org.mindrot.jbcrypt.BCrypt
  * @property loginButton [Button] boton que procesa el inicio de sesion
  */
 
-class LoginController {
+class LoginController: KoinComponent {
     private val dao: UsersServiceImpl by inject()
+    private val cache: Cache<Long,User> by inject()
+
     @FXML
     lateinit var acercaDeButton: Button
     @FXML
@@ -53,10 +56,6 @@ class LoginController {
             handleLogin()
         }
 
-        loginButton.setOnKeyTyped { event ->
-            if(event.code == KeyCode.ENTER) handleLogin()
-        }
-
         userText.textProperty().addListener { _, oldValue, newValue ->
             if (oldValue != newValue) {
                 errorMessage.text = ""
@@ -75,13 +74,17 @@ class LoginController {
     }
 
     private fun handleLogin() {
-        if (!validateForm(userText.text, passwordText.text)) showUserError()
-        if (userText.text == "admin" && BCrypt.checkpw(passwordText.text, dao.getPassword(userText.text))) Session.launchAdmin(userText.text, passwordText.text, userText.scene.window as Stage)
-        else if (userText.text == "user" && BCrypt.checkpw(passwordText.text, dao.getPassword(userText.text))) Session.launchUser(userText.text, passwordText.text, userText.scene.window as Stage)
-        showUserError()
+        val result = validateForm(userText.text, passwordText.text)
+        if(result.isErr) showUserError(result.error.message)
+        else{
+            cache.put(1L,result.value)
+            if (result.value.isAdmin){
+                RoutesManager.initAdminStage(userText.scene.window as Stage)
+            }else RoutesManager.initUserStage(userText.scene.window as Stage)
+        }
     }
 
-    private fun showUserError() {
+    private fun showUserError(error: String) {
         errorMessage.style = "-fx-text-fill: #FF2C2C;"
         userText.style = "-fx-border-color: #FF2C2C;" +
                 "-fx-border-width: 2px;" +
@@ -89,16 +92,15 @@ class LoginController {
         passwordText.style = "-fx-border-color: #FF2C2C;" +
                 "-fx-border-width: 2px;" +
                 "-fx-border-radius: 3"
-        errorMessage.text = "El usuario o la contraseña son incorrectos"
+        errorMessage.text = error
     }
 
-    private fun validateForm(username: String, password: String): Boolean {
-        val regex = """^[a-zA-Z0-9_@]+$""".toRegex()
-        if (!username.matches(regex) || !password.matches(regex)) return false
-        return true
+    private fun validateForm(username: String, password: String): Result<User, UsersException> {
+        //val encrypt= BCrypt.hashpw(password, BCrypt.gensalt(12))
+        if (username.isEmpty() || password.isEmpty()) {
+            return Err(UsersException.ContraseniaEquivocadaException("No puede estar en blanco"))
+        }
+        return dao.goodLogin(username,password)
     }
 }
-
-
- */
 
