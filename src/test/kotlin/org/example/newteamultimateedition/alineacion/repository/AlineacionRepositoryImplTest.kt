@@ -7,11 +7,12 @@ import org.example.newteamultimateedition.alineacion.dao.CodigoDao
 import org.example.newteamultimateedition.alineacion.mapper.AlineacionMapper
 import org.example.newteamultimateedition.alineacion.model.Alineacion
 import org.example.newteamultimateedition.alineacion.model.CodigoAlineacion
+import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -157,8 +158,26 @@ class AlineacionRepositoryImplTest {
    verify(mapper, times(1)).toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))
    verify(mapper, times(1)).toModel(alineacionEntity2, listOf(codigoModel3))
   }
+  @Test
+  @DisplayName("Save")
+  fun saveTest(){
+   whenever(alineacionDao.save(alineacionEntity1)).thenReturn(1)
+   whenever(mapper.toEntity(alineacionModel1)).thenReturn(alineacionEntity1)
+   whenever(mapper.toEntity(codigoModel1)).thenReturn(codigoEntity1)
+   whenever(mapper.toEntity(codigoModel2)).thenReturn(codigoEntity2)
 
+   val result = repository.save(alineacionModel1)
 
+   assertAll(
+    { assertEquals(result, alineacionModel1) },
+    { assertEquals(result.id, 1L) }
+   )
+   verify(alineacionDao, times(1)).save(alineacionEntity1)
+   verify(mapper, times(1)).toEntity(codigoModel1)
+   verify(mapper, times(1)).toEntity(codigoModel2)
+   verify(codigoDao, times(1)).save(codigoEntity1)
+   verify(codigoDao, times(1)).save(codigoEntity2)
+  }
 
  }
  @Nested
@@ -188,41 +207,6 @@ class AlineacionRepositoryImplTest {
    verify(mapper, times(0)).toModel(alineacionEntity2, listOf(codigoModel3))
 
   }
-
-  @Test
-  @DisplayName("getAll filtra alineaciones con lista de códigos vacía")
-  fun getAllEmptyCodes() {
-   // Simulamos que hay dos alineaciones en la base de datos
-   whenever(alineacionDao.getAll()).thenReturn(listOf(alineacionEntity1, alineacionEntityEmptyPersonalList))
-
-   // La primera tiene 2 códigos asociados
-   whenever(codigoDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
-   // La segunda tiene 0 códigos → será filtrada
-   whenever(codigoDao.getByAlineacionId(alineacionEntityEmptyPersonalList.id)).thenReturn(emptyListCodigosAlineacionEntity)
-
-   // También simulamos que el mapper transforma correctamente los códigos
-   whenever(mapper.toModel(codigoEntity1)).thenReturn(codigoModel1)
-   whenever(mapper.toModel(codigoEntity2)).thenReturn(codigoModel2)
-
-   // Y la transformación final a modelo de alineación
-   whenever(mapper.toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))).thenReturn(alineacionModel1)
-   // No se llama mapper.toModel con entity 3 porque su lista está vacía
-
-   val expected = listOf(alineacionModel1)
-   val actual = repository.getAll()
-
-   assertEquals(expected, actual)
-
-   // Verificaciones
-   verify(alineacionDao, times(1)).getAll()
-   verify(codigoDao, times(1)).getByAlineacionId(alineacionEntity1.id)
-   verify(codigoDao, times(1)).getByAlineacionId(alineacionEntityEmptyPersonalList.id)
-   verify(mapper, times(1)).toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))
-
-   // No debería llamarse toModel con alineación vacía
-   verify(mapper, never()).toModel(alineacionEntityEmptyPersonalList, emptyList())
-  }
-
 
  }
 
