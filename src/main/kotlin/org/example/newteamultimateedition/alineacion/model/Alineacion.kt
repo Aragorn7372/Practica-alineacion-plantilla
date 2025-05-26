@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 
 data class Alineacion(
     val id: Long,
-    val personalList: List<CodigoAlineacion>,
+    val personalList: List<LineaAlineacion>,
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime = LocalDateTime.now(),
     val juegoDate: LocalDate

@@ -2,11 +2,11 @@ package org.example.newteamultimateedition.alineacion.repository
 
 import org.example.newteamultimateedition.alineacion.dao.AlineacionDao
 import org.example.newteamultimateedition.alineacion.dao.AlineacionEntity
-import org.example.newteamultimateedition.alineacion.dao.CodigoAlineacionEntity
-import org.example.newteamultimateedition.alineacion.dao.CodigoDao
+import org.example.newteamultimateedition.alineacion.dao.LineaAlineacionEntity
+import org.example.newteamultimateedition.alineacion.dao.LineaAlineacionDao
 import org.example.newteamultimateedition.alineacion.mapper.AlineacionMapper
 import org.example.newteamultimateedition.alineacion.model.Alineacion
-import org.example.newteamultimateedition.alineacion.model.CodigoAlineacion
+import org.example.newteamultimateedition.alineacion.model.LineaAlineacion
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
@@ -23,45 +23,45 @@ class AlineacionRepositoryImplTest {
 
   private lateinit var mapper: AlineacionMapper
   private lateinit var alineacionDao: AlineacionDao
-  private lateinit var codigoDao: CodigoDao
+  private lateinit var lineaAlineacionDao: LineaAlineacionDao
   private lateinit var repository: AlineacionRepositoryImpl
 
- private val codigoEntity1 = CodigoAlineacionEntity(
+ private val codigoEntity1 = LineaAlineacionEntity(
   id = "fccfcf50-e184-4aaa-acde-e7388fe623cf",
   personalId = 101L,
   alineacionId = 1L,
   posicion = 1
  )
  
- private val codigoModel1 = CodigoAlineacion(
+ private val codigoModel1 = LineaAlineacion(
      id = UUID.fromString("fccfcf50-e184-4aaa-acde-e7388fe623cf"),
      idAlineacion = 1L,
      idPersona = 101L,
      posicion = 1
  )
  
- private val codigoEntity2 = CodigoAlineacionEntity(
+ private val codigoEntity2 = LineaAlineacionEntity(
      id = "2c2ac9d7-1bd0-4ebf-8b61-cf1e019272e0",
      personalId = 102L,
      alineacionId = 1L,
      posicion = 2
  )
 
- private val codigoModel2 = CodigoAlineacion(
+ private val codigoModel2 = LineaAlineacion(
   id = UUID.fromString("2c2ac9d7-1bd0-4ebf-8b61-cf1e019272e0"),
   idAlineacion = 1L,
   idPersona = 102L,
   posicion = 2
  )
 
- private val codigoEntity3 = CodigoAlineacionEntity(
+ private val codigoEntity3 = LineaAlineacionEntity(
   id = "bcfd589a-429e-42f2-a543-2b0fa4fe8477",
   personalId = 201L,
   alineacionId = 2L,
   posicion = 1
  )
 
- private val codigoModel3 = CodigoAlineacion(
+ private val codigoModel3 = LineaAlineacion(
   id = UUID.fromString("bcfd589a-429e-42f2-a543-2b0fa4fe8477"),
   idAlineacion = 2L,
   idPersona = 201L,
@@ -105,9 +105,9 @@ class AlineacionRepositoryImplTest {
   juegoDate = LocalDate.of(2000,8,20)
  )
 
- private val emptyListCodigosAlineacionEntity: List<CodigoAlineacionEntity> = listOf()
+ private val emptyListCodigosAlineacionEntity: List<LineaAlineacionEntity> = listOf()
 
- private val emptyListCodigosAlineacionModel: List<CodigoAlineacion> = listOf()
+ private val emptyListCodigosAlineacionModel: List<LineaAlineacion> = listOf()
 
  private val alineacionModelEmptyPersonalList = Alineacion(
   id = 3L,
@@ -121,8 +121,8 @@ class AlineacionRepositoryImplTest {
   fun setUp(){
    mapper = mock()
    alineacionDao = mock()
-   codigoDao = mock()
-   repository = AlineacionRepositoryImpl(alineacionDao, codigoDao, mapper)
+   lineaAlineacionDao = mock()
+   repository = AlineacionRepositoryImpl(alineacionDao, lineaAlineacionDao, mapper)
   }
 
  @Nested
@@ -134,8 +134,8 @@ class AlineacionRepositoryImplTest {
   fun getAllOk(){
    whenever(alineacionDao.getAll()).thenReturn(listOf(alineacionEntity1, alineacionEntity2))
 
-   whenever(codigoDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
-   whenever(codigoDao.getByAlineacionId(alineacionEntity2.id)).thenReturn(listOf(codigoEntity3))
+   whenever(lineaAlineacionDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
+   whenever(lineaAlineacionDao.getByAlineacionId(alineacionEntity2.id)).thenReturn(listOf(codigoEntity3))
 
    whenever(mapper.toModel(codigoEntity1)).thenReturn(codigoModel1)
    whenever(mapper.toModel(codigoEntity2)).thenReturn(codigoModel2)
@@ -150,8 +150,8 @@ class AlineacionRepositoryImplTest {
 
    verify(alineacionDao, times(1)).getAll()
 
-   verify(codigoDao, times(1)).getByAlineacionId(alineacionEntity1.id)
-   verify(codigoDao, times(1)).getByAlineacionId(alineacionEntity2.id)
+   verify(lineaAlineacionDao, times(1)).getByAlineacionId(alineacionEntity1.id)
+   verify(lineaAlineacionDao, times(1)).getByAlineacionId(alineacionEntity2.id)
 
    verify(mapper, times(1)).toModel(codigoEntity1)
    verify(mapper, times(1)).toModel(codigoEntity2)
@@ -164,7 +164,7 @@ class AlineacionRepositoryImplTest {
   @DisplayName("Buscar por id")
   fun getByIdOk(){
    whenever(alineacionDao.getById(alineacionModel1.id)).thenReturn(alineacionEntity1)
-   whenever(codigoDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
+   whenever(lineaAlineacionDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
    whenever(mapper.toModel(codigoEntity1)).thenReturn(codigoModel1)
    whenever(mapper.toModel(codigoEntity2)).thenReturn(codigoModel2)
    whenever(mapper.toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))).thenReturn(alineacionModel1)
@@ -175,7 +175,7 @@ class AlineacionRepositoryImplTest {
    assertEquals(expected, actual)
 
    verify(alineacionDao, times(1)).getById(alineacionModel1.id)
-   verify(codigoDao, times(1)).getByAlineacionId(alineacionEntity1.id)
+   verify(lineaAlineacionDao, times(1)).getByAlineacionId(alineacionEntity1.id)
    verify(mapper, times(1)).toModel(codigoEntity1)
    verify(mapper, times(1)).toModel(codigoEntity2)
    verify(mapper, times(1)).toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))
@@ -185,7 +185,7 @@ class AlineacionRepositoryImplTest {
   @DisplayName("Buscar por fecha")
   fun getByDateOk(){
    whenever(alineacionDao.getByFechaJuego(alineacionModel1.juegoDate)).thenReturn(alineacionEntity1)
-   whenever(codigoDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
+   whenever(lineaAlineacionDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
    whenever(mapper.toModel(codigoEntity1)).thenReturn(codigoModel1)
    whenever(mapper.toModel(codigoEntity2)).thenReturn(codigoModel2)
    whenever(mapper.toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))).thenReturn(alineacionModel1)
@@ -196,7 +196,7 @@ class AlineacionRepositoryImplTest {
    assertEquals(expected, actual)
 
    verify(alineacionDao, times(1)).getByFechaJuego(alineacionModel1.juegoDate)
-   verify(codigoDao, times(1)).getByAlineacionId(alineacionEntity1.id)
+   verify(lineaAlineacionDao, times(1)).getByAlineacionId(alineacionEntity1.id)
    verify(mapper, times(1)).toModel(codigoEntity1)
    verify(mapper, times(1)).toModel(codigoEntity2)
    verify(mapper, times(1)).toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))
@@ -207,14 +207,14 @@ class AlineacionRepositoryImplTest {
   fun deleteByIdOk(){
    //Funciones que lleva dentro getById()
    whenever(alineacionDao.getById(alineacionModel1.id)).thenReturn(alineacionEntity1)
-   whenever(codigoDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
+   whenever(lineaAlineacionDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
    whenever(mapper.toModel(codigoEntity1)).thenReturn(codigoModel1)
    whenever(mapper.toModel(codigoEntity2)).thenReturn(codigoModel2)
    whenever(mapper.toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))).thenReturn(alineacionModel1)
 
    //Funciones propias de delete()
    whenever(alineacionDao.deleteById(alineacionModel1.id)).thenReturn(1)
-   whenever(codigoDao.deleteByAlinecionId(alineacionModel1.id)).thenReturn(18)
+   whenever(lineaAlineacionDao.deleteByAlinecionId(alineacionModel1.id)).thenReturn(18)
 
    val expected = alineacionModel1
    val actual = repository.delete(alineacionModel1.id)
@@ -222,7 +222,7 @@ class AlineacionRepositoryImplTest {
    assertEquals(expected, actual)
 
    verify(alineacionDao, times(1)).deleteById(alineacionModel1.id)
-   verify(codigoDao, times(1)).deleteByAlinecionId(alineacionModel1.id)
+   verify(lineaAlineacionDao, times(1)).deleteByAlinecionId(alineacionModel1.id)
   }
 
   @Test
@@ -230,9 +230,9 @@ class AlineacionRepositoryImplTest {
   fun updateGoodAlineacion() {
    whenever(alineacionDao.getById(alineacionEntity1.id)).thenReturn(alineacionEntity1)
    whenever(alineacionDao.updateById(alineacionEntity1, alineacionEntity1.id)).thenReturn(1)
-   whenever(codigoDao.deleteByAlinecionId(alineacionEntity1.id)).thenReturn(1)
-   whenever(codigoDao.save(codigoEntity2)).thenReturn(1)
-   whenever(codigoDao.save(codigoEntity1)).thenReturn(1)
+   whenever(lineaAlineacionDao.deleteByAlinecionId(alineacionEntity1.id)).thenReturn(1)
+   whenever(lineaAlineacionDao.save(codigoEntity2)).thenReturn(1)
+   whenever(lineaAlineacionDao.save(codigoEntity1)).thenReturn(1)
 
    // Mapear correctamente modelos a entidades
    whenever(mapper.toEntity(codigoModel1)).thenReturn(codigoEntity1)
@@ -251,9 +251,9 @@ class AlineacionRepositoryImplTest {
    // Verificaciones
    verify(alineacionDao, times(1)).getById(alineacionEntity1.id)
    verify(alineacionDao, times(1)).updateById(alineacionEntity1, alineacionEntity1.id)
-   verify(codigoDao, times(1)).deleteByAlinecionId(alineacionEntity1.id)
-   verify(codigoDao, times(1)).save(codigoEntity2)
-   verify(codigoDao, times(1)).save(codigoEntity1)
+   verify(lineaAlineacionDao, times(1)).deleteByAlinecionId(alineacionEntity1.id)
+   verify(lineaAlineacionDao, times(1)).save(codigoEntity2)
+   verify(lineaAlineacionDao, times(1)).save(codigoEntity1)
    verify(mapper, times(1)).toEntity(codigoModel2)
    verify(mapper, times(1)).toEntity(codigoModel1)
    verify(mapper, times(1)).toEntity(alineacionModel1)
@@ -278,8 +278,8 @@ class AlineacionRepositoryImplTest {
    verify(alineacionDao, times(1)).save(alineacionEntity1)
    verify(mapper, times(1)).toEntity(codigoModel1)
    verify(mapper, times(1)).toEntity(codigoModel2)
-   verify(codigoDao, times(1)).save(codigoEntity1)
-   verify(codigoDao, times(1)).save(codigoEntity2)
+   verify(lineaAlineacionDao, times(1)).save(codigoEntity1)
+   verify(lineaAlineacionDao, times(1)).save(codigoEntity2)
   }
 
  }
@@ -300,8 +300,8 @@ class AlineacionRepositoryImplTest {
 
    verify(alineacionDao, times(1)).getAll()
 
-   verify(codigoDao, times(0)).getByAlineacionId(alineacionEntity1.id)
-   verify(codigoDao, times(0)).getByAlineacionId(alineacionEntity2.id)
+   verify(lineaAlineacionDao, times(0)).getByAlineacionId(alineacionEntity1.id)
+   verify(lineaAlineacionDao, times(0)).getByAlineacionId(alineacionEntity2.id)
 
    verify(mapper, times(0)).toModel(codigoEntity1)
    verify(mapper, times(0)).toModel(codigoEntity2)
@@ -322,7 +322,7 @@ class AlineacionRepositoryImplTest {
    assertEquals(expected, actual)
 
    verify(alineacionDao, times(1)).getById(alineacionModel1.id)
-   verify(codigoDao, times(0)).getByAlineacionId(alineacionEntity1.id)
+   verify(lineaAlineacionDao, times(0)).getByAlineacionId(alineacionEntity1.id)
    verify(mapper, times(0)).toModel(codigoEntity1)
    verify(mapper, times(0)).toModel(codigoEntity2)
    verify(mapper, times(0)).toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))
@@ -333,7 +333,7 @@ class AlineacionRepositoryImplTest {
   @DisplayName("Buscar por id (lista de códigos de alineacion vacía)")
   fun getByIdEmptyListOfCodes(){
    whenever(alineacionDao.getById(alineacionModelEmptyPersonalList.id)).thenReturn(alineacionEntityEmptyPersonalList)
-   whenever(codigoDao.getByAlineacionId(alineacionEntityEmptyPersonalList.id)).thenReturn(emptyListCodigosAlineacionEntity)
+   whenever(lineaAlineacionDao.getByAlineacionId(alineacionEntityEmptyPersonalList.id)).thenReturn(emptyListCodigosAlineacionEntity)
 
    val expected = null
    val actual = repository.getById(alineacionModelEmptyPersonalList.id)
@@ -341,7 +341,7 @@ class AlineacionRepositoryImplTest {
    assertEquals(expected, actual)
 
    verify(alineacionDao, times(1)).getById(alineacionModelEmptyPersonalList.id)
-   verify(codigoDao, times(1)).getByAlineacionId(alineacionEntityEmptyPersonalList.id)
+   verify(lineaAlineacionDao, times(1)).getByAlineacionId(alineacionEntityEmptyPersonalList.id)
    verify(mapper, times(0)).toModel(alineacionEntityEmptyPersonalList, emptyListCodigosAlineacionModel)
 
   }
@@ -351,7 +351,7 @@ class AlineacionRepositoryImplTest {
   fun deleteByIdDAOFailure(){
    //Funciones que lleva dentro getById()
    whenever(alineacionDao.getById(alineacionModel1.id)).thenReturn(alineacionEntity1)
-   whenever(codigoDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
+   whenever(lineaAlineacionDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
    whenever(mapper.toModel(codigoEntity1)).thenReturn(codigoModel1)
    whenever(mapper.toModel(codigoEntity2)).thenReturn(codigoModel2)
    whenever(mapper.toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))).thenReturn(alineacionModel1)
@@ -365,7 +365,7 @@ class AlineacionRepositoryImplTest {
    assertEquals(expected, actual)
 
    verify(alineacionDao, times(1)).deleteById(alineacionModel1.id)
-   verify(codigoDao, times(0)).deleteByAlinecionId(alineacionModel1.id)
+   verify(lineaAlineacionDao, times(0)).deleteByAlinecionId(alineacionModel1.id)
   }
 
   @Test
@@ -373,14 +373,14 @@ class AlineacionRepositoryImplTest {
   fun deleteByIdNotEnoughCodigosAlineacion(){
    //Funciones que lleva dentro getById()
    whenever(alineacionDao.getById(alineacionModel1.id)).thenReturn(alineacionEntity1)
-   whenever(codigoDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
+   whenever(lineaAlineacionDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
    whenever(mapper.toModel(codigoEntity1)).thenReturn(codigoModel1)
    whenever(mapper.toModel(codigoEntity2)).thenReturn(codigoModel2)
    whenever(mapper.toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))).thenReturn(alineacionModel1)
 
    //Funciones propias de delete()
    whenever(alineacionDao.deleteById(alineacionModel1.id)).thenReturn(1)
-   whenever(codigoDao.deleteByAlinecionId(alineacionModel1.id)).thenReturn(9)
+   whenever(lineaAlineacionDao.deleteByAlinecionId(alineacionModel1.id)).thenReturn(9)
 
    val expected = null
    val actual = repository.delete(alineacionModel1.id)
@@ -388,7 +388,7 @@ class AlineacionRepositoryImplTest {
    assertEquals(expected, actual)
 
    verify(alineacionDao, times(1)).deleteById(alineacionModel1.id)
-   verify(codigoDao, times(1)).deleteByAlinecionId(alineacionModel1.id)
+   verify(lineaAlineacionDao, times(1)).deleteByAlinecionId(alineacionModel1.id)
   }
 
   @Test
@@ -403,7 +403,7 @@ class AlineacionRepositoryImplTest {
    assertEquals(expected, actual)
 
    verify(alineacionDao, times(0)).deleteById(alineacionModel1.id)
-   verify(codigoDao, times(0)).deleteByAlinecionId(alineacionModel1.id)
+   verify(lineaAlineacionDao, times(0)).deleteByAlinecionId(alineacionModel1.id)
   }
 
   @Test
@@ -417,7 +417,7 @@ class AlineacionRepositoryImplTest {
    assertEquals(expected, actual)
 
    verify(alineacionDao, times(1)).getByFechaJuego(alineacionModel1.juegoDate)
-   verify(codigoDao, times(0)).getByAlineacionId(alineacionEntity1.id)
+   verify(lineaAlineacionDao, times(0)).getByAlineacionId(alineacionEntity1.id)
    verify(mapper, times(0)).toModel(codigoEntity1)
    verify(mapper, times(0)).toModel(codigoEntity2)
    verify(mapper, times(0)).toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))
@@ -427,7 +427,7 @@ class AlineacionRepositoryImplTest {
   @DisplayName("Buscar por fecha (lista de códigos de alineacion vacía)")
   fun getByDateEmptyListOfCodes(){
    whenever(alineacionDao.getByFechaJuego(alineacionModelEmptyPersonalList.juegoDate)).thenReturn(alineacionEntityEmptyPersonalList)
-   whenever(codigoDao.getByAlineacionId(alineacionEntityEmptyPersonalList.id)).thenReturn(emptyListCodigosAlineacionEntity)
+   whenever(lineaAlineacionDao.getByAlineacionId(alineacionEntityEmptyPersonalList.id)).thenReturn(emptyListCodigosAlineacionEntity)
 
    val expected = null
    val actual = repository.getByDate(alineacionModelEmptyPersonalList.juegoDate)
@@ -435,7 +435,7 @@ class AlineacionRepositoryImplTest {
    assertEquals(expected, actual)
 
    verify(alineacionDao, times(1)).getByFechaJuego(alineacionModelEmptyPersonalList.juegoDate)
-   verify(codigoDao, times(1)).getByAlineacionId(alineacionEntityEmptyPersonalList.id)
+   verify(lineaAlineacionDao, times(1)).getByAlineacionId(alineacionEntityEmptyPersonalList.id)
    verify(mapper, times(0)).toModel(alineacionEntityEmptyPersonalList, emptyListCodigosAlineacionModel)
 
   }
@@ -458,9 +458,9 @@ class AlineacionRepositoryImplTest {
    // Verificaciones
    verify(alineacionDao, times(1)).getById(alineacionEntity1.id)
    verify(alineacionDao, times(0)).updateById(alineacionEntity1, alineacionEntity1.id)
-   verify(codigoDao, times(0)).deleteByAlinecionId(alineacionEntity1.id)
-   verify(codigoDao, times(0)).save(codigoEntity2)
-   verify(codigoDao, times(0)).save(codigoEntity1)
+   verify(lineaAlineacionDao, times(0)).deleteByAlinecionId(alineacionEntity1.id)
+   verify(lineaAlineacionDao, times(0)).save(codigoEntity2)
+   verify(lineaAlineacionDao, times(0)).save(codigoEntity1)
    verify(mapper, times(0)).toEntity(codigoModel2)
    verify(mapper, times(0)).toEntity(codigoModel1)
    verify(mapper, times(0)).toEntity(alineacionModel1)
@@ -481,9 +481,9 @@ class AlineacionRepositoryImplTest {
    // Verificaciones
    verify(alineacionDao, times(1)).getById(alineacionEntity1.id)
    verify(alineacionDao, times(1)).updateById(alineacionEntity1, alineacionEntity1.id)
-   verify(codigoDao, times(0)).deleteByAlinecionId(alineacionEntity1.id)
-   verify(codigoDao, times(0)).save(codigoEntity2)
-   verify(codigoDao, times(0)).save(codigoEntity1)
+   verify(lineaAlineacionDao, times(0)).deleteByAlinecionId(alineacionEntity1.id)
+   verify(lineaAlineacionDao, times(0)).save(codigoEntity2)
+   verify(lineaAlineacionDao, times(0)).save(codigoEntity1)
    verify(mapper, times(0)).toEntity(codigoModel2)
    verify(mapper, times(0)).toEntity(codigoModel1)
    verify(mapper, times(1)).toEntity(alineacionModel1)
@@ -498,9 +498,9 @@ class AlineacionRepositoryImplTest {
    whenever(alineacionDao.getAll()).thenReturn(listOf(alineacionEntity1, alineacionEntityEmptyPersonalList))
 
    // La primera tiene 2 códigos asociados
-   whenever(codigoDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
+   whenever(lineaAlineacionDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
    // La segunda tiene 0 códigos → será filtrada
-   whenever(codigoDao.getByAlineacionId(alineacionEntityEmptyPersonalList.id)).thenReturn(emptyListCodigosAlineacionEntity)
+   whenever(lineaAlineacionDao.getByAlineacionId(alineacionEntityEmptyPersonalList.id)).thenReturn(emptyListCodigosAlineacionEntity)
 
    // También simulamos que el mapper transforma correctamente los códigos
    whenever(mapper.toModel(codigoEntity1)).thenReturn(codigoModel1)
@@ -518,8 +518,8 @@ class AlineacionRepositoryImplTest {
 
    // Verificaciones
    verify(alineacionDao, times(1)).getAll()
-   verify(codigoDao, times(1)).getByAlineacionId(alineacionEntity1.id)
-   verify(codigoDao, times(1)).getByAlineacionId(alineacionEntityEmptyPersonalList.id)
+   verify(lineaAlineacionDao, times(1)).getByAlineacionId(alineacionEntity1.id)
+   verify(lineaAlineacionDao, times(1)).getByAlineacionId(alineacionEntityEmptyPersonalList.id)
    verify(mapper, times(1)).toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2))
    verify(mapper, times(1)).toModel(alineacionEntityEmptyPersonalList, emptyList())
   }

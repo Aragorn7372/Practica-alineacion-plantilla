@@ -2,7 +2,7 @@ package org.example.newteamultimateedition.di
 
 import com.github.benmanes.caffeine.cache.Cache
 import org.example.newteamultimateedition.alineacion.dao.AlineacionDao
-import org.example.newteamultimateedition.alineacion.dao.CodigoDao
+import org.example.newteamultimateedition.alineacion.dao.LineaAlineacionDao
 import org.example.newteamultimateedition.alineacion.dao.provideAlineacionDao
 import org.example.newteamultimateedition.alineacion.dao.provideCodigoDao
 import org.example.newteamultimateedition.alineacion.validador.AlineacionValidate
@@ -44,7 +44,7 @@ val appModule = module {
         bind<UsersDao>()
     }
     singleOf(::provideCodigoDao) {
-        bind<CodigoDao>()
+        bind<LineaAlineacionDao>()
     }
     singleOf(::provideAlineacionDao) {
         bind<AlineacionDao>()

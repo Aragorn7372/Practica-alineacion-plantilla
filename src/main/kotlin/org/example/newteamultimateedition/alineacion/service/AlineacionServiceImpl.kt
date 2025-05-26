@@ -7,7 +7,7 @@ import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.onSuccess
 import org.example.newteamultimateedition.alineacion.error.AlineacionError
 import org.example.newteamultimateedition.alineacion.model.Alineacion
-import org.example.newteamultimateedition.alineacion.model.CodigoAlineacion
+import org.example.newteamultimateedition.alineacion.model.LineaAlineacion
 import org.example.newteamultimateedition.alineacion.repository.AlineacionRepositoryImpl
 import org.example.newteamultimateedition.alineacion.validador.AlineacionValidate
 import org.example.newteamultimateedition.common.error.Errors
@@ -45,7 +45,7 @@ class AlineacionServiceImpl(
         }
     }
 
-    override fun getJugadoresByLista(lista: List<CodigoAlineacion>): Result<List<Persona>, PersonasError> {
+    override fun getJugadoresByLista(lista: List<LineaAlineacion>): Result<List<Persona>, PersonasError> {
         logger.debug { "getJugadoresByLista" }
         try {
             val list= lista.map { personalService.getByID(it.idPersona) }
