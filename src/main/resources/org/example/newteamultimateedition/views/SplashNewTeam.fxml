@@ -19,7 +19,7 @@
             <AnchorPane prefHeight="86.0" prefWidth="600.0" style="-fx-background-color: #1b263b;">
                <children>
                   <ProgressBar fx:id="progressBar" layoutX="150.0" layoutY="22.0" prefHeight="27.0" prefWidth="300.0" progress="0.0" />
-                  <Label fx:id="mensajeCarga" layoutX="286.0" layoutY="56.0" textFill="WHITE" />
+                  <Label fx:id="mensajeCarga" layoutX="256.0" layoutY="51.0" textFill="WHITE" />
                </children>
             </AnchorPane>
          </children>
