@@ -1,6 +1,6 @@
 package org.example.newteamultimateedition.alineacion.dao
 
-data class CodigoAlineacionEntity(
+data class LineaAlineacionEntity(
     val id: String,
     val personalId: Long,
     val alineacionId: Long,

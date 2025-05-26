@@ -1,7 +1,7 @@
 package org.example.newteamultimateedition.alineacion.validador
 
 import org.example.newteamultimateedition.alineacion.model.Alineacion
-import org.example.newteamultimateedition.alineacion.model.CodigoAlineacion
+import org.example.newteamultimateedition.alineacion.model.LineaAlineacion
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
@@ -11,14 +11,14 @@ import java.time.LocalDateTime
 
 class AlineacionValidateTest{
   private val validator= AlineacionValidate()
-  private val codigo= CodigoAlineacion(
+  private val codigo= LineaAlineacion(
    idAlineacion = 1L,
    idPersona = 1L,
    posicion = 1
   )
 
- private fun createList(maxRows: Int): List<CodigoAlineacion> {
-  val list: MutableList<CodigoAlineacion> = mutableListOf()
+ private fun createList(maxRows: Int): List<LineaAlineacion> {
+  val list: MutableList<LineaAlineacion> = mutableListOf()
    for (i in 1..maxRows) {
     list.add(codigo)
    }

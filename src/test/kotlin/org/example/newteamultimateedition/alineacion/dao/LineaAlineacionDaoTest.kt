@@ -5,10 +5,10 @@ import org.junit.jupiter.api.*
 import org.junit.jupiter.api.Assertions.*
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-class CodigoDaoTest {
-    private lateinit var dao: CodigoDao
+class LineaAlineacionDaoTest {
+    private lateinit var dao: LineaAlineacionDao
 
-    private val codigoEntity= CodigoAlineacionEntity(
+    private val codigoEntity= LineaAlineacionEntity(
         id= "ash",
         personalId = 1,
         alineacionId = 1,
