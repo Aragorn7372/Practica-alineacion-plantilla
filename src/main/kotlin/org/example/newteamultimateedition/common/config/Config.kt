@@ -59,6 +59,7 @@ object Config {
         val cacheExpiration = propiedades.getProperty("cache.expiration").toLong()
 
 
+
         crearDirectorios(directorioData, directorioBackup, directorioImagenes)
 
         return ConfigProperties(directorioData, directorioBackup, directorioImagenes, databaseUrl, databaseInitTables,databaseInitData, cacheSize, cacheExpiration)

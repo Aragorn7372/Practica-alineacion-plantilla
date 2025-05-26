@@ -18,5 +18,5 @@ data class ConfigProperties(
     val databaseInitTables: Boolean,
     val databaseInitData: Boolean,
     val cacheSize: Long,
-    val cacheExpiration: Long
+    val cacheExpiration: Long,
 )

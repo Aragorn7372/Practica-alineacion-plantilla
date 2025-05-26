@@ -52,7 +52,7 @@ class EquipoViewModel (
         val fechaIncorporacion: LocalDate = LocalDate.now(),
         val salario: Double = 0.0,
         val pais: String = "",
-        val imagen: String = "media/profile_picture.png",
+        val imagen: String = "resources/profile_picture.png",
         val especialidad: String = "",
         val posicion: String = "",
         val dorsal: Int = 0,

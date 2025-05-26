@@ -101,8 +101,7 @@ class RegisterController: KoinComponent {
                 cache.put(1L,result.value)
                 if (!result.value.isAdmin) {
                     RoutesManager.initAdminStage(toLogin.scene.window as Stage)
-                }
-            }
+                }            }
         }
     }
     private fun validation(userName: String, password: String, passwordConfirmation: String) : Result<User,UsersException> {
