@@ -1,6 +1,7 @@
 
 package org.example.newteamultimateedition.personal.controllers
 
+import com.github.benmanes.caffeine.cache.Cache
 import com.github.michaelbull.result.*
 import javafx.application.Platform
 import javafx.fxml.FXML
@@ -22,6 +23,7 @@ import org.example.newteamultimateedition.personal.models.Jugador
 import org.example.newteamultimateedition.personal.models.Persona
 
 import org.example.newteamultimateedition.routes.RoutesManager
+import org.example.newteamultimateedition.users.models.User
 import org.example.newteamultimateedition.viewmodels.EquipoViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -37,6 +39,7 @@ class NewTeamAdminController(): KoinComponent {
 
     private val logger = logging()
     private val viewModel: EquipoViewModel by inject()
+    private val cache: Cache<Long, User> by inject()
 
     /* Menu */
     @FXML
@@ -173,7 +176,7 @@ class NewTeamAdminController(): KoinComponent {
      */
     private fun initDefaultValues() {
         disableAll()
-        
+
         //Tabla
         listIntegrantes.items = viewModel.state.value.personas
         //Columnas, ya se bindean solas en base al contenido de la tabla
@@ -1029,7 +1032,10 @@ class NewTeamAdminController(): KoinComponent {
             this.title = "Cerrar sesión"
             this.contentText = "Si cierras la sesión perderás todos los datos no guardados. ¿Estás seguro de querer continuar?"
         }.showAndWait().ifPresent { opcion ->
-            if (opcion == ButtonType.OK) RoutesManager.initLoginStage(searchBar.scene.window as Stage)
+            if (opcion == ButtonType.OK) {
+                cache.cleanUp()
+                RoutesManager.initLoginStage(searchBar.scene.window as Stage)
+            }
         }
     }
 }

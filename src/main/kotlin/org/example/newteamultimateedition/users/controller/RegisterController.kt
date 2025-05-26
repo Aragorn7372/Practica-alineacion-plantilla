@@ -31,9 +31,10 @@ import org.mindrot.jbcrypt.BCrypt
 
 class RegisterController: KoinComponent {
 
-
     private val dao: UsersServiceImpl by inject()
+
     private val cache: Cache<Long,User> by inject()
+
     @FXML
     lateinit var acercaDeButton: Button
     @FXML
@@ -98,6 +99,9 @@ class RegisterController: KoinComponent {
                 showUserError("La base de datos ha explotado por favor reinicie la aplicacion")
             }else{
                 cache.put(1L,result.value)
+                if (!result.value.isAdmin) {
+                    RoutesManager.initAdminStage(toLogin.scene.window as Stage)
+                }
             }
         }
     }
