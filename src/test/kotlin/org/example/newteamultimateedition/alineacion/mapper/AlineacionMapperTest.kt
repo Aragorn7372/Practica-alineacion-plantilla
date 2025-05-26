@@ -1,9 +1,9 @@
 package org.example.newteamultimateedition.alineacion.mapper
 
 import org.example.newteamultimateedition.alineacion.dao.AlineacionEntity
-import org.example.newteamultimateedition.alineacion.dao.CodigoAlineacionEntity
+import org.example.newteamultimateedition.alineacion.dao.LineaAlineacionEntity
 import org.example.newteamultimateedition.alineacion.model.Alineacion
-import org.example.newteamultimateedition.alineacion.model.CodigoAlineacion
+import org.example.newteamultimateedition.alineacion.model.LineaAlineacion
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
@@ -19,7 +19,7 @@ class AlineacionMapperTest {
    updatedAt = LocalDateTime.now(),
    juegoDate = LocalDate.now(),
   )
- private val codigo= CodigoAlineacion(
+ private val codigo= LineaAlineacion(
   id= UUID.fromString("7fa10f96-a0fc-4ccd-8aa5-5238a2642488"),
   idAlineacion = 1L,
   idPersona = 1L,
@@ -32,7 +32,7 @@ class AlineacionMapperTest {
   updatedAt = alineacionEntity.updatedAt,
   createdAt = alineacionEntity.createdAt
  )
- private val codigoEntity= CodigoAlineacionEntity(
+ private val codigoEntity= LineaAlineacionEntity(
   id= "7fa10f96-a0fc-4ccd-8aa5-5238a2642488",
   personalId = 1L,
   alineacionId = 1L,
@@ -55,14 +55,14 @@ class AlineacionMapperTest {
 @Test
  fun testToEntity() {
   val result= mapper.toEntity(codigo)
- assertTrue(result is CodigoAlineacionEntity,"debe ser un codigoAlineacionEntity")
+ assertTrue(result is LineaAlineacionEntity,"debe ser un codigoAlineacionEntity")
  assertEquals(result,codigoEntity, "deberian ser iguales")
  }
 
 @Test
  fun toModel() {
   val result= mapper.toModel(codigoEntity)
- assertTrue(result is CodigoAlineacion,"debe ser un codigoAlineacionEntity")
+ assertTrue(result is LineaAlineacion,"debe ser un codigoAlineacionEntity")
  assertEquals(result,codigo, "deberian ser iguales")
  }
 }

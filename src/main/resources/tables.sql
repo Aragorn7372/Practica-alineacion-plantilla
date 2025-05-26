@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS alineacion (
 
 );
 
-CREATE TABLE IF NOT EXISTS codigo (
+CREATE TABLE IF NOT EXISTS linea (
     uuid VARCHAR NOT NULL PRIMARY KEY,
     id_persona BIGINT NOT NULL,
     id_alineacion BIGINT NOT NULL,

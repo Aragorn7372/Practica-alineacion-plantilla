@@ -5,7 +5,7 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import org.example.newteamultimateedition.alineacion.error.AlineacionError
 import org.example.newteamultimateedition.alineacion.model.Alineacion
-import org.example.newteamultimateedition.alineacion.model.CodigoAlineacion
+import org.example.newteamultimateedition.alineacion.model.LineaAlineacion
 import org.example.newteamultimateedition.alineacion.repository.AlineacionRepositoryImpl
 import org.example.newteamultimateedition.alineacion.validador.AlineacionValidate
 import org.example.newteamultimateedition.personal.error.PersonasError
@@ -17,7 +17,6 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
@@ -41,7 +40,7 @@ class AlineacionServiceImplTest {
     @InjectMocks
     private lateinit var service: AlineacionServiceImpl
 
-    private val code= CodigoAlineacion(
+    private val code= LineaAlineacion(
         id= UUID.fromString("7fa10f96-a0fc-4ccd-8aa5-5238a2642488"),
         idAlineacion = 1L,
         idPersona = 1L,
