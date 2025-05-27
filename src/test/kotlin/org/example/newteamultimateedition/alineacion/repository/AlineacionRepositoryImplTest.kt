@@ -9,7 +9,6 @@ import org.example.newteamultimateedition.alineacion.model.Alineacion
 import org.example.newteamultimateedition.alineacion.model.LineaAlineacion
 import org.example.newteamultimateedition.personal.models.Entrenador
 import org.example.newteamultimateedition.personal.models.Especialidad
-import org.example.newteamultimateedition.personal.repository.PersonalRepository
 import org.example.newteamultimateedition.personal.repository.PersonasRepositoryImplementation
 import org.junit.jupiter.api.Assertions.assertAll
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -225,6 +224,7 @@ class AlineacionRepositoryImplTest {
 
    verify(alineacionDao, times(1)).getByFechaJuego(alineacionModel1.juegoDate)
    verify(lineaAlineacionDao, times(1)).getByAlineacionId(alineacionEntity1.id)
+   verify(personasRepository, times(1)).getById(entrenador.id)
    verify(mapper, times(1)).toModel(codigoEntity1)
    verify(mapper, times(1)).toModel(codigoEntity2)
    verify(mapper, times(1)).toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2), entrenador)
@@ -317,6 +317,25 @@ class AlineacionRepositoryImplTest {
  @Nested
  @DisplayName("Tests incorrectos")
  inner class TestsIncorrectos {
+
+  @Test
+  @DisplayName("Buscar por id (Repositorio no encuentra entrenador)")
+  fun getByIdEntrenadorNotFound(){
+   whenever(alineacionDao.getById(alineacionModel1.id)).thenReturn(alineacionEntity1)
+   whenever(lineaAlineacionDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
+   whenever(personasRepository.getById(1L)).thenReturn(null)
+
+   val expected = null
+   val actual = repository.getById(alineacionEntity1.id)
+
+   assertEquals(expected, actual)
+
+   verify(alineacionDao, times(1)).getById(alineacionModel1.id)
+   verify(lineaAlineacionDao, times(1)).getByAlineacionId(alineacionEntity1.id)
+   verify(mapper, times(0)).toModel(codigoEntity1)
+   verify(mapper, times(0)).toModel(codigoEntity2)
+   verify(mapper, times(0)).toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2), entrenador)
+  }
 
   @Test
   @DisplayName("getAll() devuelve lista de alineaciones vacía")
@@ -460,6 +479,26 @@ class AlineacionRepositoryImplTest {
   }
 
   @Test
+  @DisplayName("Buscar por fecha (Repositorio no encuentra entrenador)")
+  fun getByDateEntrenadorNotFound(){
+   whenever(alineacionDao.getByFechaJuego(alineacionModel1.juegoDate)).thenReturn(alineacionEntity1)
+   whenever(lineaAlineacionDao.getByAlineacionId(alineacionEntity1.id)).thenReturn(listOf(codigoEntity1, codigoEntity2))
+   whenever(personasRepository.getById(entrenador.id)).thenReturn(null)
+
+   val expected = null
+   val actual = repository.getByDate(alineacionModel1.juegoDate)
+
+   assertEquals(expected, actual)
+
+   verify(alineacionDao, times(1)).getByFechaJuego(alineacionModel1.juegoDate)
+   verify(lineaAlineacionDao, times(1)).getByAlineacionId(alineacionEntity1.id)
+   verify(personasRepository, times(1)).getById(entrenador.id)
+   verify(mapper, times(0)).toModel(codigoEntity1)
+   verify(mapper, times(0)).toModel(codigoEntity2)
+   verify(mapper, times(0)).toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2), entrenador)
+  }
+
+  @Test
   @DisplayName("Buscar por fecha (lista de códigos de alineacion vacía)")
   fun getByDateEmptyListOfCodes(){
    whenever(alineacionDao.getByFechaJuego(alineacionModelEmptyPersonalList.juegoDate)).thenReturn(alineacionEntityEmptyPersonalList)
@@ -502,6 +541,33 @@ class AlineacionRepositoryImplTest {
    verify(mapper, times(0)).toEntity(alineacionModel1)
    verify(mapper, times(0)).toModel(alineacionEntity1, alineacionModel1.personalList, entrenador)
   }
+
+  @Test
+  @DisplayName("getAll() el repositorio no encuentra el entrenador")
+  fun getAllEntrenadorNotFound() {
+   // Solo una alineación, cuyo entrenador no existe
+   whenever(alineacionDao.getAll()).thenReturn(listOf(alineacionEntity1))
+
+   // La alineación tiene líneas asociadas
+   whenever(lineaAlineacionDao.getByAlineacionId(alineacionEntity1.id))
+    .thenReturn(listOf(codigoEntity1, codigoEntity2))
+
+   // Pero no se encuentra el entrenador
+   whenever(personasRepository.getById(1L)).thenReturn(null)
+
+   val expected = emptyList<Alineacion>()
+   val actual = repository.getAll()
+
+   assertEquals(expected, actual)
+
+   verify(alineacionDao, times(1)).getAll()
+   verify(lineaAlineacionDao, times(1)).getByAlineacionId(alineacionEntity1.id)
+   verify(personasRepository, times(1)).getById(1L)
+
+   // No se deben llamar los mappers, ya que no hay entrenador
+   verify(mapper, times(0)).toModel(alineacionEntity1, listOf(codigoModel1, codigoModel2), entrenador)
+  }
+
   @Test
   @DisplayName("update bad update failed")
   fun updateBadUpdateAlineacion() {
