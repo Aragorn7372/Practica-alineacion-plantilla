@@ -4,16 +4,39 @@ import org.example.newteamultimateedition.personal.dao.PersonaEntity
 import org.example.newteamultimateedition.personal.dto.IntegranteDTO
 import org.example.newteamultimateedition.personal.dto.IntegranteXmlDTO
 import org.example.newteamultimateedition.personal.models.*
+import org.example.newteamultimateedition.viewmodels.EquipoViewModel
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.LocalDateTime
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Nested
+import org.junit.jupiter.api.assertThrows
 
 
 class PersonaMapperTest {
-
+    class PersonaRemix(
+        id: Long = 0L,
+        nombre: String,
+        apellidos: String,
+        fechaNacimiento: LocalDate,
+        fechaIncorporacion: LocalDate,
+        salario: Double,
+        pais: String,
+        createdAt: LocalDateTime = LocalDateTime.now(),
+        updatedAt: LocalDateTime = LocalDateTime.now(),
+        imagen: String,
+        ):Persona(id = id, nombre = nombre, apellidos = apellidos, fechaNacimiento = fechaNacimiento, fechaIncorporacion = fechaIncorporacion, salario = salario, pais = pais, createdAt = createdAt,updatedAt = updatedAt, imagen = imagen)
+    private val personaRemix = PersonaRemix(
+        id = 1,
+        nombre = "Jugadora",
+        apellidos = "hola",
+        fechaNacimiento = LocalDate.parse("2020-01-01"),
+        fechaIncorporacion = LocalDate.parse("2020-01-02"),
+        salario = 3000.0,
+        pais = "españa",
+        imagen = "jaskjndkjnas"
+    )
     private val jugador = Jugador(
         id = 1,
         nombre = "Jugadora",
@@ -103,6 +126,7 @@ class PersonaMapperTest {
         minutosJugados = 100,
         imagen = "jaskjndkjnas"
     )
+    private val any= Any()
 
     private val entrenadorDTO = IntegranteDTO(
         id = 2,
@@ -164,6 +188,25 @@ class PersonaMapperTest {
         imagen = "oijsdoiasjd"
     )
 
+    /*
+    val id: Long = 0L,
+    val nombre: String = "",
+    val apellidos: String = "",
+    val fechaNacimiento: LocalDate = LocalDate.now(),
+    val fechaIncorporacion: LocalDate = LocalDate.now(),
+    val salario: Double = 0.0,
+    val pais: String = "",
+    val imagen: String = "resources/profile_picture.png",
+    val especialidad: String = "",
+    val posicion: String = "",
+    val dorsal: Int = 0,
+    val altura: Double = 0.0,
+    val peso: Double = 0.0,
+    val goles: Int = 0,
+    val partidosJugados: Int = 0,
+    val minutosJugados: Int = 0
+     */
+
     @Nested
     @DisplayName("Tests correctos")
     inner class TestsCorrectos {
@@ -187,6 +230,14 @@ class PersonaMapperTest {
 
             assertTrue(result is PersonaEntity)
             assertEquals(expected, result, "El resultado del mapeo debe coincidir con lo esperado.")
+        }
+
+        @Test
+        @DisplayName("probando con algo que no es una persona")
+        fun personaToEntitySinPersona(){
+            val result=assertThrows<IllegalArgumentException> { (personaRemix).toEntity() }
+            assertTrue(result is Exception,"deberia ser un error")
+            assertEquals(result.message,"No se trata de un jugador ni de un entrenador","deberian tener el mismo codigo de error")
         }
 
         @Test
@@ -348,7 +399,5 @@ class PersonaMapperTest {
             assertTrue(result is IntegranteDTO)
             assertEquals(expected.posicion, result.posicion, "El resultado del mapeo debe coincidir con lo esperado.")
         }
-        
     }
-
 }
