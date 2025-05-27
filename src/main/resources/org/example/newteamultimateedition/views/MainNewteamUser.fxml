@@ -73,7 +73,14 @@
         </Menu>
         <Menu mnemonicParsing="false" text="Ayuda">
           <items>
-            <MenuItem fx:id="aboutButton" mnemonicParsing="false" text="Sobre NewTeam Manager" />
+            <MenuItem fx:id="aboutButton" mnemonicParsing="false" text="Sobre NewTeam Manager">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../media/informacion.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></MenuItem>
           </items>
         </Menu>
             <Menu mnemonicParsing="false" text="Sesión">
@@ -88,6 +95,19 @@
                      </graphic>
                   </MenuItem>
                </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Alineaciones">
+              <items>
+                <MenuItem fx:id="menuAlineacionesUser" mnemonicParsing="false" text="Consultar Alineaciones">
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../media/equipo-de-futbol.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+              </items>
             </Menu>
       </menus>
     </MenuBar>

@@ -14,13 +14,13 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane fx:id="root" prefHeight="449.0" prefWidth="540.0" stylesheets="@../styles/alineaciones.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="">
+<BorderPane fx:id="root" prefHeight="600.0" prefWidth="900.0" stylesheets="@../styles/alineaciones.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newteamultimateedition.alineacion.controllers.AlineacionAdminController">
 
     <!-- Top: Barra de búsqueda y selector -->
     <top>
         <HBox spacing="10" style="-fx-background-color: #2c3e50;">
             <ComboBox fx:id="filterComboBox" prefWidth="150" promptText="Filtrar por..." />
-            <TextField fx:id="searchTextField" promptText="Buscar..." HBox.hgrow="ALWAYS" />
+            <TextField fx:id="buscador" promptText="Buscar..." HBox.hgrow="ALWAYS" />
             <MenuBar>
                 <Menu id="archivoMenu" mnemonicParsing="false" text="Archivo">
                     <items>
@@ -49,7 +49,10 @@
                     <items>
                         <MenuItem fx:id="aboutButton" mnemonicParsing="false" text="Sobre NewTeam Manager">
                             <graphic>
-                                <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true" />
+                                <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../media/informacion.png" />
+                           </image></ImageView>
                             </graphic></MenuItem>
                     </items>
                 </Menu>
@@ -75,15 +78,15 @@
         <TableView fx:id="alineacionesTable" prefHeight="384.0" prefWidth="506.0">
             <columns>
                 <TableColumn fx:id="colId" prefWidth="100" text="ID" />
-                <TableColumn fx:id="colUpdatedAt" prefWidth="219.20001983642578" text="Updated At" />
-                <TableColumn fx:id="colFechaJuego" prefWidth="219.99996948242188" text="Fecha de Juego" />
+                <TableColumn fx:id="colUpdatedAt" prefWidth="402.39998626708984" text="Updated At" />
+                <TableColumn fx:id="colFechaJuego" prefWidth="396.8000183105469" text="Fecha de Juego" />
             </columns>
         </TableView>
     </center>
 
     <!-- Bottom: Botones de acción -->
     <bottom>
-        <HBox alignment="CENTER_RIGHT">
+        <HBox alignment="CENTER" spacing="50.0">
             <Button fx:id="btnEditar" prefHeight="11.0" prefWidth="110.0" text="Editar" HBox.hgrow="ALWAYS">
                 <graphic>
                     <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
@@ -97,21 +100,30 @@
                 </HBox.margin></Button>
             <Button fx:id="btnVisualizar" prefHeight="0.0" prefWidth="137.0" text="Visualizar" HBox.hgrow="ALWAYS">
                 <graphic>
-                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../media/visualizar.png" />
+                  </image></ImageView>
                 </graphic>
                 <HBox.margin>
                     <Insets right="5.0" />
                 </HBox.margin></Button>
             <Button fx:id="btnCrearAlineacion" prefHeight="36.0" prefWidth="169.0" text="Crear Alineación" HBox.hgrow="ALWAYS">
                 <graphic>
-                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../media/crear.png" />
+                  </image></ImageView>
                 </graphic>
                 <HBox.margin>
                     <Insets right="5.0" />
                 </HBox.margin></Button>
-            <Button fx:id="btnEditarPersonas" prefHeight="36.0" prefWidth="119.0" text="Jugadores" HBox.hgrow="ALWAYS">
+            <Button fx:id="btnEditarPersonas" prefHeight="36.0" prefWidth="146.0" text="Editar Jugadores" HBox.hgrow="ALWAYS">
                 <graphic>
-                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../media/editarJugadores.png" />
+                  </image></ImageView>
                 </graphic>
                 <HBox.margin>
                     <Insets right="10.0" />

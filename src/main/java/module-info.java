@@ -1,6 +1,7 @@
 module org.example.newteamultimateedition {
     requires javafx.controls;
     requires javafx.fxml;
+
     requires kotlin.stdlib;
     // Logger
     requires logging.jvm;
@@ -44,6 +45,7 @@ module org.example.newteamultimateedition {
     opens org.example.newteamultimateedition.users.dao to javafx.fxml;
     opens org.example.newteamultimateedition.users.models to org.jdbi.v3.core, javafx.fxml, javafx.base;
     opens org.example.newteamultimateedition.users.controller to javafx.fxml;
+    opens org.example.newteamultimateedition.alineacion.controllers to javafx.fxml;
 
     // Exportar los paquetes públicos si son utilizados en otros módulos\
     exports org.example.newteamultimateedition.personal.controllers;
@@ -54,4 +56,6 @@ module org.example.newteamultimateedition {
     exports org.example.newteamultimateedition.common.controller;
     exports org.example.newteamultimateedition.routes;
     exports org.example.newteamultimateedition.users.controller;
+    exports org.example.newteamultimateedition.alineacion.controllers;
+
 }

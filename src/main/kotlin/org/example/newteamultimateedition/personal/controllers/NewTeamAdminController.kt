@@ -52,6 +52,8 @@ class NewTeamAdminController(): KoinComponent {
     lateinit var aboutButton: MenuItem
     @FXML
     lateinit var logoutButton: MenuItem
+    @FXML
+    lateinit var menuAlineacionesAdmin: MenuItem
 
     /* Master */
     @FXML
@@ -369,6 +371,11 @@ class NewTeamAdminController(): KoinComponent {
         importButton.setOnAction { onImportarAction() }
 
         exportButton.setOnAction { onExportarAction() }
+
+        menuAlineacionesAdmin.setOnAction {
+            RoutesManager.initAlineacionesAdminStage()
+        }
+
 
         saveJugadorButton.setOnAction {
             especialidad.toggles.forEach{ it.isSelected = false }
