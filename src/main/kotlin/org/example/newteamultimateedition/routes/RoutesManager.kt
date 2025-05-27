@@ -45,7 +45,9 @@ object RoutesManager {
         SPLASH("views/SplashNewTeam.fxml"),
         LOGIN("views/LoginNewTeam.fxml"),
         ABOUT("views/AboutNewTeam.fxml"),
-        REGISTER("views/RegisterNewTeam.fxml")
+        REGISTER("views/RegisterNewTeam.fxml"),
+        ALINEACIONADMIN("views/alineacionesAdmin.fxml"),
+        ALINEACIONUSER("views/alineacionesUser.fxml"),
     }
 
     /**
@@ -85,7 +87,7 @@ object RoutesManager {
         stage.scene = scene
         stage.centerOnScreen()
         stage.setOnCloseRequest { onAppExit(event = it) }
-        mainStage = stage // Escena principal...
+        mainStage = stage
         _activeStage = stage
         mainStage.show()
     }
@@ -166,6 +168,23 @@ object RoutesManager {
         mainStage = stage
         _activeStage = stage
         mainStage.show()
+    }
+
+    fun initAlineacionesAdminStage() {
+        logger.debug { "Iniciando Alineaciones Admin" }
+        val fxmlLoader = FXMLLoader(getResource(Vistas.ALINEACIONADMIN.path))
+        val parentRoot = fxmlLoader.load<Pane>()
+        val myScene = Scene(parentRoot, 900.0, 600.0)
+        val stage = Stage()
+        stage.title = "Alineaciones Admin"
+        stage.scene = myScene
+        stage.initOwner(mainStage)
+        stage.centerOnScreen()
+        stage.isIconified = false
+        stage.initModality(Modality.WINDOW_MODAL)
+        stage.icons.add(Image(getResourceAsStream("media/app-icon.png")))
+        stage.isResizable = false
+        stage.show()
     }
 
     /**

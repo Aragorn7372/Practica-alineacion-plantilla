@@ -38,6 +38,8 @@ class NewTeamUserController(): KoinComponent {
     lateinit var aboutButton: MenuItem
     @FXML
     lateinit var logoutButton: MenuItem
+    @FXML
+    lateinit var menuAlineacionesUser: MenuItem
 
     /* Detalle */
 
