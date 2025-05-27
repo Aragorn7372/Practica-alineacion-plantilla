@@ -17,6 +17,7 @@ class AlineacionDaoTest {
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),
             juegoDate = LocalDate.now(),
+            idEntrenador = 1L
         )
 
 

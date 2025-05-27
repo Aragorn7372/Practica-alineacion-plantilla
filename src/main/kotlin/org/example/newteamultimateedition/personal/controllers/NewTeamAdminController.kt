@@ -65,6 +65,7 @@ class NewTeamAdminController(): KoinComponent {
     @FXML
     lateinit var editAndSaveButton: Button
 
+
     /* Detalle */
 
     // Comunes
@@ -119,6 +120,8 @@ class NewTeamAdminController(): KoinComponent {
 
     /* Main */
     @FXML
+    lateinit var nombreCuenta: Label
+    @FXML
     lateinit var colSalario: TableColumn<Persona, Double>
     @FXML
     lateinit var colEspecialidad: TableColumn<Persona, Especialidad>
@@ -128,12 +131,6 @@ class NewTeamAdminController(): KoinComponent {
     lateinit var colNombre: TableColumn<Persona, String>
     @FXML
     lateinit var listIntegrantes: TableView<Persona>
-    @FXML
-    lateinit var sortBySalario: MenuItem
-    @FXML
-    lateinit var sortByNombre: MenuItem
-    @FXML
-    lateinit var sortByNothing: MenuItem
     @FXML
     lateinit var filterByEntrenadores: MenuItem
     @FXML
@@ -153,10 +150,6 @@ class NewTeamAdminController(): KoinComponent {
 
     /* Lógica */
     private var isEditButton: Boolean = true
-
-    private var nombreAscending: Boolean = true
-
-    private var salarioAscending: Boolean = true
 
     private var alreadyFiltered: Boolean = false
 
@@ -186,6 +179,7 @@ class NewTeamAdminController(): KoinComponent {
         colSalario.cellValueFactory =PropertyValueFactory("salario")
         colRol.cellValueFactory = PropertyValueFactory("rol")
         colEspecialidad.cellValueFactory = PropertyValueFactory("miEspecialidad")
+        nombreCuenta.text = "${cache.getIfPresent(1L).name}"
     }
 
     /**
@@ -373,7 +367,7 @@ class NewTeamAdminController(): KoinComponent {
         exportButton.setOnAction { onExportarAction() }
 
         menuAlineacionesAdmin.setOnAction {
-            RoutesManager.initAlineacionesAdminStage()
+            RoutesManager.initAlineacionesAdminStage(apellidosField.scene.window as Stage)
         }
 
 
@@ -400,11 +394,6 @@ class NewTeamAdminController(): KoinComponent {
             onImageSelectAction()
         }
 
-        sortByNombre.setOnAction { onSortByNombreAction() }
-
-        sortBySalario.setOnAction { onSortBySalarioAction() }
-
-        sortByNothing.setOnAction { onSortByNothingAction() }
 
         filterByJugadores.setOnAction { onFilterByJugadoresAction() }
 
@@ -482,59 +471,6 @@ class NewTeamAdminController(): KoinComponent {
         val jugadoresFiltrados: List<Persona> = viewModel.state.value.personas.filterIsInstance<Jugador>()
         viewModel.filterPersonas(jugadoresFiltrados)
         alreadyFiltered = true
-    }
-
-    /**
-     * Elimina los filtros de ordenación de la lista de integrantes
-     * @see[EquipoViewModel.sortIntegrantes]
-     */
-    private fun onSortByNothingAction() {
-        logger.debug { "Quitando filtros de ordenación" }
-
-        val integrantesSinOrden: List<Persona> = viewModel.state.value.personas.shuffled()
-
-        viewModel.sortPersonas(integrantesSinOrden)
-
-    }
-
-    /**
-     * Ordena los integrantes por salario
-     * @see [EquipoViewModel.sortIntegrantes]
-     */
-    private fun onSortBySalarioAction(){
-        logger.debug { "Ordenando integrantes por salario" }
-
-        val integrantesOrdenados: List<Persona>
-
-        if (salarioAscending) {
-            integrantesOrdenados = viewModel.state.value.personas.sortedBy { it.salario }
-            salarioAscending = false
-        } else {
-            integrantesOrdenados = viewModel.state.value.personas.sortedByDescending { it.salario }
-            salarioAscending = true
-        }
-
-        viewModel.sortPersonas(integrantesOrdenados)
-    }
-
-    /**
-     * Ordena los integrantes por nombre
-     * @see [EquipoViewModel.sortIntegrantes]
-     */
-    private fun onSortByNombreAction() {
-        logger.debug { "Ordenando integrantes por nombre" }
-
-        val integrantesOrdenados: List<Persona>
-
-        if (nombreAscending) {
-            integrantesOrdenados = viewModel.state.value.personas.sortedBy { it.apellidos }
-            nombreAscending = false
-        } else {
-            integrantesOrdenados = viewModel.state.value.personas.sortedByDescending { it.apellidos }
-            nombreAscending = true
-        }
-
-        viewModel.sortPersonas(integrantesOrdenados)
     }
 
     /**

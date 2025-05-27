@@ -115,15 +115,7 @@ class EquipoViewModel (
         )
     }
 
-    /**
-     * Guarda en el estado los integrantes ordenados
-     * @see updateState
-     */
-    fun sortPersonas(personasOrdenados: List<Persona>) {
-        logger.debug { "Ordenando la lista de integrantes" }
 
-        state.value.personas.setAll(personasOrdenados)
-    }
 
     /**
      * Guarda en el estado los integrantes filtrados

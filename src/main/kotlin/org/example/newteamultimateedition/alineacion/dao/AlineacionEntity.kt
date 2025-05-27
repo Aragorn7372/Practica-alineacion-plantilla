@@ -7,6 +7,7 @@ data class AlineacionEntity(
     val id: Long,
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime,
-    val juegoDate: LocalDate
+    val juegoDate: LocalDate,
+    val idEntrenador: Long
 ) {
 }

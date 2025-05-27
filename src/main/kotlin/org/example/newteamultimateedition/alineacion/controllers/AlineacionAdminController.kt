@@ -1,10 +1,16 @@
 package org.example.newteamultimateedition.alineacion.controllers
 
+import com.github.benmanes.caffeine.cache.Cache
 import javafx.fxml.FXML
 import javafx.scene.control.*
+import org.example.newteamultimateedition.users.models.User
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import org.lighthousegames.logging.logging
 
-class AlineacionAdminController {
-
+class AlineacionAdminController(): KoinComponent {
+    private val cache: Cache<Long, User> by inject()
+    private val logger= logging()
     //Botones HBox de abajo
     @FXML
     lateinit var btnEditar: Button
@@ -41,5 +47,22 @@ class AlineacionAdminController {
     @FXML
     lateinit var colUpdatedAt: TableColumn<String, String>
 
+    fun initialize() {
+        initEvents()
+        initBindings()
+        initDefaultValues()
+    }
+
+    private fun initDefaultValues() {
+        TODO("Not yet implemented")
+    }
+
+    private fun initBindings() {
+        TODO("Not yet implemented")
+    }
+
+    private fun initEvents() {
+        TODO("Not yet implemented")
+    }
 
 }

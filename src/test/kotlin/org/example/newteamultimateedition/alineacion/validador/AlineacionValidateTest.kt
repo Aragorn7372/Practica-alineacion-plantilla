@@ -2,6 +2,8 @@ package org.example.newteamultimateedition.alineacion.validador
 
 import org.example.newteamultimateedition.alineacion.model.Alineacion
 import org.example.newteamultimateedition.alineacion.model.LineaAlineacion
+import org.example.newteamultimateedition.personal.models.Entrenador
+import org.example.newteamultimateedition.personal.models.Especialidad
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
@@ -16,6 +18,19 @@ class AlineacionValidateTest{
    idPersona = 1L,
    posicion = 1
   )
+ private val entrenador = Entrenador(
+  id = 2,
+  nombre = "Entrenadora",
+  apellidos = "hola",
+  fechaNacimiento = LocalDate.parse("2020-01-01"),
+  fechaIncorporacion = LocalDate.parse("2020-01-02"),
+  salario = 3000.0,
+  pais = "españa",
+  especialidad = Especialidad.ENTRENADOR_PRINCIPAL,
+  createdAt = LocalDateTime.of(2022, 5, 10, 14, 30),
+  updatedAt = LocalDateTime.of(2022, 5, 10, 14, 30),
+  imagen = "oijsdoiasjd"
+ )
 
  private fun createList(maxRows: Int): List<LineaAlineacion> {
   val list: MutableList<LineaAlineacion> = mutableListOf()
@@ -35,7 +50,9 @@ inner class CasosCorrectos {
    personalList = createList(18),
    juegoDate = LocalDate.now(),
    updatedAt = LocalDateTime.now(),
-   createdAt = LocalDateTime.now()
+   createdAt = LocalDateTime.now(),
+   entrenador = entrenador
+
   )
    val result=validator.validator(alineacion)
    assertTrue(result.isOk,"deberia esta bien")
@@ -54,7 +71,8 @@ inner class CasosCorrectos {
     personalList = createList(18),
     juegoDate = LocalDate.parse("2025-05-23"),
     updatedAt = LocalDateTime.now(),
-    createdAt = LocalDateTime.now()
+    createdAt = LocalDateTime.now(),
+    entrenador = entrenador
    )
    val result=validator.validator(alineacion)
    assertTrue(result.isErr,"deberia devolver un error")
@@ -68,7 +86,8 @@ inner class CasosCorrectos {
     personalList = createList(17),
     juegoDate = LocalDate.now(),
     updatedAt = LocalDateTime.now(),
-    createdAt = LocalDateTime.now()
+    createdAt = LocalDateTime.now(),
+    entrenador = entrenador
    )
    val result=validator.validator(alineacion)
    assertTrue(result.isErr,"deberia devolver un error")
@@ -82,7 +101,8 @@ inner class CasosCorrectos {
     personalList = createList(19),
     juegoDate = LocalDate.now(),
     updatedAt = LocalDateTime.now(),
-    createdAt = LocalDateTime.now()
+    createdAt = LocalDateTime.now(),
+    entrenador = entrenador
    )
    val result=validator.validator(alineacion)
    assertTrue(result.isErr,"deberia devolver un error")

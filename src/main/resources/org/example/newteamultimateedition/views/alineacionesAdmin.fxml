@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="root" prefHeight="600.0" prefWidth="900.0" stylesheets="@../styles/alineaciones.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newteamultimateedition.alineacion.controllers.AlineacionAdminController">
+<BorderPane fx:id="root" prefHeight="600.0" prefWidth="900.0" stylesheets="@../styles/alineaciones.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newteamultimateedition.alineacion.controllers.AlineacionAdminController">
 
     <!-- Top: Barra de búsqueda y selector -->
     <top>
@@ -24,15 +15,6 @@
             <MenuBar>
                 <Menu id="archivoMenu" mnemonicParsing="false" text="Archivo">
                     <items>
-                        <MenuItem fx:id="importButton" mnemonicParsing="false" text="Importar">
-                            <graphic>
-                                <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../media/Import.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                        </MenuItem>
                         <MenuItem fx:id="exportButton" mnemonicParsing="false" text="Exportar">
                             <graphic>
                                 <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
@@ -112,17 +94,17 @@
                 <graphic>
                     <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                     <Image url="@../media/crear.png" />
+                     <Image url="@../media/Add.png" />
                   </image></ImageView>
                 </graphic>
                 <HBox.margin>
                     <Insets right="5.0" />
                 </HBox.margin></Button>
-            <Button fx:id="btnEditarPersonas" prefHeight="36.0" prefWidth="146.0" text="Editar Jugadores" HBox.hgrow="ALWAYS">
+            <Button fx:id="btnEditarPersonas" prefHeight="36.0" prefWidth="146.0" text=" Menu Personal" HBox.hgrow="ALWAYS">
                 <graphic>
                     <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                     <Image url="@../media/editarJugadores.png" />
+                     <Image url="@../media/editPlayers.png" />
                   </image></ImageView>
                 </graphic>
                 <HBox.margin>

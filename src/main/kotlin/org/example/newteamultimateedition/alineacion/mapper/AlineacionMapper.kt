@@ -4,17 +4,19 @@ import org.example.newteamultimateedition.alineacion.dao.AlineacionEntity
 import org.example.newteamultimateedition.alineacion.dao.LineaAlineacionEntity
 import org.example.newteamultimateedition.alineacion.model.Alineacion
 import org.example.newteamultimateedition.alineacion.model.LineaAlineacion
+import org.example.newteamultimateedition.personal.models.Entrenador
 import java.util.*
 
 class AlineacionMapper {
-    fun toModel(alineacionEntity: AlineacionEntity, list:List<LineaAlineacion>): Alineacion {
+    fun toModel(alineacionEntity: AlineacionEntity, list:List<LineaAlineacion>,entrenador: Entrenador): Alineacion {
 
         return Alineacion(
             id = alineacionEntity.id,
             createdAt = alineacionEntity.createdAt,
             updatedAt = alineacionEntity.updatedAt,
             juegoDate = alineacionEntity.juegoDate,
-            personalList = list
+            personalList = list,
+            entrenador = entrenador
         )
     }
     fun toEntity(model: Alineacion): AlineacionEntity {
@@ -24,6 +26,7 @@ class AlineacionMapper {
             createdAt = model.createdAt,
             updatedAt = model.updatedAt,
             juegoDate = model.juegoDate,
+            idEntrenador = model.entrenador.id
         )
     }
     fun toEntity(model: LineaAlineacion): LineaAlineacionEntity {

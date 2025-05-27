@@ -4,6 +4,8 @@ import org.example.newteamultimateedition.alineacion.dao.AlineacionDao
 import org.example.newteamultimateedition.alineacion.dao.LineaAlineacionDao
 import org.example.newteamultimateedition.alineacion.mapper.AlineacionMapper
 import org.example.newteamultimateedition.alineacion.model.Alineacion
+import org.example.newteamultimateedition.personal.models.Entrenador
+import org.example.newteamultimateedition.personal.repository.PersonalRepository
 import org.lighthousegames.logging.logging
 import java.time.LocalDate
 
@@ -11,7 +13,8 @@ import java.time.LocalDate
 class AlineacionRepositoryImpl(
     private val alineacionDao: AlineacionDao,
     private val lineaAlineacionDao: LineaAlineacionDao,
-    private val mapper: AlineacionMapper
+    private val mapper: AlineacionMapper,
+    private val personaRepository: PersonalRepository
 ):AlineacioRepository {
     private val logger = logging()
 
@@ -19,9 +22,11 @@ class AlineacionRepositoryImpl(
         logger.debug { "getByDate: $date" }
         val lista= alineacionDao.getByFechaJuego(date)?.let {
             val posiciones=lineaAlineacionDao.getByAlineacionId(it.id)
-            if(posiciones.isNotEmpty()){
-                mapper.toModel(it,posiciones.map { mapper.toModel(it) })
-            } else null
+            personaRepository.getById(it.idEntrenador)?.let { entrenador ->
+                if(posiciones.isNotEmpty()){
+                    mapper.toModel(it,posiciones.map { mapper.toModel(it) },entrenador as Entrenador)
+                } else null
+            }?:return null
         }
         return lista
     }
@@ -33,17 +38,23 @@ class AlineacionRepositoryImpl(
         //Si no esta vacia devolvemos la lista de alineacinoes filtrada por las que estan vacias
         return alineacionesEntity.map {
             val codigoAlineaciones = lineaAlineacionDao.getByAlineacionId(it.id).map { codigo -> mapper.toModel(codigo) }
-            mapper.toModel(it, codigoAlineaciones)
-        }.filter {  it.personalList.isNotEmpty()}
+            personaRepository.getById(it.idEntrenador)?.let { entrenador ->
+                val persona= entrenador!!
+                mapper.toModel(it, codigoAlineaciones, persona as Entrenador)
+            }
+        }.filterNotNull().filter { it.personalList.isNotEmpty() }
+
     }
 
     override fun getById(id: Long): Alineacion? {
         logger.debug { "getById: $id" }
         val lista= alineacionDao.getById(id)?.let {
             val posiciones=lineaAlineacionDao.getByAlineacionId(it.id)
-            if(posiciones.isNotEmpty()){
-                mapper.toModel(it,posiciones.map { mapper.toModel(it) })
-            } else null
+            personaRepository.getById(it.idEntrenador)?.let { entrenador ->
+                if(posiciones.isNotEmpty()){
+                    mapper.toModel(it,posiciones.map { mapper.toModel(it) },entrenador as Entrenador)
+                } else null
+            }?:return null
         }
         return lista
     }
@@ -59,7 +70,7 @@ class AlineacionRepositoryImpl(
                         lineaAlineacionDao.save(mapper.toEntity(it))
                     }
                 }else return null
-                return mapper.toModel(newAlineacion, codigoAlineaciones)
+                return mapper.toModel(newAlineacion, codigoAlineaciones,objeto.entrenador )
             }
         return null
     }

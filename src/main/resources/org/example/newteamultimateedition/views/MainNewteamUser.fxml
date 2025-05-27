@@ -32,30 +32,15 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
-<VBox prefHeight="600.0" prefWidth="970.0" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newteamultimateedition.personal.controllers.NewTeamUserController">
+<VBox prefHeight="600.0" prefWidth="970.0" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newteamultimateedition.personal.controllers.NewTeamUserController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -129,7 +114,7 @@
                                           <Color red="0.624" green="0.624" blue="0.624" fx:id="x21" />
                                        </textFill>
                                     </Label>
-                            <Label id="bigLabel" alignment="CENTER" style="&#10;" text="User" textAlignment="CENTER" wrapText="false">
+                            <Label id="bigLabel" fx:id="nombreCuenta" alignment="CENTER" style="&#10;" text="User" textAlignment="CENTER" wrapText="false">
                                        <font>
                                   <Font size="18.0" fx:id="x1" />
                                        </font>
@@ -153,13 +138,6 @@
                                         <MenuItem fx:id="filterByJugadores" mnemonicParsing="false" text="Jugadores" />
                                         <MenuItem fx:id="filterByEntrenadores" mnemonicParsing="false" text="Entrenadores" />
                                       </items>
-                                    </MenuButton>
-                                    <MenuButton mnemonicParsing="false" text="Ordenar">
-                                       <items>
-                                          <MenuItem fx:id="sortByNothing" mnemonicParsing="false" text="Nada" />
-                                          <MenuItem fx:id="sortByNombre" mnemonicParsing="false" text="Nombre" />
-                                          <MenuItem fx:id="sortBySalario" mnemonicParsing="false" text="Salario" />
-                                       </items>
                                     </MenuButton>
                                  </children>
                               </HBox>

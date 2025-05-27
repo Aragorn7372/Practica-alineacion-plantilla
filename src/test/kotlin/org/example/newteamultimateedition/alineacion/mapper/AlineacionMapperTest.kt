@@ -4,6 +4,8 @@ import org.example.newteamultimateedition.alineacion.dao.AlineacionEntity
 import org.example.newteamultimateedition.alineacion.dao.LineaAlineacionEntity
 import org.example.newteamultimateedition.alineacion.model.Alineacion
 import org.example.newteamultimateedition.alineacion.model.LineaAlineacion
+import org.example.newteamultimateedition.personal.models.Entrenador
+import org.example.newteamultimateedition.personal.models.Especialidad
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
@@ -13,11 +15,25 @@ import java.util.UUID
 
 class AlineacionMapperTest {
   private val mapper = AlineacionMapper()
+ private val entrenador = Entrenador(
+  id = 1,
+  nombre = "Entrenadora",
+  apellidos = "hola",
+  fechaNacimiento = LocalDate.parse("2020-01-01"),
+  fechaIncorporacion = LocalDate.parse("2020-01-02"),
+  salario = 3000.0,
+  pais = "españa",
+  especialidad = Especialidad.ENTRENADOR_PRINCIPAL,
+  createdAt = LocalDateTime.of(2022, 5, 10, 14, 30),
+  updatedAt = LocalDateTime.of(2022, 5, 10, 14, 30),
+  imagen = "oijsdoiasjd"
+ )
   private val alineacionEntity= AlineacionEntity(
    id= 1L,
    createdAt = LocalDateTime.now(),
    updatedAt = LocalDateTime.now(),
    juegoDate = LocalDate.now(),
+   idEntrenador= 1L
   )
  private val codigo= LineaAlineacion(
   id= UUID.fromString("7fa10f96-a0fc-4ccd-8aa5-5238a2642488"),
@@ -30,7 +46,8 @@ class AlineacionMapperTest {
   personalList = listOf(),
   juegoDate =alineacionEntity.juegoDate,
   updatedAt = alineacionEntity.updatedAt,
-  createdAt = alineacionEntity.createdAt
+  createdAt = alineacionEntity.createdAt,
+  entrenador = entrenador
  )
  private val codigoEntity= LineaAlineacionEntity(
   id= "7fa10f96-a0fc-4ccd-8aa5-5238a2642488",
@@ -40,7 +57,7 @@ class AlineacionMapperTest {
  )
 @Test
  fun toDatabaseModel() {
-  val result= mapper.toModel(alineacionEntity, listOf())
+  val result= mapper.toModel(alineacionEntity, listOf(),entrenador)
   assertTrue(result is Alineacion,"debe ser una alineacion")
   assertEquals(result,alineacion, "deberian ser iguales")
  }

@@ -170,21 +170,20 @@ object RoutesManager {
         mainStage.show()
     }
 
-    fun initAlineacionesAdminStage() {
+    fun initAlineacionesAdminStage(stage: Stage) {
         logger.debug { "Iniciando Alineaciones Admin" }
         val fxmlLoader = FXMLLoader(getResource(Vistas.ALINEACIONADMIN.path))
         val parentRoot = fxmlLoader.load<Pane>()
         val myScene = Scene(parentRoot, 900.0, 600.0)
-        val stage = Stage()
-        stage.title = "Alineaciones Admin"
+        stage.title = "Alineaciones"
         stage.scene = myScene
-        stage.initOwner(mainStage)
         stage.centerOnScreen()
         stage.isIconified = false
-        stage.initModality(Modality.WINDOW_MODAL)
         stage.icons.add(Image(getResourceAsStream("media/app-icon.png")))
         stage.isResizable = false
-        stage.show()
+        mainStage = stage
+        _activeStage = stage
+        mainStage.show()
     }
 
     /**

@@ -9,6 +9,8 @@ import org.example.newteamultimateedition.alineacion.model.LineaAlineacion
 import org.example.newteamultimateedition.alineacion.repository.AlineacionRepositoryImpl
 import org.example.newteamultimateedition.alineacion.validador.AlineacionValidate
 import org.example.newteamultimateedition.personal.error.PersonasError
+import org.example.newteamultimateedition.personal.models.Entrenador
+import org.example.newteamultimateedition.personal.models.Especialidad
 import org.example.newteamultimateedition.personal.models.Jugador
 import org.example.newteamultimateedition.personal.models.Posicion
 import org.example.newteamultimateedition.personal.services.PersonaServiceImpl
@@ -65,12 +67,26 @@ class AlineacionServiceImplTest {
         minutosJugados = 100,
         imagen = "jaskjndkjnas"
     )
-    val alineacion: Alineacion = Alineacion(
+    private val entrenador = Entrenador(
+        id = 2,
+        nombre = "Entrenadora",
+        apellidos = "hola",
+        fechaNacimiento = LocalDate.parse("2020-01-01"),
+        fechaIncorporacion = LocalDate.parse("2020-01-02"),
+        salario = 3000.0,
+        pais = "españa",
+        especialidad = Especialidad.ENTRENADOR_PRINCIPAL,
+        createdAt = LocalDateTime.of(2022, 5, 10, 14, 30),
+        updatedAt = LocalDateTime.of(2022, 5, 10, 14, 30),
+        imagen = "oijsdoiasjd"
+    )
+    private val alineacion: Alineacion = Alineacion(
         id = 1L,
         personalList = listOf(code),
         juegoDate =LocalDate.now(),
         updatedAt = LocalDateTime.now(),
         createdAt = LocalDateTime.now(),
+        entrenador = entrenador
     )
 
     @Nested
