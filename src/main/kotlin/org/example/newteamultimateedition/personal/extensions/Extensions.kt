@@ -45,7 +45,8 @@ fun Jugador.copy(
     newPartidosJugados: Int  = this.partidosJugados,
     newMinutosJugados: Int = this.minutosJugados,
     newImagen: String= this.imagen,
-    timeStamp: LocalDateTime = LocalDateTime.now()
+    timeStamp: LocalDateTime = LocalDateTime.now(),
+    isDeleted: Boolean = this.isDeleted,
 ): Jugador {
     return Jugador(
         id = newId,
@@ -64,7 +65,8 @@ fun Jugador.copy(
         goles = newGoles,
         partidosJugados = newPartidosJugados,
         imagen = newImagen,
-        minutosJugados = newMinutosJugados
+        minutosJugados = newMinutosJugados,
+        isDeleted = isDeleted,
     )
 }
 /**
@@ -90,7 +92,8 @@ fun Entrenador.copy(
     newPais: String = this.pais,
     newEspecialidad: Especialidad = this.especialidad,
     newImagen: String= this.imagen,
-    timeStamp: LocalDateTime = LocalDateTime.now()
+    timeStamp: LocalDateTime = LocalDateTime.now(),
+    isDeleted: Boolean = this.isDeleted,
 ): Entrenador {
     return Entrenador(
         id = newId,
@@ -104,6 +107,7 @@ fun Entrenador.copy(
         updatedAt = timeStamp,
         especialidad = newEspecialidad,
         imagen = newImagen,
+        isDeleted = isDeleted,
     )
 }
 

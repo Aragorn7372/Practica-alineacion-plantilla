@@ -65,7 +65,8 @@ class AlineacionServiceImplTest {
         updatedAt = LocalDateTime.of(2022, 5, 10, 14, 30),
         partidosJugados = 10,
         minutosJugados = 100,
-        imagen = "jaskjndkjnas"
+        imagen = "jaskjndkjnas",
+        isDeleted = false
     )
     private val entrenador = Entrenador(
         id = 2,
@@ -78,7 +79,8 @@ class AlineacionServiceImplTest {
         especialidad = Especialidad.ENTRENADOR_PRINCIPAL,
         createdAt = LocalDateTime.of(2022, 5, 10, 14, 30),
         updatedAt = LocalDateTime.of(2022, 5, 10, 14, 30),
-        imagen = "oijsdoiasjd"
+        imagen = "oijsdoiasjd",
+        isDeleted = false
     )
     private val alineacion: Alineacion = Alineacion(
         id = 1L,

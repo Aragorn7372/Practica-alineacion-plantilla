@@ -29,6 +29,7 @@ class PersonaDaoTest {
         imagen = "jaskjndkjnas",
         createdAt = LocalDateTime.now(),
         updatedAt = LocalDateTime.now(),
+        isDeleted = false
         )
 
     @BeforeAll

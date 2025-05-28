@@ -26,7 +26,8 @@ class AlineacionMapperTest {
   especialidad = Especialidad.ENTRENADOR_PRINCIPAL,
   createdAt = LocalDateTime.of(2022, 5, 10, 14, 30),
   updatedAt = LocalDateTime.of(2022, 5, 10, 14, 30),
-  imagen = "oijsdoiasjd"
+  imagen = "oijsdoiasjd",
+  isDeleted = false
  )
   private val alineacionEntity= AlineacionEntity(
    id= 1L,

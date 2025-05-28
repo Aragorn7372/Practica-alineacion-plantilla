@@ -34,6 +34,7 @@ class Jugador(
     createdAt: LocalDateTime = LocalDateTime.now(),
     updatedAt: LocalDateTime = LocalDateTime.now(),
     imagen: String,
+    isDeleted: Boolean,
     val posicion: Posicion,
     val dorsal: Int,
     val altura: Double,
@@ -41,7 +42,7 @@ class Jugador(
     val goles: Int,
     val partidosJugados: Int,
     val minutosJugados: Int
-): Persona(id = id, nombre = nombre, apellidos = apellidos, fechaNacimiento = fechaNacimiento, fechaIncorporacion = fechaIncorporacion, salario = salario, pais = pais, createdAt = createdAt,updatedAt = updatedAt, imagen = imagen) {
+): Persona(id = id, nombre = nombre, apellidos = apellidos, fechaNacimiento = fechaNacimiento, fechaIncorporacion = fechaIncorporacion, salario = salario, pais = pais, createdAt = createdAt,updatedAt = updatedAt, imagen = imagen, isDeleted = isDeleted) {
     /**
      * Sobreescribe la funcion [toString] predeterminada dandole un formato mas legible
      */

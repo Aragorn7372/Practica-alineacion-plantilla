@@ -58,7 +58,7 @@ class PersonaServiceImpl(
 
     override fun getAll(): Result<List<Persona>,PersonasError> {
         return try {
-            Ok(repositorio.getAll())
+            Ok(repositorio.getAll().filter { !it.isDeleted })
         }catch (e:Exception){
             Err(PersonasError.PersonaDatabaseError(e.message.toString()))
         }

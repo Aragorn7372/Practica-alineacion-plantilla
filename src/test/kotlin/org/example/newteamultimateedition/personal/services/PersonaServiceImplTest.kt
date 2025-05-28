@@ -46,7 +46,8 @@ class PersonaServiceImplTest {
         updatedAt = LocalDateTime.of(2022, 5, 10, 14, 30),
         partidosJugados = 10,
         minutosJugados = 100,
-        imagen = "jaskjndkjnas"
+        imagen = "jaskjndkjnas",
+        isDeleted = false
     )
 
     private val invalidJugador = Jugador (
@@ -66,7 +67,8 @@ class PersonaServiceImplTest {
         partidosJugados = 30,
         createdAt = LocalDateTime.now(),
         updatedAt = LocalDateTime.now(),
-        minutosJugados = 100
+        minutosJugados = 100,
+        isDeleted = false
     )
 
     private val entrenador = Entrenador(
@@ -80,7 +82,8 @@ class PersonaServiceImplTest {
         createdAt = LocalDateTime.now(),
         updatedAt = LocalDateTime.now(),
         imagen = "pepito-grillo.png",
-        especialidad = Especialidad.ENTRENADOR_PRINCIPAL
+        especialidad = Especialidad.ENTRENADOR_PRINCIPAL,
+        isDeleted = false
     )
 
     private val equipo = listOf(entrenador, jugador)

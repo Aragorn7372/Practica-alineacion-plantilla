@@ -29,7 +29,8 @@ class EquipoStorageXMLTest {
         createdAt = LocalDateTime.now(),
         updatedAt = LocalDateTime.now(),
         imagen = "pepito-grillo.png",
-        especialidad = Especialidad.ENTRENADOR_PRINCIPAL
+        especialidad = Especialidad.ENTRENADOR_PRINCIPAL,
+        isDeleted = false
     )
 
     private val j = Jugador(
@@ -47,7 +48,8 @@ class EquipoStorageXMLTest {
         peso = 65.0,
         goles = 70,
         partidosJugados = 150,
-        minutosJugados = 13245
+        minutosJugados = 13245,
+        isDeleted = false
     )
 
     val list = listOf(e, j)
@@ -142,7 +144,8 @@ class EquipoStorageXMLTest {
                 peso = 65.0,
                 goles = 70,
                 partidosJugados = 150,
-                minutosJugados = 13245
+                minutosJugados = 13245,
+                isDeleted = false
             )
             val jugadorActual = lista.first() as Jugador
 
@@ -188,6 +191,7 @@ class EquipoStorageXMLTest {
                     "        <partidosJugados></partidosJugados>\n" +
                     "        <minutos_jugados></minutos_jugados>\n" +
                     "        <imagen>pepito-grillo.png</imagen>\n" +
+                    "        <isDeleted>false</isDeleted>\n" +
                     "    </personal>\n" +
                     "    <personal id=\"2\">\n" +
                     "        <tipo>Jugador</tipo>\n" +
@@ -206,6 +210,7 @@ class EquipoStorageXMLTest {
                     "        <partidosJugados>150</partidosJugados>\n" +
                     "        <minutos_jugados>13245</minutos_jugados>\n" +
                     "        <imagen>media/jugador1.png</imagen>\n" +
+                    "        <isDeleted>false</isDeleted>\n" +
                     "    </personal>\n" +
                     "</equipo>"
 

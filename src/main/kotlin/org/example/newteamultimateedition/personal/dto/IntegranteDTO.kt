@@ -74,5 +74,8 @@ data class IntegranteDTO(
     val minutosJugados: Int?,
     @SerialName("imagen")
     @XmlElement
-    val imagen: String
+    val imagen: String,
+    @SerialName("isDeleted")
+    @XmlElement
+    val isDeleted: Boolean=false,
 ): java.io.Serializable

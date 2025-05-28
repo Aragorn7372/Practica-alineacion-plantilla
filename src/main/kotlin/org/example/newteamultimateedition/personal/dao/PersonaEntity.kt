@@ -23,5 +23,7 @@ data class PersonaEntity(
     val minutosJugados: Int?=null,
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime,
-    val imagen: String
+    val imagen: String,
+    @get:JvmName("getIsDeleted")
+    val isDeleted: Boolean
 )

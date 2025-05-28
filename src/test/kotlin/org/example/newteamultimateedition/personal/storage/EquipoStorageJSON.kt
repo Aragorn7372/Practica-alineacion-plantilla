@@ -29,7 +29,8 @@ class EquipoStorageJSONTest {
         createdAt = LocalDateTime.now(),
         updatedAt = LocalDateTime.now(),
         imagen = "pepito-grillo.png",
-        especialidad = Especialidad.ENTRENADOR_PRINCIPAL
+        especialidad = Especialidad.ENTRENADOR_PRINCIPAL,
+        isDeleted = false
     )
 
     private val j = Jugador(
@@ -47,7 +48,8 @@ class EquipoStorageJSONTest {
         peso = 65.0,
         goles = 70,
         partidosJugados = 150,
-        minutosJugados = 13245
+        minutosJugados = 13245,
+        isDeleted = false
     )
 
     val list = listOf(e, j)
@@ -145,7 +147,8 @@ class EquipoStorageJSONTest {
                 peso = 65.0,
                 goles = 70,
                 partidosJugados = 150,
-                minutosJugados = 13245
+                minutosJugados = 13245,
+                isDeleted = false
             )
             val jugadorActual = lista.first() as Jugador
 

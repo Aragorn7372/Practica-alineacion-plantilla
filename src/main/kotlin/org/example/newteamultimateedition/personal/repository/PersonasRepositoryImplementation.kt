@@ -58,12 +58,21 @@ class PersonasRepositoryImplementation(
         else null
     }
 
+    override fun delete(id: Long): Persona? {
+        logger.debug { "Deleting logico persona by id $id" }
+        dao.getById(id)?.let {
+            if (dao.update(it.copy(isDeleted = true),id)==1) return it.toModel()
+            else null
+        }
+        return null
+    }
+
     /**
      * elimina en base a una id
      * @param id
      * @return devuelve persona si lo encuentra y elimina o nulo si no lo encuentra
      */
-    override fun delete(id: Long): Persona? {
+    fun deleteFisico(id: Long): Persona? {
         logger.debug { "Deleting persona by id $id" }
         dao.getById(id)?.let {
             if (dao.deleteById(id)==1) return it.toModel()

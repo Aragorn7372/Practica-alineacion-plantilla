@@ -28,7 +28,8 @@ class PersonaValidationTest {
             imagen = "https://www.hdwallpapers.in/download/cristiano_ronaldo_cr7_with_cup_in_blur_stadium_background_is_wearing_white_sports_dress_hd_cristiano_ronaldo-HD.jpg",
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),
-            especialidad = Especialidad.ENTRENADOR_PRINCIPAL
+            especialidad = Especialidad.ENTRENADOR_PRINCIPAL,
+            isDeleted = false
         )
         val result= validator.validator(entrenador)
         assertTrue(result.isOk)
@@ -58,7 +59,8 @@ class PersonaValidationTest {
             partidosJugados = 30,
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),
-            minutosJugados = 100
+            minutosJugados = 100,
+            isDeleted = false
         )
 
         val result = validator.validator(jugador)
@@ -90,7 +92,8 @@ class PersonaValidationTest {
             partidosJugados = 30,
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),
-            minutosJugados = 100
+            minutosJugados = 100,
+            isDeleted = false
         )
 
         val result = validator.validator(jugador)
@@ -122,7 +125,8 @@ class PersonaValidationTest {
             partidosJugados = 30,
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),
-            minutosJugados = 100
+            minutosJugados = 100,
+            isDeleted = false
         )
         val result = validator.validator(jugador)
         assertTrue(result.isErr)
@@ -152,7 +156,8 @@ class PersonaValidationTest {
             partidosJugados = 30,
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),
-            minutosJugados = 100
+            minutosJugados = 100,
+            isDeleted = false
         )
 
         val result = validator.validator(jugador)
@@ -184,7 +189,8 @@ class PersonaValidationTest {
             partidosJugados = 30,
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),
-            minutosJugados = 100
+            minutosJugados = 100,
+            isDeleted = false
         )
 
         val result = validator.validator(jugador)
@@ -216,7 +222,8 @@ class PersonaValidationTest {
             partidosJugados = 30,
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),
-            minutosJugados = 100
+            minutosJugados = 100,
+            isDeleted = false
         )
 
         val result = validator.validator(jugador)
@@ -248,7 +255,8 @@ class PersonaValidationTest {
             partidosJugados = 30,
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),
-            minutosJugados = 100
+            minutosJugados = 100,
+            isDeleted = false
         )
 
         val result = validator.validator(jugador)
@@ -280,7 +288,8 @@ class PersonaValidationTest {
             partidosJugados = 30,
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),
-            minutosJugados = 100
+            minutosJugados = 100,
+            isDeleted = false
         )
 
         val result = validator.validator(jugador)
@@ -312,7 +321,8 @@ class PersonaValidationTest {
             partidosJugados = 30,
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),
-            minutosJugados = 100
+            minutosJugados = 100,
+            isDeleted = false
         )
 
         val result = validator.validator(jugador)
@@ -344,7 +354,8 @@ class PersonaValidationTest {
             partidosJugados = 30,
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),
-            minutosJugados = 100
+            minutosJugados = 100,
+            isDeleted = false
         )
 
         val result = validator.validator(jugador)
@@ -376,7 +387,8 @@ class PersonaValidationTest {
             partidosJugados = 30,
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),
-            minutosJugados = 100
+            minutosJugados = 100,
+            isDeleted = false
         )
 
         val result = validator.validator(jugador)
@@ -408,7 +420,8 @@ class PersonaValidationTest {
             partidosJugados = 30,
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),
-            minutosJugados = 100
+            minutosJugados = 100,
+            isDeleted = false
         )
 
         val result = validator.validator(jugador)
@@ -440,7 +453,8 @@ class PersonaValidationTest {
             partidosJugados = 30,
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),
-            minutosJugados = 100
+            minutosJugados = 100,
+            isDeleted = false
         )
 
         val result = validator.validator(jugador)
@@ -472,7 +486,8 @@ class PersonaValidationTest {
             partidosJugados = 30,
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),
-            minutosJugados = 100
+            minutosJugados = 100,
+            isDeleted = false
         )
 
         val result = validator.validator(jugador)
@@ -504,7 +519,8 @@ class PersonaValidationTest {
             partidosJugados = 30,
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),
-            minutosJugados = 100
+            minutosJugados = 100,
+            isDeleted = false
         )
 
         val result = validator.validator(jugador)
@@ -536,7 +552,8 @@ class PersonaValidationTest {
             partidosJugados = -4,
             createdAt = LocalDateTime.now(),
             updatedAt = LocalDateTime.now(),
-            minutosJugados = 100
+            minutosJugados = 100,
+            isDeleted = false
         )
 
         val result = validator.validator(jugador)

@@ -40,7 +40,8 @@ class AlineacionRepositoryImplTest {
   especialidad = Especialidad.ENTRENADOR_PRINCIPAL,
   createdAt = LocalDateTime.of(2022, 5, 10, 14, 30),
   updatedAt = LocalDateTime.of(2022, 5, 10, 14, 30),
-  imagen = "oijsdoiasjd"
+  imagen = "oijsdoiasjd",
+  isDeleted = false
  )
  private val codigoEntity1 = LineaAlineacionEntity(
   id = "fccfcf50-e184-4aaa-acde-e7388fe623cf",

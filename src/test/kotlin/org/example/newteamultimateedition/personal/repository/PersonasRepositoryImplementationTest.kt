@@ -41,7 +41,8 @@ class PersonasRepositoryImplementationTest {
         goles = 10,
         partidosJugados = 10,
         minutosJugados = 100,
-        imagen = "jaskjndkjnas"
+        imagen = "jaskjndkjnas",
+        isDeleted = false
     )
     private val persona2 = Entrenador(
         id = 2,
@@ -52,7 +53,8 @@ class PersonasRepositoryImplementationTest {
         salario = 3000.0,
         pais = "españa",
         especialidad = Especialidad.ENTRENADOR_PRINCIPAL,
-        imagen = "oijsdoiasjd"
+        imagen = "oijsdoiasjd",
+        isDeleted = false
     )
     private val persona3 = PersonaEntity(
         id = 2,
@@ -67,6 +69,7 @@ class PersonasRepositoryImplementationTest {
         imagen = "oijsdoiasjd",
         createdAt = persona2.createdAt,
         updatedAt = persona2.updatedAt,
+        isDeleted = false
     )
     private val persona4 = PersonaEntity(
         id = 1,
@@ -87,6 +90,7 @@ class PersonasRepositoryImplementationTest {
         imagen = "jaskjndkjnas",
         createdAt = persona.createdAt,
         updatedAt = persona.updatedAt,
+        isDeleted = false
     )
 
     @Test
@@ -196,7 +200,7 @@ class PersonasRepositoryImplementationTest {
     @DisplayName("delete persona")
     fun delete() {
         whenever(dao.getById(persona3.id)) doReturn persona3
-        whenever(dao.deleteById(persona3.id)) doReturn 1
+        whenever(dao.update(persona3.copy(isDeleted=true),persona3.id)) doReturn 1
 
 
         val result=repository.delete(persona2.id)
@@ -205,7 +209,7 @@ class PersonasRepositoryImplementationTest {
         assertNotNull(result,"no deberia ser nulo")
         assertEquals(result.id,persona2.id,"deberia devolver la persona2")
 
-        verify(dao,times(1)).deleteById(persona3.id)
+        verify(dao,times(1)).update(persona3.copy(isDeleted=true),persona3.id)
 
         verify(dao, times(1)).getById(persona3.id)
     }
@@ -230,7 +234,7 @@ class PersonasRepositoryImplementationTest {
     fun notDeletePersona() {
         whenever(dao.getById(persona3.id)) doReturn persona3
         //whenever(mapper.toDatabaseModel(persona3)) doReturn persona2
-        whenever(dao.deleteById(persona3.id)) doReturn 0
+        whenever(dao.update(persona3.copy(isDeleted=true),persona3.id)) doReturn 0
 
 
         val result=repository.delete(persona2.id)
@@ -238,9 +242,9 @@ class PersonasRepositoryImplementationTest {
         assertNull(result,"deberia ser nulo")
 
 
-        verify(dao,times(1)).deleteById(persona3.id)
+        verify(dao,times(1)).update(persona3.copy(isDeleted=true),persona3.id)
 
-        verify(dao, times(1)).deleteById(persona3.id)
+        verify(dao, times(1)).getById(persona3.id)
     }
 
     @Test

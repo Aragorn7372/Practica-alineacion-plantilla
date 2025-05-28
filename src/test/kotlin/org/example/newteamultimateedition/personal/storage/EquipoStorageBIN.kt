@@ -28,7 +28,8 @@ class EquipoStorageBINTest {
         createdAt = LocalDateTime.now(),
         updatedAt = LocalDateTime.now(),
         imagen = "pepito-grillo.png",
-        especialidad = Especialidad.ENTRENADOR_PRINCIPAL
+        especialidad = Especialidad.ENTRENADOR_PRINCIPAL,
+        isDeleted = false
     )
 
     val j = Jugador(
@@ -46,7 +47,8 @@ class EquipoStorageBINTest {
         peso = 65.0,
         goles = 70,
         partidosJugados = 150,
-        minutosJugados = 13245
+        minutosJugados = 13245,
+        isDeleted = false
     )
 
     val list = listOf(e, j)

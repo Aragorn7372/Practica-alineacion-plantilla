@@ -6,7 +6,6 @@ import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import javafx.fxml.FXML
 import javafx.scene.control.*
-import javafx.scene.input.KeyCode
 import javafx.stage.Stage
 import org.example.newteamultimateedition.routes.RoutesManager
 import org.example.newteamultimateedition.users.exception.UsersException
@@ -14,7 +13,6 @@ import org.example.newteamultimateedition.users.models.User
 import org.example.newteamultimateedition.users.service.UsersServiceImpl
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import org.koin.java.KoinJavaComponent.inject
 
 
 import org.mindrot.jbcrypt.BCrypt
@@ -26,7 +24,7 @@ import org.mindrot.jbcrypt.BCrypt
  * @property errorMessage [Label] Label que saca un mensaje de error
  * @property passwordText [PasswordField] Campo que recoge la contraseña
  * @property userText [TextField] Campo que recoge el usuario
- * @property resgisterButton [Button] boton que procesa el inicio de sesion
+ * @property registerButton [Button] boton que procesa el inicio de sesion
  */
 
 class RegisterController: KoinComponent {
@@ -104,15 +102,13 @@ class RegisterController: KoinComponent {
                 showUserError("La base de datos ha explotado por favor reinicie la aplicacion")
             }else{
                 cache.put(1L,result.value)
-                if (!result.value.isAdmin) {
-                    if(true) RoutesManager.initUserStage(toLogin.scene.window as Stage)
-                }
+                RoutesManager.initUserStage(toLogin.scene.window as Stage)
             }
         }
     }
     private fun validation(userName: String, password: String, passwordConfirmation: String) : Result<User,UsersException> {
         val encrypt= BCrypt.hashpw(password, BCrypt.gensalt(12))
-        if (userName.isEmpty() || userName.isEmpty() || password.isEmpty() || passwordConfirmation.isEmpty()){
+        if (userName.isEmpty() || password.isEmpty() || passwordConfirmation.isEmpty()){
             return Err(UsersException.ContraseniaEquivocadaException("Por favor, rellena los campos"))
         }
         if (password!= passwordConfirmation){

@@ -54,7 +54,8 @@ class PersonaMapperTest {
         updatedAt = LocalDateTime.of(2022, 5, 10, 14, 30),
         partidosJugados = 10,
         minutosJugados = 100,
-        imagen = "jaskjndkjnas"
+        imagen = "jaskjndkjnas",
+        isDeleted = false
     )
 
     private val entrenador = Entrenador(
@@ -68,7 +69,8 @@ class PersonaMapperTest {
         especialidad = Especialidad.ENTRENADOR_PRINCIPAL,
         createdAt = LocalDateTime.of(2022, 5, 10, 14, 30),
         updatedAt = LocalDateTime.of(2022, 5, 10, 14, 30),
-        imagen = "oijsdoiasjd"
+        imagen = "oijsdoiasjd",
+        isDeleted = false
     )
 
     private val jugadorEntity = PersonaEntity(
@@ -89,7 +91,8 @@ class PersonaMapperTest {
         rol = "Jugador",
         createdAt = LocalDateTime.of(2022, 5, 10, 14, 30),
         updatedAt = LocalDateTime.of(2022, 5, 10, 14, 30),
-        imagen = "jaskjndkjnas"
+        imagen = "jaskjndkjnas",
+        isDeleted = false
     )
 
     private val entrenadorEntity = PersonaEntity(
@@ -104,7 +107,8 @@ class PersonaMapperTest {
         createdAt = LocalDateTime.of(2022, 5, 10, 14, 30),
         updatedAt = LocalDateTime.of(2022, 5, 10, 14, 30),
         rol = "Entrenador",
-        imagen = "oijsdoiasjd"
+        imagen = "oijsdoiasjd",
+        isDeleted = false
     )
     
     private val jugadorDTO = IntegranteDTO(

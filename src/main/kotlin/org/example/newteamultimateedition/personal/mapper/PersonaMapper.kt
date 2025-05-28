@@ -29,7 +29,8 @@ import java.time.LocalDate
                 createdAt = createdAt,
                 updatedAt = updatedAt,
                 imagen = imagen,
-                minutosJugados = minutosJugados!!
+                minutosJugados = minutosJugados!!,
+                isDeleted = isDeleted,
             )
         } else {
             Entrenador(
@@ -43,7 +44,8 @@ import java.time.LocalDate
                 especialidad = Especialidad.valueOf(especialidad!!),
                 createdAt = createdAt,
                 updatedAt = updatedAt,
-                imagen = imagen
+                imagen = imagen,
+                isDeleted = isDeleted,
             )
         }
     }
@@ -91,7 +93,8 @@ fun Persona.toEntity(): PersonaEntity {
             createdAt = createdAt,
             updatedAt = updatedAt,
             minutosJugados = minutosJugados,
-            imagen = imagen
+            imagen = imagen,
+            isDeleted = isDeleted,
         )
     }
 
@@ -118,7 +121,8 @@ fun Persona.toEntity(): PersonaEntity {
             createdAt = createdAt,
             updatedAt = updatedAt,
             minutosJugados = null,
-            imagen = imagen
+            imagen = imagen,
+            isDeleted = isDeleted,
         )
     }
 
@@ -143,7 +147,8 @@ fun Persona.toEntity(): PersonaEntity {
                 goles = goles!!,
                 partidosJugados = partidosJugados!!,
                 imagen = imagen,
-                minutosJugados = minutosJugados!!
+                minutosJugados = minutosJugados!!,
+                isDeleted = isDeleted,
             )
         } else {
             Entrenador(
@@ -155,7 +160,8 @@ fun Persona.toEntity(): PersonaEntity {
                 salario = salario,
                 pais = pais,
                 especialidad = Especialidad.valueOf(especialidad!!),
-                imagen = imagen
+                imagen = imagen,
+                isDeleted = isDeleted,
             )
         }
     }
@@ -182,6 +188,7 @@ fun Persona.toEntity(): PersonaEntity {
                 partidosJugados = partidosJugados!!.toInt(),
                 imagen = imagen,
                 minutosJugados = minutosJugados!!.toInt(),
+                isDeleted = isDeleted
             )
         } else {
             Entrenador(
@@ -193,7 +200,8 @@ fun Persona.toEntity(): PersonaEntity {
                 salario = salario,
                 pais = pais,
                 especialidad = Especialidad.valueOf(especialidad!!),
-                imagen = imagen
+                imagen = imagen,
+                isDeleted = isDeleted,
             )
         }
     }
@@ -220,7 +228,8 @@ fun Persona.toEntity(): PersonaEntity {
             goles = "",
             partidosJugados = "",
             minutosJugados = "",
-            imagen = imagen
+            imagen = imagen,
+            isDeleted = isDeleted,
         )
     }
 
@@ -246,7 +255,8 @@ fun Persona.toEntity(): PersonaEntity {
             goles = goles.toString(),
             partidosJugados = partidosJugados.toString(),
             minutosJugados = minutosJugados.toString(),
-            imagen = imagen
+            imagen = imagen,
+            isDeleted = isDeleted,
         )
     }
 
@@ -272,7 +282,8 @@ fun Persona.toEntity(): PersonaEntity {
             goles = null,
             partidosJugados = null,
             minutosJugados = null,
-            imagen = imagen
+            imagen = imagen,
+            isDeleted = isDeleted
         )
     }
 
@@ -298,7 +309,8 @@ fun Persona.toEntity(): PersonaEntity {
             goles = goles,
             partidosJugados = partidosJugados,
             minutosJugados = minutosJugados,
-            imagen = imagen
+            imagen = imagen,
+            isDeleted = isDeleted,
         )
     }
 
@@ -321,6 +333,7 @@ fun EquipoViewModel.PersonalState.toJugadorModel(): Persona {
         goles = this.goles,
         partidosJugados = this.partidosJugados,
         minutosJugados = this.minutosJugados,
+        isDeleted = false
     )
 }
 /**
@@ -336,6 +349,7 @@ fun EquipoViewModel.PersonalState.toEntrenadorModel(): Persona {
         pais = this.pais,
         imagen = this.imagen,
         especialidad = Especialidad.valueOf(this.especialidad),
+        isDeleted = false
     )
 }
 
