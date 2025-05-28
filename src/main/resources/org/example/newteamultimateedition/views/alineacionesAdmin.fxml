@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -19,8 +18,10 @@
     <!-- Top: Barra de búsqueda y selector -->
     <top>
         <HBox spacing="10" style="-fx-background-color: #2c3e50;">
-            <ComboBox fx:id="filterComboBox" prefWidth="150" promptText="Filtrar por..." />
-            <TextField fx:id="searchBar" promptText="Buscar..." HBox.hgrow="ALWAYS" />
+            <TextField fx:id="searchBar" promptText="Buscar..." HBox.hgrow="ALWAYS">
+            <HBox.margin>
+               <Insets left="5.0" top="5.0" />
+            </HBox.margin></TextField>
             <MenuBar>
                 <Menu id="archivoMenu" mnemonicParsing="false" text="Archivo">
                     <items>
@@ -66,7 +67,7 @@
 
     <!-- Center: Tabla de alineaciones -->
     <center>
-        <TableView fx:id="alineacionesTable" prefHeight="384.0" prefWidth="506.0">
+        <TableView fx:id="tablaAlineacion" prefHeight="384.0" prefWidth="506.0">
             <columns>
                 <TableColumn fx:id="colId" prefWidth="100" text="ID" />
                 <TableColumn fx:id="colUpdatedAt" prefWidth="402.39998626708984" text="Updated At" />
@@ -78,7 +79,7 @@
     <!-- Bottom: Botones de acción -->
     <bottom>
         <HBox fx:id="buttonContainer" alignment="CENTER" spacing="50.0">
-            <Button id="editButton" fx:id="btnEditar" prefHeight="11.0" prefWidth="110.0" text="Editar">
+            <Button id="editButton" fx:id="editButton" prefHeight="11.0" prefWidth="110.0" text="Editar">
                 <graphic>
                     <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                         <image>
@@ -87,7 +88,7 @@
                     </ImageView>
                 </graphic>
          </Button>
-            <Button id="viewButton" fx:id="btnVisualizar" prefHeight="0.0" prefWidth="137.0" text="Visualizar" HBox.hgrow="ALWAYS">
+            <Button id="viewButton" fx:id="viewButton" prefHeight="0.0" prefWidth="137.0" text="Visualizar" HBox.hgrow="ALWAYS">
                 <graphic>
                     <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -97,7 +98,7 @@
                 <HBox.margin>
                     <Insets right="5.0" />
                 </HBox.margin></Button>
-            <Button id="personalButton" fx:id="btnEditarPersonas" prefHeight="36.0" prefWidth="146.0" text=" Menu Personal" HBox.hgrow="ALWAYS">
+            <Button id="personalButton" fx:id="backButton" prefHeight="36.0" prefWidth="146.0" text=" Menu Personal" HBox.hgrow="ALWAYS">
                 <graphic>
                     <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -107,7 +108,7 @@
                 <HBox.margin>
                     <Insets right="10.0" />
                 </HBox.margin></Button>
-            <Button id="addButton" fx:id="btnCrearAlineacion" prefHeight="36.0" prefWidth="169.0" text="Crear Alineación">
+            <Button id="addButton" fx:id="createButton" prefHeight="36.0" prefWidth="169.0" text="Crear Alineación">
                 <graphic>
                     <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                   <image>

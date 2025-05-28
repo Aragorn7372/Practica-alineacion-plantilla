@@ -24,7 +24,7 @@ import org.example.newteamultimateedition.personal.models.Persona
 
 import org.example.newteamultimateedition.routes.RoutesManager
 import org.example.newteamultimateedition.users.models.User
-import org.example.newteamultimateedition.viewmodels.EquipoViewModel
+import org.example.newteamultimateedition.personal.viewmodels.EquipoViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.lighthousegames.logging.logging

@@ -4,7 +4,7 @@ import org.example.newteamultimateedition.personal.dao.PersonaEntity
 import org.example.newteamultimateedition.personal.dto.IntegranteDTO
 import org.example.newteamultimateedition.personal.dto.IntegranteXmlDTO
 import org.example.newteamultimateedition.personal.models.*
-import org.example.newteamultimateedition.viewmodels.EquipoViewModel
+import org.example.newteamultimateedition.personal.viewmodels.EquipoViewModel
 import java.time.LocalDate
 
     /**

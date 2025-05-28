@@ -124,7 +124,7 @@ class AlineacionServiceImplTest {
     @DisplayName("personas good")
     fun getJugadores() {
         whenever(personalService.getAll()) doReturn Ok(listOf(jugador))
-        val result=service.getJugadores()
+        val result=service.getAllPersonas()
         assertTrue(result.isOk)
         assertEquals(jugador,result.value.first(),"Deberia Ser el jugador")
         verify(personalService,times(1)).getAll()
@@ -277,7 +277,7 @@ class AlineacionServiceImplTest {
         @DisplayName("get all personas with error")
         fun getJugadores() {
             whenever(personalService.getAll()) doThrow(RuntimeException("error en la base de datos"))
-            val result=service.getJugadores()
+            val result=service.getAllPersonas()
             assertTrue(result.isErr,"deberia devolver Err")
             assertEquals("error en la base de datos",result.error.message,"Deberian Ser iguales")
             verify(personalService,times(1)).getAll()

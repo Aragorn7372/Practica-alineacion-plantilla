@@ -1,4 +1,4 @@
-package org.example.newteamultimateedition.viewmodels
+package org.example.newteamultimateedition.personal.viewmodels
 
 import com.github.michaelbull.result.Result
 import com.github.michaelbull.result.onSuccess

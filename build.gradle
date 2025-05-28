@@ -150,7 +150,7 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
-                    "personal/models/",
+                    "org/example/newteamultimateedition/personal/models/",
                     "users/models/",
                     "users/exception/",
                     "Main.*",

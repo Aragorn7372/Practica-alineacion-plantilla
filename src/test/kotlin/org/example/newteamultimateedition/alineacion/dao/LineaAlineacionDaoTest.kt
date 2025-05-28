@@ -22,7 +22,7 @@ class LineaAlineacionDaoTest {
             initData = true,
             initTables = true,
         ).jdbi
-        dao = provideCodigoDao(jdbi)
+        dao = provideLineaAlineacionDao(jdbi)
     }
     @AfterEach
     fun tearDown() {

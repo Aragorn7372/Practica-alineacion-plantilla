@@ -4,7 +4,7 @@ import com.github.benmanes.caffeine.cache.Cache
 import org.example.newteamultimateedition.alineacion.dao.AlineacionDao
 import org.example.newteamultimateedition.alineacion.dao.LineaAlineacionDao
 import org.example.newteamultimateedition.alineacion.dao.provideAlineacionDao
-import org.example.newteamultimateedition.alineacion.dao.provideCodigoDao
+import org.example.newteamultimateedition.alineacion.dao.provideLineaAlineacionDao
 import org.example.newteamultimateedition.alineacion.validador.AlineacionValidate
 import org.example.newteamultimateedition.common.database.provideDatabaseManager
 import org.example.newteamultimateedition.personal.cache.darPersonasCache
@@ -25,34 +25,42 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import org.koin.core.module.dsl.bind
 import org.example.newteamultimateedition.users.models.User
-import org.example.newteamultimateedition.viewmodels.EquipoViewModel
+import org.example.newteamultimateedition.personal.viewmodels.EquipoViewModel
 import org.example.newteamultimateedition.personal.services.PersonaServiceImpl
 import org.example.newteamultimateedition.personal.storage.*
+import org.example.newteamultimateedition.alineacion.service.AlineacionServiceImpl
+import org.example.newteamultimateedition.alineacion.viewmodels.AlineacionViewModel
 
 /**
  * Koin module for the application.
  */
 val appModule = module {
 
-    // Base: Jdbi
+    // Common
     singleOf(::provideDatabaseManager) {
         bind<Jdbi>()
+    }
+
+    singleOf(::AlineacionServiceImpl){
+        bind<AlineacionServiceImpl>()
     }
 
     // DAO: depende de Jdbi
     singleOf(::provideUsersDao) {
         bind<UsersDao>()
     }
-    singleOf(::provideCodigoDao) {
+
+    singleOf(::provideLineaAlineacionDao) {
         bind<LineaAlineacionDao>()
     }
+
     singleOf(::provideAlineacionDao) {
         bind<AlineacionDao>()
     }
+
     singleOf(::AlineacionValidate) {
         bind<AlineacionValidate>()
     }
-
 
     // Repository: depende de DAO
     singleOf(::UsersRepositoryImpl) {
@@ -111,6 +119,8 @@ val appModule = module {
         bind<Cache<Long, User>>()
     }
     singleOf(::EquipoViewModel)
+
+    singleOf(::AlineacionViewModel)
 }
 
 
