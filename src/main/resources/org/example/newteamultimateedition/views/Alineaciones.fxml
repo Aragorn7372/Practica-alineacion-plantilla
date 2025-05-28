@@ -14,8 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../styles/alineacion.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -43,59 +42,59 @@
                               <Image url="@../media/FondoCampoFutbol.png" />
                            </image>
                         </ImageView>
-                        <Pane layoutX="35.0" layoutY="144.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
+                        <Pane fx:id="extremoIzquierdo" layoutX="35.0" layoutY="144.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
                            <children>
-                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="extremoIzquierdoImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Pane layoutX="100.0" layoutY="81.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
+                        <Pane fx:id="delanteroIzquierdo" layoutX="100.0" layoutY="81.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
                            <children>
-                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="delanteroIzquierdoImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Pane layoutX="243.0" layoutY="144.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
+                        <Pane fx:id="extremoDerecho" layoutX="243.0" layoutY="144.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
                            <children>
-                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="extremoDerechoImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Pane layoutX="178.0" layoutY="81.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
+                        <Pane fx:id="delanteroDerecho" layoutX="178.0" layoutY="81.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
                            <children>
-                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="delanteroDerechoImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Pane layoutX="35.0" layoutY="270.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
+                        <Pane fx:id="lateralIzquierdo" layoutX="35.0" layoutY="270.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
                            <children>
-                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="lateralIzquierdoImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Pane layoutX="100.0" layoutY="329.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
+                        <Pane fx:id="centralIzquierdo" layoutX="100.0" layoutY="329.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
                            <children>
-                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="centralIzquierdoImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Pane layoutX="178.0" layoutY="329.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
+                        <Pane fx:id="centralDerecho" layoutX="178.0" layoutY="329.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
                            <children>
-                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="centralDerechoImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Pane layoutX="243.0" layoutY="270.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
+                        <Pane fx:id="lateralDerecho" layoutX="243.0" layoutY="270.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
                            <children>
-                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="lateralDerechoImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Pane layoutX="100.0" layoutY="208.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
+                        <Pane fx:id="medioCentroIzquierdo" layoutX="100.0" layoutY="208.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
                            <children>
-                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="medioCentroIzquierdoImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Pane layoutX="178.0" layoutY="208.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
+                        <Pane fx:id="medioCentroDerecho" layoutX="178.0" layoutY="208.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
                            <children>
-                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="medioCentroDerechoImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
-                        <Pane layoutX="139.0" layoutY="415.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
+                        <Pane fx:id="porteroTitular" layoutX="139.0" layoutY="415.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
                            <children>
-                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="porteroTitularImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
                            </children>
                         </Pane>
                      </children>
@@ -115,43 +114,17 @@
                            <children>
                               <HBox alignment="CENTER" fillHeight="false" prefHeight="48.0" prefWidth="200.0">
                                  <children>
-                                    <Pane style="-fx-background-color: #333;">
+                                    <Pane fx:id="suplente1" style="-fx-background-color: #333;">
                                        <children>
-                                          <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
+                                          <ImageView fx:id="suplente1Img" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
                                        </children>
                                        <HBox.margin>
                                           <Insets left="5.0" right="5.0" />
                                        </HBox.margin>
                                     </Pane>
-                                    <Pane style="-fx-background-color: #333;">
+                                    <Pane fx:id="suplente2" style="-fx-background-color: #333;">
                                        <children>
-                                          <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
-                                       </children>
-                                       <HBox.margin>
-                                          <Insets left="5.0" right="5.0" />
-                                       </HBox.margin>
-                                    </Pane>
-                                 </children>
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox alignment="CENTER" fillHeight="false" prefHeight="48.0" prefWidth="200.0">
-                                 <children>
-                                    <Pane style="-fx-background-color: #333;">
-                                       <children>
-                                          <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
-                                       </children>
-                                       <HBox.margin>
-                                          <Insets left="5.0" right="5.0" />
-                                       </HBox.margin>
-                                    </Pane>
-                                    <Pane style="-fx-background-color: #333;">
-                                       <children>
-                                          <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
+                                          <ImageView fx:id="suplente2Img" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
                                        </children>
                                        <HBox.margin>
                                           <Insets left="5.0" right="5.0" />
@@ -167,17 +140,17 @@
                               </HBox>
                               <HBox alignment="CENTER" fillHeight="false" prefHeight="48.0" prefWidth="200.0">
                                  <children>
-                                    <Pane style="-fx-background-color: #333;">
+                                    <Pane fx:id="suplente3" style="-fx-background-color: #333;">
                                        <children>
-                                          <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
+                                          <ImageView fx:id="suplente3Img" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
                                        </children>
                                        <HBox.margin>
                                           <Insets left="5.0" right="5.0" />
                                        </HBox.margin>
                                     </Pane>
-                                    <Pane style="-fx-background-color: #333;">
+                                    <Pane fx:id="suplente4" style="-fx-background-color: #333;">
                                        <children>
-                                          <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
+                                          <ImageView fx:id="suplente4Img" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
                                        </children>
                                        <HBox.margin>
                                           <Insets left="5.0" right="5.0" />
@@ -193,9 +166,35 @@
                               </HBox>
                               <HBox alignment="CENTER" fillHeight="false" prefHeight="48.0" prefWidth="200.0">
                                  <children>
-                                    <Pane style="-fx-background-color: #333;">
+                                    <Pane fx:id="suplente5" style="-fx-background-color: #333;">
                                        <children>
-                                          <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
+                                          <ImageView fx:id="suplente5Img" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </HBox.margin>
+                                    </Pane>
+                                    <Pane fx:id="suplente6" style="-fx-background-color: #333;">
+                                       <children>
+                                          <ImageView fx:id="suplente6Img" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </HBox.margin>
+                                    </Pane>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER" fillHeight="false" prefHeight="48.0" prefWidth="200.0">
+                                 <children>
+                                    <Pane fx:id="porteroSuplente" style="-fx-background-color: #333;">
+                                       <children>
+                                          <ImageView fx:id="porteroSuplenteImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
                                        </children>
                                     </Pane>
                                  </children>
@@ -216,9 +215,9 @@
                         </Label>
                         <HBox alignment="CENTER" fillHeight="false" prefHeight="48.0" prefWidth="200.0">
                            <children>
-                              <Pane style="-fx-background-color: #333;">
+                              <Pane fx:id="entrenador" style="-fx-background-color: #333;">
                                  <children>
-                                    <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
+                                    <ImageView fx:id="entrenadorImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
                                  </children>
                               </Pane>
                            </children>
@@ -228,35 +227,42 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <TableView prefHeight="493.0" prefWidth="475.0">
+                  <TableView fx:id="tablaAlineacion" prefHeight="493.0" prefWidth="475.0">
                     <columns>
-                      <TableColumn prefWidth="145.0" text="Nombre" />
-                      <TableColumn prefWidth="106.0" text="Partidos Jugados" />
-                        <TableColumn prefWidth="68.0" text="Goles" />
-                        <TableColumn prefWidth="154.0" text="Especialidad" />
+                      <TableColumn fx:id="colNombre" prefWidth="145.0" text="Nombre" />
+                      <TableColumn fx:id="colPartidosJugados" prefWidth="106.0" text="Partidos Jugados" />
+                        <TableColumn fx:id="colGoles" prefWidth="68.0" text="Goles" />
+                        <TableColumn fx:id="colEspecialidad" prefWidth="154.0" text="Especialidad" />
                     </columns>
                   </TableView>
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0">
                <children>
-                  <Button id="addButton" mnemonicParsing="false" text="Añadir">
+                  <Button id="addButton" fx:id="addButton" mnemonicParsing="false" text="Añadir">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </Button>
-                  <Button id="addButton" mnemonicParsing="false" text="Editar">
+                  <Button id="deleteButton" fx:id="deleteButton" mnemonicParsing="false" text="Eliminar">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </Button>
-                  <Button id="addButton" mnemonicParsing="false" text="Eliminar">
+                  <Button id="saveButton" fx:id="saveButton" mnemonicParsing="false" text="Guardar">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </Button>
-                  <Button id="addButton" mnemonicParsing="false" text="Volver al inicio" />
+                  <Button id="saveButton" fx:id="backButton" mnemonicParsing="false" text="Volver a Inicio">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
             </HBox>
          </children>
       </VBox>
