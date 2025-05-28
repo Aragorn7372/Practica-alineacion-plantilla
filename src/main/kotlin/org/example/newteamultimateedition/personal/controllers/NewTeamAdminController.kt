@@ -169,6 +169,7 @@ class NewTeamAdminController(): KoinComponent {
      */
     private fun initDefaultValues() {
         disableAll()
+        disableEditCancel()
 
         //Tabla
         listIntegrantes.items = viewModel.state.value.personas
@@ -197,42 +198,42 @@ class NewTeamAdminController(): KoinComponent {
         // De interfaz a ViewModel
 
         paisField.textProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.persona.pais) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(pais = newvalue))
+            if(newvalue != viewModel.state.value.persona.pais) viewModel.state.value = viewModel.state.value.copy(persona = viewModel.state.value.persona.copy(pais = newvalue))
         }
         salarioField.textProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.persona.salario.toString()) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(salario = newvalue.toDoubleOrNull() ?: 0.0))
+            if(newvalue != viewModel.state.value.persona.salario.toString()) viewModel.state.value = viewModel.state.value.copy(persona = viewModel.state.value.persona.copy(salario = newvalue.toDoubleOrNull() ?: 0.0))
         }
         incorporacionDP.valueProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.persona.fechaIncorporacion) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(fechaIncorporacion = newvalue))
+            if(newvalue != viewModel.state.value.persona.fechaIncorporacion) viewModel.state.value = viewModel.state.value.copy(persona = viewModel.state.value.persona.copy(fechaIncorporacion = newvalue))
         }
         nacimientoDP.valueProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.persona.fechaNacimiento) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(fechaNacimiento = newvalue))
+            if(newvalue != viewModel.state.value.persona.fechaNacimiento) viewModel.state.value = viewModel.state.value.copy(persona = viewModel.state.value.persona.copy(fechaNacimiento = newvalue))
         }
         apellidosField.textProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.persona.apellidos) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(apellidos = newvalue))
+            if(newvalue != viewModel.state.value.persona.apellidos) viewModel.state.value = viewModel.state.value.copy(persona = viewModel.state.value.persona.copy(apellidos = newvalue))
         }
         nombreField.textProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.persona.nombre) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(nombre = newvalue))
+            if(newvalue != viewModel.state.value.persona.nombre) viewModel.state.value = viewModel.state.value.copy(persona = viewModel.state.value.persona.copy(nombre = newvalue))
         }
 
         //Jugador
         minutosField.textProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.persona.minutosJugados.toString()) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(minutosJugados = newvalue.toIntOrNull() ?: 0))
+            if(newvalue != viewModel.state.value.persona.minutosJugados.toString()) viewModel.state.value = viewModel.state.value.copy(persona = viewModel.state.value.persona.copy(minutosJugados = newvalue.toIntOrNull() ?: 0))
         }
         partidosField.textProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.persona.partidosJugados.toString()) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(partidosJugados = newvalue.toIntOrNull() ?: 0))
+            if(newvalue != viewModel.state.value.persona.partidosJugados.toString()) viewModel.state.value = viewModel.state.value.copy(persona = viewModel.state.value.persona.copy(partidosJugados = newvalue.toIntOrNull() ?: 0))
         }
         golesField.textProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.persona.goles.toString()) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(goles = newvalue.toIntOrNull() ?: 0))
+            if(newvalue != viewModel.state.value.persona.goles.toString()) viewModel.state.value = viewModel.state.value.copy(persona = viewModel.state.value.persona.copy(goles = newvalue.toIntOrNull() ?: 0))
         }
         minutosField.textProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.persona.minutosJugados.toString()) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(minutosJugados = newvalue.toIntOrNull() ?: 0))
+            if(newvalue != viewModel.state.value.persona.minutosJugados.toString()) viewModel.state.value = viewModel.state.value.copy(persona = viewModel.state.value.persona.copy(minutosJugados = newvalue.toIntOrNull() ?: 0))
         }
         alturaField.textProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.persona.altura.toString()) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(altura = newvalue.toDoubleOrNull() ?: 0.0))
+            if(newvalue != viewModel.state.value.persona.altura.toString()) viewModel.state.value = viewModel.state.value.copy(persona = viewModel.state.value.persona.copy(altura = newvalue.toDoubleOrNull() ?: 0.0))
         }
         dorsalField.textProperty().addListener{_,_,newvalue ->
-            if(newvalue != viewModel.state.value.persona.dorsal.toString()) viewModel.state.value = viewModel.state.value.copy(persona = EquipoViewModel.PersonalState(dorsal = newvalue.toIntOrNull() ?: 0))
+            if(newvalue != viewModel.state.value.persona.dorsal.toString()) viewModel.state.value = viewModel.state.value.copy(persona = viewModel.state.value.persona.copy(dorsal = newvalue.toIntOrNull() ?: 0))
         }
 
         //Barra de búqueda
@@ -295,7 +296,10 @@ class NewTeamAdminController(): KoinComponent {
 
 
         listIntegrantes.selectionModel.selectedItemProperty().addListener { _, _, newValue ->
-            newValue?.let { onTablaSelected(newValue) }
+            newValue?.let {
+                onTablaSelected(newValue)
+                enableEditCancel()
+            }
         }
 
         //Footer
@@ -372,12 +376,14 @@ class NewTeamAdminController(): KoinComponent {
         saveJugadorButton.setOnAction {
             especialidad.toggles.forEach{ it.isSelected = false }
             onCheckEditState()
+            enableEditCancel()
             onCreateJugadorAction()
         }
 
         saveEntrenadorButton.setOnAction {
             posicion.toggles.forEach{ it.isSelected = false }
             onCheckEditState()
+            enableEditCancel()
             onCreateEntrenadorAction()
         }
 
@@ -479,6 +485,7 @@ class NewTeamAdminController(): KoinComponent {
     private fun onCheckDeleteState() {
         if (isEditButton) deleteFunction()
         else cancelFunction()
+        disableEditCancel()
     }
 
     /**
@@ -515,6 +522,7 @@ class NewTeamAdminController(): KoinComponent {
      * @see disableAll
      */
     private fun cancelFunction() {
+        logger.debug { "Cancelando acción" }
         styleToEditButton()
         styleToDeleteButton()
         disableAll()
@@ -594,6 +602,19 @@ class NewTeamAdminController(): KoinComponent {
         disableJugador()
         disableEntrenador()
     }
+
+    private fun disableEditCancel(){
+        editAndSaveButton.isDisable = true
+        deleteAndCancelButton.isDisable = true
+
+    }
+
+    private fun enableEditCancel(){
+        editAndSaveButton.isDisable = false
+        deleteAndCancelButton.isDisable = false
+    }
+
+
 
     /**
      * Deshabilita los campos comunes a [Jugador] y [Entrenador]
@@ -745,7 +766,7 @@ class NewTeamAdminController(): KoinComponent {
                     fechaIncorporacion = incorporacionDP.value,
                     salario = salarioField.text.toDoubleOrNull() ?: 0.0,
                     pais = paisField.text,
-                    imagen = profilePicture.image.url,
+                    imagen = listIntegrantes.selectionModel.selectedItem.imagen,
                     posicion = getPosicionFromView(),
                     dorsal = dorsalField.text.toIntOrNull() ?: 0,
                     altura = alturaField.text.toDoubleOrNull() ?: 0.0,
