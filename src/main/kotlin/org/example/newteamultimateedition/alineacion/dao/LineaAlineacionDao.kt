@@ -35,7 +35,7 @@ interface LineaAlineacionDao {
     @SqlUpdate("DELETE  FROM linea")
     fun deleteAll(): Int
 }
-fun provideCodigoDao(jdbi: Jdbi): LineaAlineacionDao {
+fun provideLineaAlineacionDao(jdbi: Jdbi): LineaAlineacionDao {
     val logger= logging()
     logger.info { "obteniendo personas dao" }
     return jdbi.onDemand(LineaAlineacionDao::class.java)

@@ -36,7 +36,7 @@ class AlineacionServiceImpl(
         }
     }
 
-    override fun getJugadores(): Result<List<Persona>, PersonasError> {
+    override fun getAllPersonas(): Result<List<Persona>, PersonasError> {
         logger.debug { "getJugadores" }
         return try {
             personalService.getAll()

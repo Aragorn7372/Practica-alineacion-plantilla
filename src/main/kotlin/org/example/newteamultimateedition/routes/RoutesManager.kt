@@ -232,5 +232,15 @@ object RoutesManager {
             } else event?.consume()
         }
     }
+    fun showAlertOperation(
+        alerta: Alert.AlertType = Alert.AlertType.CONFIRMATION,
+        title: String = "",
+        mensaje: String = ""
+    ) {
+        Alert(alerta).apply {
+            this.title = title
+            this.contentText = mensaje
+        }.showAndWait()
+    }
 
 }

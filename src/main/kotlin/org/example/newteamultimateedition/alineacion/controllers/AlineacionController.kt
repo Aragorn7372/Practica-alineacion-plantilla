@@ -12,29 +12,35 @@ import javafx.scene.control.Alert.AlertType
 import javafx.scene.layout.HBox
 import javafx.stage.FileChooser
 import javafx.stage.Stage
+import org.example.newteamultimateedition.alineacion.error.AlineacionError
+import org.example.newteamultimateedition.alineacion.model.Alineacion
+import org.example.newteamultimateedition.alineacion.viewmodels.AlineacionViewModel
 import org.example.newteamultimateedition.personal.error.PersonasError
+import org.example.newteamultimateedition.personal.models.Persona
 import org.example.newteamultimateedition.routes.RoutesManager
 import org.example.newteamultimateedition.users.models.User
-import org.example.newteamultimateedition.viewmodels.EquipoViewModel
+import org.example.newteamultimateedition.personal.viewmodels.EquipoViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.lighthousegames.logging.logging
 
 class AlineacionController(): KoinComponent {
     private val cache: Cache<Long, User> by inject()
+    private val viewModel: AlineacionViewModel by inject()
     private val logger= logging()
+    private val alineacionList = viewModel.loadAllAlineciones()
 
     //Botones HBox de abajo
     @FXML
     lateinit var buttonContainer: HBox // Contenedor de los botones
     @FXML
-    lateinit var btnEditar: Button
+    lateinit var editButton: Button
     @FXML
-    lateinit var btnVisualizar: Button
+    lateinit var viewButton: Button
     @FXML
-    lateinit var btnCrearAlineacion: Button
+    lateinit var createButton: Button
     @FXML
-    lateinit var btnEditarPersonas: Button
+    lateinit var backButton: Button
 
     // MenuBar
 
@@ -50,10 +56,10 @@ class AlineacionController(): KoinComponent {
     // Hbox de arriba
     @FXML
     lateinit var searchBar: TextField
-    @FXML
-    lateinit var filterComboBox: ComboBox<String>
 
     //TableView
+    @FXML
+    lateinit var tablaAlineacion: TableView<Persona>
     @FXML
     lateinit var colId: TableColumn<String, String>
     @FXML
@@ -69,6 +75,7 @@ class AlineacionController(): KoinComponent {
 
     private fun initDefaultValues() {
         handleSesionView()
+        viewModel.loadAllAlineciones()
     }
 
     private fun handleSesionView() {
@@ -77,8 +84,8 @@ class AlineacionController(): KoinComponent {
 
     private fun initBindings() {
         if(!cache.getIfPresent(1L).isAdmin) {
-            buttonContainer.children.remove(btnEditar)
-            buttonContainer.children.remove(btnCrearAlineacion)
+            buttonContainer.children.remove(editButton)
+            buttonContainer.children.remove(createButton)
         }
         //Barra de búqueda
         searchBar.textProperty().addListener { _, oldValue, newValue ->

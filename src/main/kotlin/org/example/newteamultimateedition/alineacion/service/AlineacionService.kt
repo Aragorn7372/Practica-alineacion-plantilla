@@ -12,7 +12,7 @@ import java.time.LocalDate
 
 interface AlineacionService: Service<Alineacion,AlineacionError,Long> {
     fun getByFecha(fecha: LocalDate):Result<Alineacion,AlineacionError>
-    fun getJugadores(): Result<List<Persona>, PersonasError>
+    fun getAllPersonas(): Result<List<Persona>, PersonasError>
     fun getJugadoresByLista(lista: List<LineaAlineacion>):Result<List<Persona>, PersonasError>
     fun getJugadoresByAlinecionId(id:Long):Result<List<Persona>, Errors>
 }
