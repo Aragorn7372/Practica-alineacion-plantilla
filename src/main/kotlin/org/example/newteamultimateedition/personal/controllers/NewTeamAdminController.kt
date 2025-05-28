@@ -1,4 +1,3 @@
-
 package org.example.newteamultimateedition.personal.controllers
 
 import com.github.benmanes.caffeine.cache.Cache
@@ -21,7 +20,6 @@ import org.example.newteamultimateedition.personal.models.Entrenador
 import org.example.newteamultimateedition.personal.models.Especialidad
 import org.example.newteamultimateedition.personal.models.Jugador
 import org.example.newteamultimateedition.personal.models.Persona
-
 import org.example.newteamultimateedition.routes.RoutesManager
 import org.example.newteamultimateedition.users.models.User
 import org.example.newteamultimateedition.personal.viewmodels.EquipoViewModel
