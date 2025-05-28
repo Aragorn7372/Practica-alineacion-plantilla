@@ -375,6 +375,7 @@ class NewTeamAdminController(): KoinComponent {
 
         saveJugadorButton.setOnAction {
             especialidad.toggles.forEach{ it.isSelected = false }
+            disableCreateButtons()
             onCheckEditState()
             enableEditCancel()
             onCreateJugadorAction()
@@ -382,6 +383,7 @@ class NewTeamAdminController(): KoinComponent {
 
         saveEntrenadorButton.setOnAction {
             posicion.toggles.forEach{ it.isSelected = false }
+            disableCreateButtons()
             onCheckEditState()
             enableEditCancel()
             onCreateEntrenadorAction()
@@ -526,6 +528,7 @@ class NewTeamAdminController(): KoinComponent {
         styleToEditButton()
         styleToDeleteButton()
         disableAll()
+        enableCreateButotns()
         isEditButton = true
     }
 
@@ -702,6 +705,14 @@ class NewTeamAdminController(): KoinComponent {
         enableComunes()
         especialidad.toggles.forEach { (it as RadioButton).isDisable = false }
     }
+    private fun enableCreateButotns(){
+        saveJugadorButton.isDisable = false
+        saveEntrenadorButton.isDisable = false
+    }
+    private fun disableCreateButtons(){
+        saveJugadorButton.isDisable = true
+        saveEntrenadorButton.isDisable = true
+    }
 
     /**
      * Crea un entrenador vacío
@@ -748,6 +759,7 @@ class NewTeamAdminController(): KoinComponent {
 
         viewModel.saveIntegrante(newIntegrante)
 
+        enableCreateButotns()
     }
 
     /**
@@ -766,7 +778,7 @@ class NewTeamAdminController(): KoinComponent {
                     fechaIncorporacion = incorporacionDP.value,
                     salario = salarioField.text.toDoubleOrNull() ?: 0.0,
                     pais = paisField.text,
-                    imagen = listIntegrantes.selectionModel.selectedItem.imagen,
+                    imagen = viewModel.state.value.persona.imagen.ifEmpty { "media/profile_picture.png" }, // Le asigna la url de la imagen del integrante seleccionado (del viewModel) y, en el caso de estar vacia, le asigna una por defecto
                     posicion = getPosicionFromView(),
                     dorsal = dorsalField.text.toIntOrNull() ?: 0,
                     altura = alturaField.text.toDoubleOrNull() ?: 0.0,
@@ -786,7 +798,7 @@ class NewTeamAdminController(): KoinComponent {
                     fechaIncorporacion = incorporacionDP.value,
                     salario = salarioField.text.toDoubleOrNull() ?: 0.0,
                     pais = paisField.text,
-                    imagen = profilePicture.image.url,
+                    imagen = viewModel.state.value.persona.imagen.ifEmpty { "media/profile_picture.png" },
                     especialidad = getEspecialidadFromView()
                 )
             )
