@@ -1,0 +1,28 @@
+.button{
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 14px;
+    -fx-pref-width: 120px;
+}
+
+#addButton {
+    -fx-text-fill: #fff;
+    -fx-background-color: #11b642;
+}
+#deleteButton{
+    -fx-text-fill: #fff;
+    -fx-background-color: #FF2C2C;
+}
+#saveButton{
+    -fx-text-fill: #fff;
+    -fx-background-color: #1660d0;
+}
+
+#addButton:hover {
+    -fx-background-color: #0f9b3a;
+}
+#deleteButton:hover{
+    -fx-background-color: #8c0505;
+}
+#saveButton:hover{
+    -fx-background-color: #10489f;
+}
