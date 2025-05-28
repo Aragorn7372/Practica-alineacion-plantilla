@@ -89,6 +89,7 @@ class UsersServiceImpl(
     }
 
     fun goodLogin(username: String, password: String): Result<User, UsersException> {
+        try {
         val userResult = repositorio.getById(username)
         return if (userResult != null) {
             if (BCrypt.checkpw(password, userResult.password)) {
@@ -101,6 +102,9 @@ class UsersServiceImpl(
         } else {
             logger.debug { "contraseña vacia" }
             Err(UsersException.UsersNotFoundException(username))
+        }
+        }catch (e:Exception){
+            return Err(UsersException.DatabaseException(e.message.toString()))
         }
     }
 

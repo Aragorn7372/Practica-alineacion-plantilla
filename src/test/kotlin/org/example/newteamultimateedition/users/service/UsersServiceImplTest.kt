@@ -7,14 +7,13 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.mindrot.jbcrypt.BCrypt
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.mock
 import org.mockito.junit.jupiter.MockitoExtension
-import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.whenever
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.times
+import org.mockito.kotlin.*
+import java.sql.SQLException
 
 @ExtendWith(MockitoExtension::class)
 class UsersServiceImplTest {
@@ -29,6 +28,11 @@ class UsersServiceImplTest {
         name = "admin",
         password = "1234",
         isAdmin = true
+    )
+    private val userHashed= User(
+        name = "admin",
+        password = BCrypt.hashpw("1234", BCrypt.gensalt(12)),
+        isAdmin = true,
     )
 
     private val userId = "admin"
@@ -109,6 +113,15 @@ class UsersServiceImplTest {
         assertEquals(exceptionMessage, (result.error as UsersException.DatabaseException).message)
         verify(repository, times(1)).save(user)
     }
+    @Test
+    @DisplayName("getById sin estar")
+    fun getByIdSinEstar() {
+        whenever(repository.getById(userId)) doReturn null
+        val result= service.getByID(userId)
+        assertTrue(result.isErr,"deberian ser iguales")
+        assertEquals(result.error.message,"Persona no encontrada con id: admin","deberian ser iguales")
+        verify(repository, times(1)).getById(userId)
+    }
 
     @Test
     @DisplayName("delete elimina usuario correctamente")
@@ -179,6 +192,44 @@ class UsersServiceImplTest {
 
         assertTrue(result.isErr)
         assertTrue((result.error is UsersException.DatabaseException))
+        verify(repository, times(1)).update(user, "123")
     }
+    @Test
+    @DisplayName("goodLogin")
+    fun goodLogin() {
+        whenever(repository.getById(userId)) doReturn userHashed
+        val result= service.goodLogin(userId,user.password)
+        assertTrue(result.isOk)
+        assertEquals(userHashed, result.value,"deberian ser iguales")
+        verify(repository, times(1)).getById(userId)
+    }
+    @Test
+    @DisplayName("badLogin Not found")
+    fun badLoginNotFound() {
+        whenever(repository.getById(userId)) doReturn null
+        val result= service.goodLogin(userId,user.password)
+        assertTrue(result.isErr)
+        assertEquals("Persona no encontrada con id: admin", result.error.message,"deberian ser iguales")
+        verify(repository, times(1)).getById(userId)
+    }
+    @Test
+    @DisplayName("badLogin bad pasword")
+    fun badLoginBadPassword() {
+        whenever(repository.getById(userId)) doReturn userHashed
+        val result= service.goodLogin(userId,"hola")
+        assertTrue(result.isErr)
+        assertEquals("Contraseña errónea", result.error.message,"deberian ser iguales")
+        verify(repository, times(1)).getById(userId)
+    }
+    @Test
+    @DisplayName("badLogin database exception")
+    fun badLoginDatabaseException() {
+        whenever(repository.getById(userId)) doThrow RuntimeException("error en la base de datos")
+        val result= service.goodLogin(userId,"1234")
+        assertTrue(result.isErr)
+        assertEquals("error en la base de datos", result.error.message,"deberian ser iguales")
+        verify(repository, times(1)).getById(userId)
+    }
+
 
 }

@@ -265,6 +265,7 @@ class PersonaServiceImplTest {
                 { assertTrue(result.isOk) },
                 { assertEquals(result.value.size, equipo.size) },
                 { assertEquals(result.value, equipo) },
+                { assertTrue(result.value.count{it.isDeleted}==0) },
             )
 
             verify(repository, times(1)).getAll()

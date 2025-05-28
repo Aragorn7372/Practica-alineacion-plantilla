@@ -1,5 +1,5 @@
 package org.example.newteamultimateedition.personal.storage
-
+/*
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
@@ -87,7 +87,6 @@ class PersonalStorageZip(
         val tempDir = Files.createTempDirectory(tempDirName)
         try {
             persona.forEach {
-                if (it is Jugador) {
                     val newfile = File(config.configProperties.imagesDirectory + "/" + it.imagen)
                     if (newfile.exists()) {
                         Files.copy(
@@ -96,7 +95,6 @@ class PersonalStorageZip(
                             StandardCopyOption.REPLACE_EXISTING
                         )
                     }
-                }
             }
 
             val datafile = when (tipe) {
@@ -128,4 +126,4 @@ enum class Tipo {
     CSV, JSON, XML, BIN
 }
 
-
+*/

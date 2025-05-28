@@ -150,16 +150,24 @@ jacocoTestReport {
     afterEvaluate {
         classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
-                    "org/example/newteamultimateedition/personal/models/",
-                    "users/models/",
-                    "users/exception/",
-                    "Main.*",
-                    "personal/cache/",
-                    "personal/dto",
-                    "di/",
-                    "personal/error/",
-                    "users/dao/UsersEntity.*",
-                    "personal/dao/PersonaEntity.*"
+                    "**/dto/**",
+                    "**/models/**",
+                    "**/model/**",
+                    "**/exception/**",
+                    "**/error/**",
+                    "**/dao/AlineacionEntity.class",
+                    "**/dao/LineaAlineacionEntity.class",
+                    "**/dao/UsersEntity.class",
+                    "**/dao/PersonaEntity.class",
+                    "**/di/**",
+                    "**/controllers/**",
+                    "**/viewmodels/**",
+                    "**/cache/**",
+                    "**/database/**",
+                    "**/config/**",
+                    "**/controller/**",
+                    "**/routes/**",
+                    "**/Main**"
             ])
         }))
     }

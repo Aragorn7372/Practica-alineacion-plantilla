@@ -12,7 +12,7 @@ class AlineacionStorageImpl(
 ): AlineacionStorage {
     override fun fileWrite(equipo: List<Persona>, file: File): Result<Unit, PersonasError> {
         when {
-            file.name.endsWith(".bin") -> {
+            file.name.endsWith(".html") -> {
                 storageHTML.fileWrite(equipo,file)
             } else -> {
             return Err(PersonasError.PersonasStorageError("Extensión inválida."))

@@ -5,6 +5,8 @@ import org.example.newteamultimateedition.alineacion.dao.AlineacionDao
 import org.example.newteamultimateedition.alineacion.dao.LineaAlineacionDao
 import org.example.newteamultimateedition.alineacion.dao.provideAlineacionDao
 import org.example.newteamultimateedition.alineacion.dao.provideLineaAlineacionDao
+import org.example.newteamultimateedition.alineacion.mapper.AlineacionMapper
+import org.example.newteamultimateedition.alineacion.repository.AlineacionRepositoryImpl
 import org.example.newteamultimateedition.alineacion.validador.AlineacionValidate
 import org.example.newteamultimateedition.common.database.provideDatabaseManager
 import org.example.newteamultimateedition.personal.cache.darPersonasCache
@@ -43,6 +45,12 @@ val appModule = module {
 
     singleOf(::AlineacionServiceImpl){
         bind<AlineacionServiceImpl>()
+    }
+    singleOf(::AlineacionRepositoryImpl){
+        bind<AlineacionRepositoryImpl>()
+    }
+    singleOf(::AlineacionMapper){
+        bind<AlineacionMapper>()
     }
 
     // DAO: depende de Jdbi
@@ -119,7 +127,6 @@ val appModule = module {
         bind<Cache<Long, User>>()
     }
     singleOf(::EquipoViewModel)
-
     singleOf(::AlineacionViewModel)
 }
 

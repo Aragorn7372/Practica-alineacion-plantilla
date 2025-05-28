@@ -5,7 +5,7 @@ import org.example.newteamultimateedition.alineacion.dao.LineaAlineacionDao
 import org.example.newteamultimateedition.alineacion.mapper.AlineacionMapper
 import org.example.newteamultimateedition.alineacion.model.Alineacion
 import org.example.newteamultimateedition.personal.models.Entrenador
-import org.example.newteamultimateedition.personal.repository.PersonalRepository
+import org.example.newteamultimateedition.personal.repository.PersonasRepositoryImplementation
 import org.lighthousegames.logging.logging
 import java.time.LocalDate
 
@@ -14,7 +14,7 @@ class AlineacionRepositoryImpl(
     private val alineacionDao: AlineacionDao,
     private val lineaAlineacionDao: LineaAlineacionDao,
     private val mapper: AlineacionMapper,
-    private val personaRepository: PersonalRepository
+    private val personaRepository: PersonasRepositoryImplementation
 ):AlineacioRepository {
     private val logger = logging()
 

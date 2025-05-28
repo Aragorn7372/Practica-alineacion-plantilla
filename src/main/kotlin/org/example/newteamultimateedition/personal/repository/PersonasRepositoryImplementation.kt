@@ -43,19 +43,14 @@ class PersonasRepositoryImplementation(
         logger.debug { "Updating persona by id $id" }
 
         val updated = dao.update(objeto.toEntity(),id)
-
-        return if (updated==1){
-            when (objeto) {
-                is Jugador -> {
-                    objeto.copy(newId = id)
+        if (updated==1){
+                if (objeto is Jugador){
+                    return objeto.copy(newId = id)
+                } else {
+                    return (objeto as Entrenador).copy(newId = id)
                 }
-                is Entrenador -> {
-                    objeto.copy(newId = id)
-                }
-                else -> null
             }
-        }
-        else null
+        else return  null
     }
 
     override fun delete(id: Long): Persona? {

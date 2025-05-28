@@ -104,6 +104,13 @@ class AlineacionController(): KoinComponent {
         logoutButton.setOnAction {
             showLogoutAlert()
         }
+        backButton.setOnAction {
+            if (cache.getIfPresent(1L).isAdmin) {
+                RoutesManager.initAdminStage(searchBar.scene.window as Stage)
+            }else{
+                RoutesManager.initUserStage(searchBar.scene.window as Stage)
+            }
+        }
 
         exportButton.setOnAction { onExportarAction() }
     }
