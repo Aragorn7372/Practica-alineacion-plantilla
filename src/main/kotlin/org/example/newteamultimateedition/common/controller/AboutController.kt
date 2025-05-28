@@ -10,7 +10,9 @@ import org.lighthousegames.logging.logging
  * Clase que representa el controlador de la vista About.
  * @property githubLinkCarlos Link al GitHub de Carlos.
  * @property githubLinkSamuel Link al GitHub de Samuel.
- * @property githubLinkJesus Link al GitHub de Jesús.
+ * @property githubLinkCristian Link al GitHub de Cristian.
+ * @property githubLinkVictor Link al GitHub de Victor.
+ * @property repositorioGitHub Link al repositorio.
  */
 class AboutController {
     private val logger = logging()

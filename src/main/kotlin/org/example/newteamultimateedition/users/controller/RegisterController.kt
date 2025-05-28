@@ -58,6 +58,11 @@ class RegisterController: KoinComponent {
     }
 
     private fun initEvents() {
+
+        acercaDeButton.setOnAction {
+            RoutesManager.initAboutStage()
+        }
+
         userText.textProperty().addListener { _, oldValue, newValue ->
             if (oldValue != newValue) {
                 errorMessage.text = ""

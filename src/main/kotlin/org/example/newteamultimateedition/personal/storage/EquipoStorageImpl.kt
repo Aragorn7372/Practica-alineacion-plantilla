@@ -3,6 +3,7 @@ package org.example.newteamultimateedition.personal.storage
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
+import org.example.newteamultimateedition.alineacion.storage.AlineacionStorageHTML
 import org.example.newteamultimateedition.personal.error.PersonasError
 import org.example.newteamultimateedition.personal.models.Persona
 import java.io.File
@@ -18,7 +19,7 @@ class EquipoStorageImpl(
     private val storageCSV: EquipoStorageCSV = EquipoStorageCSV(),
     private val storageXML: EquipoStorageXML = EquipoStorageXML(),
     private val storageJSON: EquipoStorageJSON = EquipoStorageJSON(),
-    private val storageBIN: EquipoStorageBIN = EquipoStorageBIN()
+    private val storageBIN: EquipoStorageBIN = EquipoStorageBIN(),
 ): EquipoStorage {
     /**
      * Llama a uno u otro storage en función de la extensión del archivo a leer que le entra por parámetro
