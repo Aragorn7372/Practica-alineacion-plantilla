@@ -10,7 +10,7 @@ id,nombre,apellidos,fecha_nacimiento,fecha_incorporacion,salario,pais,rol,especi
 9,Johnny,Mason,1984-01-25,2001-05-15,31000.0,España,Jugador,,CENTROCAMPISTA,6,1.74,68.0,15,130,11650,media/jugador2.png
 10,Leo,Aragones,1970-05-30,2002-09-01,57000.0,Argentina,Entrenador,ENTRENADOR_PRINCIPAL,,,,,,,,media/entrenador2.png
 11,Paul,Diamond,1983-10-18,2001-05-15,29000.0,España,Jugador,,DELANTERO,9,1.76,67.0,40,145,12050,media/jugador3.png
-12,Ed,Warner,1983-02-02,2001-05-15,32000.0,España,Jugador,,PORTERO,22,1.85,80.0,0,180,14000,media/jugador4.png
+12,Edd,Warner,1983-02-02,2001-05-15,32000.0,España,Jugador,,PORTERO,22,1.85,80.0,0,180,14000,media/jugador4.png
 13,Danny,Mello,1984-09-09,2001-05-15,31000.0,España,Jugador,,DELANTERO,11,1.77,69.0,25,135,11720,media/jugador2.png
 14,Ted,Carter,1983-07-07,2001-05-15,30000.0,España,Jugador,,CENTROCAMPISTA,7,1.73,66.0,20,125,10840,media/jugador3.png
 15,Jack,Morris,1984-11-11,2001-05-15,33000.0,España,Jugador,,DEFENSA,3,1.79,71.0,8,155,12400,media/jugador3.png
