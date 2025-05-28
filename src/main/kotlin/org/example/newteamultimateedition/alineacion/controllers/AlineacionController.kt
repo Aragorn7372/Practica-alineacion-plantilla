@@ -1,13 +1,21 @@
 package org.example.newteamultimateedition.alineacion.controllers
 
 import com.github.benmanes.caffeine.cache.Cache
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
+import javafx.application.Platform
 import javafx.fxml.FXML
+import javafx.scene.Cursor.DEFAULT
+import javafx.scene.Cursor.WAIT
 import javafx.scene.control.*
 import javafx.scene.control.Alert.AlertType
 import javafx.scene.layout.HBox
+import javafx.stage.FileChooser
 import javafx.stage.Stage
+import org.example.newteamultimateedition.personal.error.PersonasError
 import org.example.newteamultimateedition.routes.RoutesManager
 import org.example.newteamultimateedition.users.models.User
+import org.example.newteamultimateedition.viewmodels.EquipoViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.lighthousegames.logging.logging
@@ -15,6 +23,7 @@ import org.lighthousegames.logging.logging
 class AlineacionController(): KoinComponent {
     private val cache: Cache<Long, User> by inject()
     private val logger= logging()
+
     //Botones HBox de abajo
     @FXML
     lateinit var buttonContainer: HBox // Contenedor de los botones
