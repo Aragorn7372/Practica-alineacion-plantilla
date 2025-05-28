@@ -34,8 +34,8 @@ class AlineacionRepositoryImpl(
     override fun getAll(): List<Alineacion> {
         logger.debug { "Obteniendo todas las alineaciones ... " }
         val alineacionesEntity = alineacionDao.getAll()
-        if ( alineacionesEntity.isNullOrEmpty() ) return listOf()
-        //Si no esta vacia devolvemos la lista de alineacinoes filtrada por las que estan vacias
+        if ( alineacionesEntity.isEmpty() ) return listOf()
+        //Si no esta vacía devolvemos la lista de alineacinoes filtrada por las que estan vacias
         return alineacionesEntity.map {
             val codigoAlineaciones = lineaAlineacionDao.getByAlineacionId(it.id).map { codigo -> mapper.toModel(codigo) }
             personaRepository.getById(it.idEntrenador)?.let { entrenador ->
