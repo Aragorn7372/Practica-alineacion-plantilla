@@ -1,75 +1,264 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="alineacionRoot" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
 
-    <!-- Centro: Campo con titulares -->
-    <center>
-        <StackPane>
-            <!-- Imagen de fondo del campo -->
-            <ImageView fitHeight="600" fitWidth="800" preserveRatio="true">
-            <image>
-               <Image url="@../media/FondoCampoFutbol.png" />
-            </image></ImageView>
-
-            <!-- Contenedor para los jugadores titulares -->
-            <Pane fx:id="campoTitulares" prefHeight="600" prefWidth="294.0">
-                <!-- Los jugadores titulares se colocarán dinámicamente en el controller -->
-            </Pane>
-        </StackPane>
-    </center>
-
-    <!-- Derecha: Suplentes y entrenador -->
-    <right>
-        <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="200.0" spacing="20" style="-fx-background-color: #f5f5f5;">
-            <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
-            </padding>
-
-            <Label style="-fx-text-fill: #374a64; -fx-font-size: 18px; -fx-underline: true;" text="Suplentes" textFill="#2b4261" />
-
-            <VBox fx:id="listaSuplentes" spacing="10">
-                <!-- Se agregan dinámicamente los suplentes -->
-            </VBox>
-
-            <Separator style="-fx-background-color: #374a64;" />
-
-            <Label style="-fx-text-fill: #374a64; -fx-font-size: 18px; -fx-underline: true;" text="Entrenador" textFill="#374a63" />
-            <Label fx:id="nombreEntrenador" style="-fx-text-fill: white; -fx-font-size: 16px;" />
-        </VBox>
-
-    </right>
-   <top>
-      <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #f5f5f5;" BorderPane.alignment="CENTER">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label prefHeight="84.0" prefWidth="407.0" text="ALINEACIONES" textFill="#374a64">
-               <font>
-                  <Font name="System Bold" size="53.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="10.0" top="7.0" />
-               </HBox.margin>
-            </Label>
-            <ImageView fitHeight="200.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../media/app-icon.png" />
-               </image>
-               <HBox.margin>
-                  <Insets left="30.0" />
-               </HBox.margin>
-            </ImageView>
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: #2c3e50;">
+               <children>
+                  <Label style="-fx-text-fill: #fff;" text="ALINEACIONES">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Pane prefHeight="56.0" prefWidth="748.0" />
+                  <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../media/app-icon.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <HBox prefHeight="500.0" prefWidth="1000.0">
+               <children>
+                  <Pane prefHeight="200.0" prefWidth="325.0">
+                     <children>
+                        <ImageView fitHeight="493.0" fitWidth="325.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../media/FondoCampoFutbol.png" />
+                           </image>
+                        </ImageView>
+                        <Pane layoutX="35.0" layoutY="144.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
+                           <children>
+                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="100.0" layoutY="81.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
+                           <children>
+                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="243.0" layoutY="144.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
+                           <children>
+                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="178.0" layoutY="81.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
+                           <children>
+                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="35.0" layoutY="270.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
+                           <children>
+                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="100.0" layoutY="329.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
+                           <children>
+                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="178.0" layoutY="329.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
+                           <children>
+                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="243.0" layoutY="270.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
+                           <children>
+                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="100.0" layoutY="208.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
+                           <children>
+                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="178.0" layoutY="208.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
+                           <children>
+                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                        <Pane layoutX="139.0" layoutY="415.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
+                           <children>
+                              <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Suplentes">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Separator prefWidth="200.0" />
+                        <VBox alignment="CENTER" prefHeight="345.0" prefWidth="100.0">
+                           <children>
+                              <HBox alignment="CENTER" fillHeight="false" prefHeight="48.0" prefWidth="200.0">
+                                 <children>
+                                    <Pane style="-fx-background-color: #333;">
+                                       <children>
+                                          <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </HBox.margin>
+                                    </Pane>
+                                    <Pane style="-fx-background-color: #333;">
+                                       <children>
+                                          <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </HBox.margin>
+                                    </Pane>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER" fillHeight="false" prefHeight="48.0" prefWidth="200.0">
+                                 <children>
+                                    <Pane style="-fx-background-color: #333;">
+                                       <children>
+                                          <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </HBox.margin>
+                                    </Pane>
+                                    <Pane style="-fx-background-color: #333;">
+                                       <children>
+                                          <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </HBox.margin>
+                                    </Pane>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER" fillHeight="false" prefHeight="48.0" prefWidth="200.0">
+                                 <children>
+                                    <Pane style="-fx-background-color: #333;">
+                                       <children>
+                                          <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </HBox.margin>
+                                    </Pane>
+                                    <Pane style="-fx-background-color: #333;">
+                                       <children>
+                                          <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </HBox.margin>
+                                    </Pane>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox alignment="CENTER" fillHeight="false" prefHeight="48.0" prefWidth="200.0">
+                                 <children>
+                                    <Pane style="-fx-background-color: #333;">
+                                       <children>
+                                          <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
+                                       </children>
+                                    </Pane>
+                                 </children>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <Separator prefWidth="200.0" />
+                        <Label text="Entrenador">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER" fillHeight="false" prefHeight="48.0" prefWidth="200.0">
+                           <children>
+                              <Pane style="-fx-background-color: #333;">
+                                 <children>
+                                    <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
+                                 </children>
+                              </Pane>
+                           </children>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <TableView prefHeight="493.0" prefWidth="475.0">
+                    <columns>
+                      <TableColumn prefWidth="145.0" text="Nombre" />
+                      <TableColumn prefWidth="106.0" text="Partidos Jugados" />
+                        <TableColumn prefWidth="68.0" text="Goles" />
+                        <TableColumn prefWidth="154.0" text="Especialidad" />
+                    </columns>
+                  </TableView>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0">
+               <children>
+                  <Button id="addButton" mnemonicParsing="false" text="Añadir">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button id="addButton" mnemonicParsing="false" text="Editar">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button id="addButton" mnemonicParsing="false" text="Eliminar">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button id="addButton" mnemonicParsing="false" text="Volver al inicio" />
+               </children>
+            </HBox>
          </children>
-      </HBox>
-   </top>
-</BorderPane>
+      </VBox>
+   </children>
+</AnchorPane>
