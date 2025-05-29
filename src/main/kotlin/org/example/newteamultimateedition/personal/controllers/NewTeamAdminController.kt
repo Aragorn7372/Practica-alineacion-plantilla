@@ -235,6 +235,9 @@ class NewTeamAdminController(): KoinComponent {
         dorsalField.textProperty().addListener{_,_,newvalue ->
             if(newvalue != viewModel.state.value.persona.dorsal.toString()) viewModel.state.value = viewModel.state.value.copy(persona = viewModel.state.value.persona.copy(dorsal = newvalue.toIntOrNull() ?: 0))
         }
+        pesoField.textProperty().addListener{_,_,newvalue ->
+            if(newvalue != viewModel.state.value.persona.peso.toString()) viewModel.state.value = viewModel.state.value.copy(persona = viewModel.state.value.persona.copy(peso = newvalue.toDoubleOrNull() ?: 0.0))
+        }
 
         //Barra de búqueda
         searchBar.textProperty().addListener { _, _, newValue ->
@@ -750,7 +753,24 @@ class NewTeamAdminController(): KoinComponent {
      */
     private fun onSaveIntegranteAction(esJugador: Boolean) {
         logger.debug { "Guardando nuevo jugador" }
-        validarJugador()
+        if (esJugador) {
+            validarJugador().onFailure {
+                showAlertOperation(AlertType.ERROR, "error", it.message)
+                disableAll()
+                disableEditCancel()
+                enableCreateButotns()
+                return
+            }
+        }else{
+            validarEntrenador().onFailure {
+                showAlertOperation(AlertType.ERROR, "error", it.message)
+                disableAll()
+                disableEditCancel()
+                enableCreateButotns()
+                return
+            }
+        }
+
         parseViewToIntegrante(esJugador) // Actualizamos el integrante seleccionado con los datos de la vista
         val newIntegrante: Persona
         logger.debug { "Mapeando integrante" }
@@ -772,12 +792,12 @@ class NewTeamAdminController(): KoinComponent {
         if (esJugador) {
             viewModel.state.value = viewModel.state.value.copy(
                 persona = EquipoViewModel.PersonalState(
-                    nombre = nombreField.text,
-                    apellidos = apellidosField.text,
+                    nombre = nombreField.text?:"",
+                    apellidos = apellidosField.text?:"",
                     fechaNacimiento = nacimientoDP.value,
                     fechaIncorporacion = incorporacionDP.value,
                     salario = salarioField.text.toDoubleOrNull() ?: 0.0,
-                    pais = paisField.text,
+                    pais = paisField.text?:"",
                     imagen = viewModel.state.value.persona.imagen.ifEmpty { "media/profile_picture.png" }, // Le asigna la url de la imagen del integrante seleccionado (del viewModel) y, en el caso de estar vacia, le asigna una por defecto
                     posicion = getPosicionFromView(),
                     dorsal = dorsalField.text.toIntOrNull() ?: 0,
@@ -835,7 +855,9 @@ class NewTeamAdminController(): KoinComponent {
      */
     private fun validarJugador (): Result<Unit, PersonasError.PersonasInvalidoError> {
         logger.debug { "Validando jugador" }
-
+        if (posicion.toggles.count { it.isSelected }!=1){
+            return Err(PersonasError.PersonasInvalidoError("Posicion no debe estar vacia"))
+        }
         if (nombreField.text.isBlank()){
             return Err(PersonasError.PersonasInvalidoError("El nombre no puede estar vacío"))
         }
@@ -893,6 +915,9 @@ class NewTeamAdminController(): KoinComponent {
      */
     private fun validarEntrenador (): Result<Unit, PersonasError> {
         logger.debug { "Validando entrenador" }
+        if (especialidad.toggles.count { it.isSelected }!=1){
+            return Err(PersonasError.PersonasInvalidoError("Especialidad no debe estar vacia"))
+        }
         if (nombreField.text.isBlank()){
             return Err(PersonasError.PersonasInvalidoError("El nombre no puede estar vacío"))
         }

@@ -6,9 +6,9 @@ import com.github.michaelbull.result.Result
 import org.example.newteamultimateedition.personal.error.PersonasError
 import org.example.newteamultimateedition.personal.models.Persona
 import java.io.File
-
+/*
 class AlineacionStorageImpl(
-    private val storageHTML: AlineacionStorageHTML = AlineacionStorageHTML()
+    private val storageHTML: AlineacionStorageHTML
 ): AlineacionStorage {
     override fun fileWrite(equipo: List<Persona>, file: File): Result<Unit, PersonasError> {
         when {
@@ -21,3 +21,4 @@ class AlineacionStorageImpl(
         return Ok(Unit)
     }
 }
+*/

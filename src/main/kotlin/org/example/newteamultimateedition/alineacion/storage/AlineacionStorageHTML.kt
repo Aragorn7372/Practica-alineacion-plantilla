@@ -9,7 +9,7 @@ import org.example.newteamultimateedition.personal.models.Jugador
 import org.example.newteamultimateedition.personal.models.Persona
 import org.lighthousegames.logging.logging
 import java.io.File
-
+/*
 class AlineacionStorageHTML : AlineacionStorage {
     private val logger = logging()
 
@@ -41,3 +41,4 @@ class AlineacionStorageHTML : AlineacionStorage {
         return Ok(Unit)
     }
 }
+*/
