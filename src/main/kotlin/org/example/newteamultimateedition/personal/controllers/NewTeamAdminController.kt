@@ -11,6 +11,7 @@ import javafx.scene.control.Alert.AlertType
 import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
+import javafx.scene.layout.VBox
 import javafx.stage.FileChooser
 import javafx.stage.Stage
 import org.example.newteamultimateedition.personal.error.PersonasError
@@ -62,6 +63,8 @@ class NewTeamAdminController(): KoinComponent {
     lateinit var deleteAndCancelButton: Button
     @FXML
     lateinit var editAndSaveButton: Button
+    @FXML
+    lateinit var detalles: VBox
 
 
     /* Detalle */
@@ -105,6 +108,8 @@ class NewTeamAdminController(): KoinComponent {
     lateinit var radioCentro: RadioButton
     @FXML
     lateinit var radioDelantero: RadioButton
+    @FXML
+    lateinit var posicionVBox: VBox
 
     // Entrenadores
     @FXML
@@ -115,6 +120,8 @@ class NewTeamAdminController(): KoinComponent {
     lateinit var radioAsistente: RadioButton
     @FXML
     lateinit var radioPrincipal: RadioButton
+    @FXML
+    lateinit var especialidadBox: VBox
 
     /* Main */
     @FXML
@@ -332,6 +339,9 @@ class NewTeamAdminController(): KoinComponent {
     private fun onTablaSelected(newValue: Persona) {
         logger.debug { " Integrante seleccionado en la tabla: $newValue " }
         disableAll()
+        if(newValue is  Jugador){
+            detalles.children.
+        }
         viewModel.updatePersonalSelected(newValue)
         logger.debug { "IntegranteState selected: ${viewModel.state.value.persona}" }
     }

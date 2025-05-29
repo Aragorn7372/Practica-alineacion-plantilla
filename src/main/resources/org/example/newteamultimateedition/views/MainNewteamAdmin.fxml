@@ -211,7 +211,7 @@
                <children>
                   <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="370.0">
                      <content>
-                        <VBox id="details" alignment="CENTER" prefHeight="900.0" prefWidth="348.0">
+                        <VBox fx:id="detalles" id="details" alignment="CENTER" prefHeight="900.0" prefWidth="348.0">
                            <children>
                               <Label id="bigLabel" alignment="CENTER" style="&#10;" text="Detalles" textAlignment="CENTER" wrapText="false">
                                  <font>
@@ -379,10 +379,10 @@
                                     <Insets left="5.0" />
                                  </padding>
                               </HBox>
-                              <VBox alignment="CENTER" prefHeight="64.0" prefWidth="348.0">
+                              <VBox fx:id="especialidadBox" alignment="CENTER" prefHeight="64.0" prefWidth="348.0">
                                  <children>
                                     <Label text="Especialidad" />
-                                    <HBox alignment="CENTER" prefHeight="42.0" prefWidth="348.0">
+                                    <HBox  alignment="CENTER" prefHeight="42.0" prefWidth="348.0">
                                        <children>
                                           <RadioButton fx:id="radioPrincipal" mnemonicParsing="false" text="Principal">
                                              <HBox.margin>
@@ -406,7 +406,7 @@
                                     </HBox>
                                  </children>
                               </VBox>
-                              <VBox alignment="CENTER" prefHeight="64.0" prefWidth="348.0">
+                              <VBox fx:id="posicionBox" alignment="CENTER" prefHeight="64.0" prefWidth="348.0">
                                  <children>
                                     <Label text="Posición" />
                                     <HBox alignment="CENTER" prefHeight="42.0" prefWidth="348.0">
