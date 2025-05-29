@@ -1,9 +1,7 @@
 package org.example.newteamultimateedition.users.controller
 
 import com.github.benmanes.caffeine.cache.Cache
-import com.github.michaelbull.result.Err
-import com.github.michaelbull.result.Ok
-import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.*
 import javafx.fxml.FXML
 import javafx.scene.control.*
 import javafx.stage.Stage
@@ -27,11 +25,9 @@ import org.mindrot.jbcrypt.BCrypt
  * @property registerButton [Button] boton que procesa el inicio de sesion
  */
 
-class RegisterController: KoinComponent {
+class ChangePasswordController: KoinComponent {
 
     private val dao: UsersServiceImpl by inject()
-
-    private val cache: Cache<Long,User> by inject()
 
     @FXML
     lateinit var acercaDeButton: Button
@@ -42,13 +38,11 @@ class RegisterController: KoinComponent {
     @FXML
     lateinit var userText: TextField
     @FXML
-    lateinit var registerButton: Button
+    lateinit var changePassword: Button
     @FXML
     lateinit var passwordConfirmationText: PasswordField
     @FXML
     lateinit var passwordMatches: Label
-    @FXML
-    lateinit var toLogin: Hyperlink
 
     @FXML
     fun initialize() {
@@ -85,35 +79,37 @@ class RegisterController: KoinComponent {
                 passwordMatches.text = ""
             }
         }
-        registerButton.setOnAction {
-            registerUser()
-        }
-
-        toLogin.setOnAction {
-            RoutesManager.initLoginStage(toLogin.scene.window as Stage)
+        changePassword.setOnAction {
+            handleNewPassword()
         }
     }
 
-    private fun registerUser(){
-        val result = validation(userText.text.toString(), passwordText.text.toString(), passwordConfirmationText.text)
+    private fun handleNewPassword(){
+        val result = validation(userText.text, passwordText.text, passwordConfirmationText.text) // Ya tiene la nueva contraseña hasheada
         if (result.isErr) showUserError(result.error.message)
         else {
-            if (dao.save(result.value).isErr){
+            if (dao.update(result.value.name, result.value).isErr) { // nickname y objeto usuario
                 showUserError("La base de datos ha explotado por favor reinicie la aplicacion")
-            }else{
-                cache.put(0L,result.value)
-                RoutesManager.initUserStage(toLogin.scene.window as Stage)
+            } else{
+                RoutesManager.initLoginStage(userText.scene.window as Stage)
             }
         }
     }
     private fun validation(userName: String, password: String, passwordConfirmation: String) : Result<User,UsersException> {
-        val encrypt= BCrypt.hashpw(password, BCrypt.gensalt(12))
+
         if (userName.isEmpty() || password.isEmpty() || passwordConfirmation.isEmpty()){
             return Err(UsersException.ContraseniaEquivocadaException("Por favor, rellena los campos"))
         }
         if (password!= passwordConfirmation){
             return Err(UsersException.ContraseniaEquivocadaException("Las contraseñas no son iguales."))
         }
+        dao.getByID(userName).onFailure { return Err(UsersException.UsersNotFoundException("Ese nombre de usuario no pertenece a ninguna cuenta.")) }
+            .onSuccess {
+                if(it.isAdmin) return Err(UsersException.AccessDeniedException("No puedes cambiar la contraseña de un administrador."))
+                if(BCrypt.checkpw(password, it.password)) return Err(UsersException.AccessDeniedException("No puedes usar la misma contraseña."))
+            }
+
+        val encrypt= BCrypt.hashpw(password, BCrypt.gensalt(12))
         return Ok(User(userName, encrypt))
     }
 

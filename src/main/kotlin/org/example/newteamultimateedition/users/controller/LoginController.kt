@@ -4,10 +4,7 @@ import com.github.benmanes.caffeine.cache.Cache
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Result
 import javafx.fxml.FXML
-import javafx.scene.control.Button
-import javafx.scene.control.Label
-import javafx.scene.control.PasswordField
-import javafx.scene.control.TextField
+import javafx.scene.control.*
 import javafx.stage.Stage
 import org.example.newteamultimateedition.routes.RoutesManager
 import org.example.newteamultimateedition.users.exception.UsersException
@@ -28,9 +25,12 @@ import org.mindrot.jbcrypt.BCrypt
  */
 
 class LoginController: KoinComponent {
+
     private val dao: UsersServiceImpl by inject()
     private val cache: Cache<Long,User> by inject()
 
+    @FXML
+    lateinit var changePassword: Hyperlink
     @FXML
     lateinit var acercaDeButton: Button
     @FXML
@@ -70,6 +70,9 @@ class LoginController: KoinComponent {
                         "-fx-border-width: 1px;"
                 passwordText.style = "-fx-border-color: rgba(0,0,0,0);"
             }
+        }
+        changePassword.setOnAction {
+            RoutesManager.initChangePasswordStage(changePassword.scene.window as Stage)
         }
     }
 
