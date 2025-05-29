@@ -542,9 +542,9 @@ class NewTeamAdminController(): KoinComponent {
      * @see onSaveIntegranteAction
      */
     private fun saveFunction(esJugador: Boolean) {
+        onSaveIntegranteAction(esJugador).onFailure { return }
         styleToEditButton()
         styleToDeleteButton()
-        onSaveIntegranteAction(esJugador)
         isEditButton = true
     }
 
@@ -751,23 +751,29 @@ class NewTeamAdminController(): KoinComponent {
      * @see validarEntrenador
      * @see [EquipoViewModel.saveIntegrante]
      */
-    private fun onSaveIntegranteAction(esJugador: Boolean) {
+    private fun onSaveIntegranteAction(esJugador: Boolean): Result<Persona, PersonasError> {
         logger.debug { "Guardando nuevo jugador" }
         if (esJugador) {
             validarJugador().onFailure {
-                showAlertOperation(AlertType.ERROR, "error", it.message)
                 disableAll()
                 disableEditCancel()
                 enableCreateButotns()
-                return
+                styleToEditButton()
+                styleToDeleteButton()
+                isEditButton = true
+                showAlertOperation(AlertType.ERROR, "error", it.message)
+                return Err(it)
             }
         }else{
             validarEntrenador().onFailure {
-                showAlertOperation(AlertType.ERROR, "error", it.message)
                 disableAll()
                 disableEditCancel()
                 enableCreateButotns()
-                return
+                styleToEditButton()
+                styleToDeleteButton()
+                isEditButton = true
+                showAlertOperation(AlertType.ERROR, "error", it.message)
+                return Err(it)
             }
         }
 
@@ -777,9 +783,21 @@ class NewTeamAdminController(): KoinComponent {
         if (esJugador) newIntegrante = viewModel.state.value.persona.toJugadorModel()
         else newIntegrante = viewModel.state.value.persona.toEntrenadorModel()
 
-        viewModel.saveIntegrante(newIntegrante)
-
-        enableCreateButotns()
+        return viewModel.saveIntegrante(newIntegrante).onFailure {
+            disableAll()
+            disableEditCancel()
+            enableCreateButotns()
+            styleToEditButton()
+            styleToDeleteButton()
+            isEditButton = true
+            showAlertOperation(AlertType.ERROR, "error", it.message)
+            return Err(it)
+        }.onSuccess {
+            disableAll()
+            disableEditCancel()
+            enableCreateButotns()
+            showAlertOperation(Alert.AlertType.INFORMATION, "Guardado", "Persona guardada con éxito. ${it.nombreCompleto}, ${it.salario}")
+        }
     }
 
     /**
