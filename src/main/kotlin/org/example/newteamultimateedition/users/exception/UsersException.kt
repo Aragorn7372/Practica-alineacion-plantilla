@@ -18,4 +18,5 @@ abstract class UsersException (val message: String) {
      */
     class DatabaseException(messager: String): UsersException(messager)
     class ContraseniaEquivocadaException(messager: String): UsersException(messager)
+    class AccessDeniedException(messager: String) : UsersException(messager)
 }

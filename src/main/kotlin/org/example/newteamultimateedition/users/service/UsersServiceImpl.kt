@@ -75,7 +75,7 @@ class UsersServiceImpl(
 
     /**
      * actualiza un usuario
-     * @param id inidicativo del usuario a eliminar
+     * @param id inidicativo del usuario a actualizar
      * @param item usuario a eliminar
      * @return usuario o error
      */
