@@ -105,7 +105,7 @@ class AlineacionController(): KoinComponent {
             showLogoutAlert()
         }
         backButton.setOnAction {
-            if (cache.getIfPresent(1L).isAdmin) {
+            if (cache.getIfPresent(0L).isAdmin) {
                 RoutesManager.initAdminStage(searchBar.scene.window as Stage)
             }else{
                 RoutesManager.initUserStage(searchBar.scene.window as Stage)
