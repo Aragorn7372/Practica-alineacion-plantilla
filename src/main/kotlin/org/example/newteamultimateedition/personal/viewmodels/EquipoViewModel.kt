@@ -1,10 +1,12 @@
 package org.example.newteamultimateedition.personal.viewmodels
 
 import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import javafx.beans.property.SimpleObjectProperty
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
+import javafx.scene.control.Alert
 import org.example.newteamultimateedition.common.config.Config
 import org.example.newteamultimateedition.personal.error.PersonasError
 import org.example.newteamultimateedition.personal.extensions.redondearA2Decimales
@@ -14,6 +16,7 @@ import org.example.newteamultimateedition.personal.models.Entrenador
 import org.example.newteamultimateedition.personal.models.Jugador
 import org.example.newteamultimateedition.personal.models.Persona
 import org.example.newteamultimateedition.personal.services.PersonaServiceImpl
+import org.example.newteamultimateedition.routes.RoutesManager
 import org.lighthousegames.logging.logging
 import java.io.File
 import java.nio.file.Files
@@ -71,6 +74,8 @@ class EquipoViewModel (
     fun saveIntegrante(persona: Persona) {
         service.save(persona).onSuccess {
             state.value.personas.addAll(it)
+        }.onFailure {
+            RoutesManager.showAlertOperation(Alert.AlertType.ERROR, "error",it.message)
         }
         updateState()
     }
