@@ -1,0 +1,111 @@
+/* Estilo general para la aplicación */
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: #f5f5f5;
+}
+/* Menú */
+.menu{
+    -fx-background-color: #2c3e50;
+}
+.menu-bar {
+    -fx-background-color: #2c3e50;
+}
+/* MenuButtons */
+.menu-button {
+    -fx-background-color: #374a64;
+    -fx-background-radius: 10;
+    -fx-font-size: 13px;
+}
+
+.menu-item {
+    -fx-background-color: #2c3e50;
+}
+
+.menu-button:hover {
+    -fx-background-color: #476381;
+}
+.menu-item:hover {
+    -fx-background-color: #476381;
+}
+/* Etiquetas */
+.label {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+}
+
+/* Etiqueta especial (como "Master", "Cuenta", "Details") */
+.label[styleClass~="title-label"] {
+    -fx-text-fill: #4a4a4a;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+/* Botones */
+.button {
+    -fx-pref-width: 150px;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-padding: 5 15;
+}
+#addButton {
+    -fx-background-color: #11b642;
+}
+#editButton {
+    -fx-background-color: #d2a005;
+}
+#deleteButton {
+    -fx-background-color: #FF2C2C;
+}
+
+#addButton:hover {
+    -fx-background-color: #0f9b3a;
+}
+#editButton:hover {
+    -fx-background-color: #856703;
+}
+#deleteButton:hover {
+    -fx-background-color: #8c0505;
+}
+.button:hover {
+    -fx-background-color: #2980b9;
+}
+
+/* TextField */
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 3;
+    -fx-padding: 4 6;
+}
+
+/* ListView */
+.list-view {
+    -fx-background-color: white;
+    -fx-border-color: #ccc;
+}
+
+/* Barra de estado inferior */
+#HBox {
+    -fx-background-color: #e0e0e0;
+    -fx-padding: 5 10;
+}
+
+#HBox .label {
+    -fx-text-fill: #7f8c8d;
+    -fx-font-size: 11px;
+}
+
+/*Correcciones de color*/
+#bigLabel {
+    -fx-text-fill: #333;
+}
+
+#details .label{
+    -fx-text-fill: #000;
+}
+
+#tableView .label{
+    -fx-text-fill: #000;
+}

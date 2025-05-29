@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "nombre": "Roberto",
+    "apellidos": "Hongo",
+    "fecha_nacimiento": "1960-07-17",
+    "fecha_incorporacion": "2000-01-01",
+    "salario": 60000.0,
+    "pais": "Brasil",
+    "rol": "Entrenador",
+    "especialidad": "ENTRENADOR_PRINCIPAL",
+    "posicion": "",
+    "dorsal": null,
+    "altura": null,
+    "peso": null,
+    "goles": null,
+    "partidos_jugados": null,
+    "minutos_jugados": null,
+    "imagen": "media/entrenador1.png"
+  }
+]

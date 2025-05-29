@@ -1,0 +1,20 @@
+<equipo>
+    <personal id="1">
+        <tipo>Entrenador</tipo>
+        <nombre>Roberto</nombre>
+        <apellidos>Hongo</apellidos>
+        <fechaNacimiento>1960-07-17</fechaNacimiento>
+        <fechaIncorporacion>2000-01-01</fechaIncorporacion>
+        <salario>60000.0</salario>
+        <pais>Brasil</pais>
+        <especialidad>ENTRENADOR_PRINCIPAL</especialidad>
+        <posicion></posicion>
+        <dorsal></dorsal>
+        <altura></altura>
+        <peso></peso>
+        <goles></goles>
+        <partidosJugados></partidosJugados>
+        <minutos_jugados></minutos_jugados>
+        <imagen>media/entrenador1.png</imagen>
+    </personal>
+</equipo>
