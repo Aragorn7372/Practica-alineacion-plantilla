@@ -41,7 +41,6 @@ class PersonasRepositoryImplementation(
      */
     override fun update(objeto: Persona, id: Long): Persona? {
         logger.debug { "Updating persona by id $id" }
-
         val updated = dao.update(objeto.toEntity(),id)
         if (updated==1){
                 if (objeto is Jugador){

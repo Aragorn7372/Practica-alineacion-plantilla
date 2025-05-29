@@ -178,7 +178,7 @@ class NewTeamAdminController(): KoinComponent {
         colSalario.cellValueFactory =PropertyValueFactory("salario")
         colRol.cellValueFactory = PropertyValueFactory("rol")
         colEspecialidad.cellValueFactory = PropertyValueFactory("miEspecialidad")
-        nombreCuenta.text = "${cache.getIfPresent(1L).name}"
+        nombreCuenta.text = "${cache.getIfPresent(0L).name}"
     }
 
     /**
@@ -542,7 +542,20 @@ class NewTeamAdminController(): KoinComponent {
      * @see onSaveIntegranteAction
      */
     private fun saveFunction(esJugador: Boolean) {
-        onSaveIntegranteAction(esJugador).onFailure { return }
+        onSaveIntegranteAction(esJugador).onFailure {
+            disableAll()
+            disableEditCancel()
+            enableCreateButotns()
+            styleToEditButton()
+            styleToDeleteButton()
+            isEditButton = true
+            showAlertOperation(AlertType.ERROR, "error", it.message)
+        }.onSuccess {
+            disableAll()
+            disableEditCancel()
+            enableCreateButotns()
+            showAlertOperation(Alert.AlertType.INFORMATION, "Guardado", "Persona guardada con éxito. ${it.nombreCompleto}, ${it.salario}")
+        }
         styleToEditButton()
         styleToDeleteButton()
         isEditButton = true
@@ -755,24 +768,10 @@ class NewTeamAdminController(): KoinComponent {
         logger.debug { "Guardando nuevo jugador" }
         if (esJugador) {
             validarJugador().onFailure {
-                disableAll()
-                disableEditCancel()
-                enableCreateButotns()
-                styleToEditButton()
-                styleToDeleteButton()
-                isEditButton = true
-                showAlertOperation(AlertType.ERROR, "error", it.message)
                 return Err(it)
             }
         }else{
             validarEntrenador().onFailure {
-                disableAll()
-                disableEditCancel()
-                enableCreateButotns()
-                styleToEditButton()
-                styleToDeleteButton()
-                isEditButton = true
-                showAlertOperation(AlertType.ERROR, "error", it.message)
                 return Err(it)
             }
         }
@@ -782,21 +781,12 @@ class NewTeamAdminController(): KoinComponent {
         logger.debug { "Mapeando integrante" }
         if (esJugador) newIntegrante = viewModel.state.value.persona.toJugadorModel()
         else newIntegrante = viewModel.state.value.persona.toEntrenadorModel()
-
+        val newList = viewModel.loadAllPersonas()
         return viewModel.saveIntegrante(newIntegrante).onFailure {
-            disableAll()
-            disableEditCancel()
-            enableCreateButotns()
-            styleToEditButton()
-            styleToDeleteButton()
-            isEditButton = true
-            showAlertOperation(AlertType.ERROR, "error", it.message)
-            return Err(it)
+           return Err(it)
+
         }.onSuccess {
-            disableAll()
-            disableEditCancel()
-            enableCreateButotns()
-            showAlertOperation(Alert.AlertType.INFORMATION, "Guardado", "Persona guardada con éxito. ${it.nombreCompleto}, ${it.salario}")
+            return Ok(it)
         }
     }
 
@@ -810,6 +800,7 @@ class NewTeamAdminController(): KoinComponent {
         if (esJugador) {
             viewModel.state.value = viewModel.state.value.copy(
                 persona = EquipoViewModel.PersonalState(
+                    id = viewModel.state.value.persona.id,
                     nombre = nombreField.text?:"",
                     apellidos = apellidosField.text?:"",
                     fechaNacimiento = nacimientoDP.value,
@@ -830,6 +821,7 @@ class NewTeamAdminController(): KoinComponent {
         else {
             viewModel.state.value = viewModel.state.value.copy(
                 persona = EquipoViewModel.PersonalState(
+                    id = viewModel.state.value.persona.id,
                     nombre = nombreField.text,
                     apellidos = apellidosField.text,
                     fechaNacimiento = nacimientoDP.value,

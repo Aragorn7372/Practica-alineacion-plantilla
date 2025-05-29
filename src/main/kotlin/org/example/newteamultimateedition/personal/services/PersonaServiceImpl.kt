@@ -16,11 +16,10 @@ import org.lighthousegames.logging.logging
 import java.nio.file.Path
 
 class PersonaServiceImpl(
-    private val repositorio: PersonasRepositoryImplementation = PersonasRepositoryImplementation(getPersonasDao(
-        provideDatabaseManager())),
-    private val cache: Cache<Long, Persona> = darPersonasCache(),
-    private val validator: PersonaValidation = PersonaValidation(),
-    private val storage: EquipoStorageImpl = EquipoStorageImpl(),
+    private val repositorio: PersonasRepositoryImplementation,
+    private val cache: Cache<Long, Persona>,
+    private val validator: PersonaValidation ,
+    private val storage: EquipoStorageImpl,
 ):PersonaService {
     private val logger= logging()
     override fun importarDatosDesdeFichero(fichero: Path): Result<List<Persona>, PersonasError> {
@@ -81,6 +80,7 @@ class PersonaServiceImpl(
     }
 
     override fun save(item: Persona): Result<Persona, PersonasError> {
+        logger.debug { "Guardando en el servicio con ID: ${item.id}" }
         val validado=validator.validator(item)
         return if (validado.isOk){
             try {
@@ -93,7 +93,7 @@ class PersonaServiceImpl(
     }
 
     override fun delete(id: Long): Result<Persona, PersonasError> {
-
+        logger.debug { "Borrando en el servicio con ID: $id" }
         return try {
             repositorio.delete(id)?.let {
                 cache.getIfPresent(id)?.let { cache.invalidate(id) }
@@ -105,10 +105,12 @@ class PersonaServiceImpl(
     }
 
     override fun update(id: Long, item: Persona): Result<Persona, PersonasError> {
+        logger.debug { "Actualizando en el servicio con ID: $id" }
         val validado=validator.validator(item)
         if (validado.isOk){
             try {
                 repositorio.update(item,id)?.let { it ->
+                    logger.debug { cache.getIfPresent(id).also { println(it) } }
                     cache.getIfPresent(id)?.let {
                         cache.invalidate(id)
                         cache.put(id,it)
