@@ -1,6 +1,7 @@
 package org.example.newteamultimateedition.personal.viewmodels
 
 import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.andThen
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import javafx.beans.property.SimpleObjectProperty
@@ -71,13 +72,11 @@ class EquipoViewModel (
      * @param persona el integrante a guardar
      * @see updateState
      */
-    fun saveIntegrante(persona: Persona) {
-        service.save(persona).onSuccess {
+    fun saveIntegrante(persona: Persona): Result<Persona, PersonasError> {
+        return service.save(persona).onSuccess {
             state.value.personas.addAll(it)
-        }.onFailure {
-            RoutesManager.showAlertOperation(Alert.AlertType.ERROR, "error",it.message)
+            updateState()
         }
-        updateState()
     }
 
     /**
