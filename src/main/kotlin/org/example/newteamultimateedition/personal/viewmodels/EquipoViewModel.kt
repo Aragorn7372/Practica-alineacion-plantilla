@@ -73,9 +73,19 @@ class EquipoViewModel (
      * @see updateState
      */
     fun saveIntegrante(persona: Persona): Result<Persona, PersonasError> {
-        return service.save(persona).onSuccess {
+        // Comprueba si el integrante seleccionado es 0, puesto que eso significa que se está creando en ese momento. De lo contrario, lanza una actualización para que no se duplique el integrante
+        logger.debug { persona.toString() }
+        return if(persona.id==0L){
+            service.save(persona).onSuccess {
             state.value.personas.addAll(it)
             updateState()
+        }
+        }else {
+            service.update(persona.id,persona).onSuccess {
+                updateState()
+                state.value.personas.filter { it.id == persona.id }.forEach { state.value.personas[state.value.personas.indexOf(it)] = persona}
+                service.getAll().value.forEach { println(it) }
+            }
         }
     }
 

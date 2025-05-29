@@ -83,7 +83,7 @@ class AlineacionController(): KoinComponent {
     }
 
     private fun initBindings() {
-        if(!cache.getIfPresent(1L).isAdmin) {
+        if(!cache.getIfPresent(0L).isAdmin) {
             buttonContainer.children.remove(editButton)
             buttonContainer.children.remove(createButton)
         }

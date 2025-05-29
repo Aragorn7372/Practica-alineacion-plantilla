@@ -77,7 +77,7 @@ class LoginController: KoinComponent {
         val result = validateForm(userText.text, passwordText.text)
         if(result.isErr) showUserError(result.error.message)
         else{
-            cache.put(1L,result.value)
+            cache.put(0L,result.value)
             if (result.value.isAdmin){
                 RoutesManager.initAdminStage(userText.scene.window as Stage)
             }else RoutesManager.initUserStage(userText.scene.window as Stage)

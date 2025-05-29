@@ -101,7 +101,7 @@ class RegisterController: KoinComponent {
             if (dao.save(result.value).isErr){
                 showUserError("La base de datos ha explotado por favor reinicie la aplicacion")
             }else{
-                cache.put(1L,result.value)
+                cache.put(0L,result.value)
                 RoutesManager.initUserStage(toLogin.scene.window as Stage)
             }
         }

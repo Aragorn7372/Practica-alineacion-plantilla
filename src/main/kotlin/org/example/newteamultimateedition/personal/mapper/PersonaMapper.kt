@@ -319,6 +319,7 @@ fun Persona.toEntity(): PersonaEntity {
  */
 fun EquipoViewModel.PersonalState.toJugadorModel(): Persona {
     return Jugador(
+        id=this.id,
         nombre = this.nombre,
         apellidos = this.apellidos,
         fechaNacimiento = this.fechaNacimiento,
@@ -341,6 +342,7 @@ fun EquipoViewModel.PersonalState.toJugadorModel(): Persona {
  */
 fun EquipoViewModel.PersonalState.toEntrenadorModel(): Persona {
     return Entrenador(
+        id = this.id,
         nombre = this.nombre,
         apellidos = this.apellidos,
         fechaNacimiento = this.fechaNacimiento,

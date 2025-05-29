@@ -156,7 +156,7 @@ class NewTeamUserController(): KoinComponent {
         colSalario.cellValueFactory =PropertyValueFactory("salario")
         colRol.cellValueFactory = PropertyValueFactory("rol")
         colEspecialidad.cellValueFactory = PropertyValueFactory("miEspecialidad")
-        nombreCuenta.text = "${cache.getIfPresent(1L).name}"
+        nombreCuenta.text = "${cache.getIfPresent(0L).name}"
     }
 
     /**
