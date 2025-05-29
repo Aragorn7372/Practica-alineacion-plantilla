@@ -110,7 +110,7 @@ class PersonaServiceImpl(
         if (validado.isOk){
             try {
                 repositorio.update(item,id)?.let { it ->
-                    logger.debug { cache.getIfPresent(id).also { println(it) } }
+
                     cache.getIfPresent(id)?.let {
                         cache.invalidate(id)
                         cache.put(id,it)
