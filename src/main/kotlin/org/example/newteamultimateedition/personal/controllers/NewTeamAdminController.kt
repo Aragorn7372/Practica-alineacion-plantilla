@@ -340,7 +340,7 @@ class NewTeamAdminController(): KoinComponent {
         logger.debug { " Integrante seleccionado en la tabla: $newValue " }
         disableAll()
         if(newValue is  Jugador){
-            detalles.children.
+            detalles
         }
         viewModel.updatePersonalSelected(newValue)
         logger.debug { "IntegranteState selected: ${viewModel.state.value.persona}" }
