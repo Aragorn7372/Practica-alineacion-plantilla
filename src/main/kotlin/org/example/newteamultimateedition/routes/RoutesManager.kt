@@ -47,7 +47,8 @@ object RoutesManager {
         ABOUT("views/AboutNewTeam.fxml"),
         REGISTER("views/RegisterNewTeam.fxml"),
         CHANGE_PASSWORD("views/ChangePasswordNewTeam.fxml"),
-        ALINEACIONADMIN("views/alineacionesAdmin.fxml"),
+        ALINEACION_ADMIN("views/alineacionesAdmin.fxml"),
+        ALINEACION_MODAL("views/Alineaciones.fxml"),
         ALINEACIONUSER("views/alineacionesUser.fxml"),
     }
 
@@ -189,7 +190,7 @@ object RoutesManager {
 
     fun initAlineacionesAdminStage(stage: Stage) {
         logger.debug { "Iniciando Alineaciones Admin" }
-        val fxmlLoader = FXMLLoader(getResource(Vistas.ALINEACIONADMIN.path))
+        val fxmlLoader = FXMLLoader(getResource(Vistas.ALINEACION_ADMIN.path))
         val parentRoot = fxmlLoader.load<Pane>()
         val myScene = Scene(parentRoot, 900.0, 600.0)
         stage.title = "Alineaciones"
@@ -201,6 +202,22 @@ object RoutesManager {
         mainStage = stage
         _activeStage = stage
         mainStage.show()
+    }
+
+    fun initAlineacionesModalStage() {
+        logger.debug { "Iniciando Modal de alineaciones" }
+        val fxmlLoader = FXMLLoader(getResource(Vistas.ALINEACION_MODAL.path))
+        val parentRoot = fxmlLoader.load<Pane>()
+        val myScene = Scene(parentRoot, 1000.0, 600.0)
+        val stage = Stage()
+        stage.title = "Gestionar alineacion"
+        stage.scene = myScene
+        stage.initOwner(mainStage)
+        stage.centerOnScreen()
+        stage.initModality(Modality.WINDOW_MODAL)
+        stage.icons.add(Image(getResourceAsStream("media/app-icon.png")))
+        stage.isResizable = false
+        stage.show()
     }
 
     /**
@@ -259,5 +276,7 @@ object RoutesManager {
             this.contentText = mensaje
         }.showAndWait()
     }
+
+
 
 }

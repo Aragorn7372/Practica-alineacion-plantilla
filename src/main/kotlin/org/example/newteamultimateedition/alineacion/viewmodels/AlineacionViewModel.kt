@@ -24,7 +24,7 @@ class AlineacionViewModel (
 
     fun loadAllPersonas(){
         val listaPersonas = alineacionService.getAllPersonas()
-        if(listaPersonas.isOk) listaPersonas.value.forEach { state.value.personas.setAll(it) }
+        if(listaPersonas.isOk) state.value.personas.setAll(listaPersonas.value)
         else RoutesManager.showAlertOperation(alerta = Alert.AlertType.ERROR, title = "Error", mensaje = listaPersonas.error.message)
     }
 
