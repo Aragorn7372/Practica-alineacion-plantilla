@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../styles/alineacion.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@../styles/alineacion.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newteamultimateedition.alineacion.controllers.AlineacionModalController">
    <children>
       <VBox prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -229,10 +229,8 @@
                   </VBox>
                   <TableView fx:id="tablaAlineacion" prefHeight="493.0" prefWidth="475.0">
                     <columns>
-                      <TableColumn fx:id="colNombre" prefWidth="145.0" text="Nombre" />
-                      <TableColumn fx:id="colPartidosJugados" prefWidth="106.0" text="Partidos Jugados" />
-                        <TableColumn fx:id="colGoles" prefWidth="68.0" text="Goles" />
-                        <TableColumn fx:id="colEspecialidad" prefWidth="154.0" text="Especialidad" />
+                      <TableColumn fx:id="colNombre" prefWidth="230.0" text="Nombre" />
+                        <TableColumn fx:id="colEspecialidad" prefWidth="244.0" text="Especialidad" />
                     </columns>
                   </TableView>
                </children>
@@ -250,11 +248,6 @@
                      </HBox.margin>
                   </Button>
                   <Button id="saveButton" fx:id="saveButton" mnemonicParsing="false" text="Guardar">
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button id="saveButton" fx:id="backButton" mnemonicParsing="false" text="Volver a Inicio">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>

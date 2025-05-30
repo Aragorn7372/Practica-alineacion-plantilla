@@ -9,6 +9,7 @@ import javafx.scene.Cursor.DEFAULT
 import javafx.scene.Cursor.WAIT
 import javafx.scene.control.*
 import javafx.scene.control.Alert.AlertType
+import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.layout.HBox
 import javafx.stage.FileChooser
 import javafx.stage.Stage
@@ -23,12 +24,13 @@ import org.example.newteamultimateedition.personal.viewmodels.EquipoViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.lighthousegames.logging.logging
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 class AlineacionController(): KoinComponent {
     private val cache: Cache<Long, User> by inject()
     private val viewModel: AlineacionViewModel by inject()
     private val logger= logging()
-    private val alineacionList = viewModel.loadAllAlineciones()
 
     //Botones HBox de abajo
     @FXML
@@ -59,13 +61,13 @@ class AlineacionController(): KoinComponent {
 
     //TableView
     @FXML
-    lateinit var tablaAlineacion: TableView<Persona>
+    lateinit var tablaAlineacion: TableView<Alineacion>
     @FXML
-    lateinit var colId: TableColumn<String, String>
+    lateinit var colId: TableColumn<Alineacion, Long>
     @FXML
-    lateinit var colFechaJuego: TableColumn<String, String>
+    lateinit var colFechaJuego: TableColumn<Alineacion, LocalDate>
     @FXML
-    lateinit var colUpdatedAt: TableColumn<String, String>
+    lateinit var colUpdatedAt: TableColumn<Alineacion, LocalDateTime>
 
     fun initialize() {
         initEvents()
@@ -76,6 +78,14 @@ class AlineacionController(): KoinComponent {
     private fun initDefaultValues() {
         handleSesionView()
         viewModel.loadAllAlineciones()
+
+        // Tabla
+        viewModel.loadAllPersonas()
+        tablaAlineacion.items = viewModel.state.value.alineaciones
+
+        colId.cellValueFactory = PropertyValueFactory("id")
+        colUpdatedAt.cellValueFactory = PropertyValueFactory("updatedAt")
+        colFechaJuego.cellValueFactory = PropertyValueFactory("juegoDate")
     }
 
     private fun handleSesionView() {
@@ -113,7 +123,16 @@ class AlineacionController(): KoinComponent {
         }
 
         exportButton.setOnAction { onExportarAction() }
+
+        createButton.setOnAction {
+            onCreateAlineacionAction()
+        }
     }
+
+    private fun onCreateAlineacionAction() {
+        RoutesManager.initAlineacionesModalStage()
+    }
+
     private fun onExportarAction() {
 
     }

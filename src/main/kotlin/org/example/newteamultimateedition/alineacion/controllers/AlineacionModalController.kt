@@ -4,11 +4,17 @@ import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
+import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.image.ImageView
 import javafx.scene.layout.Pane
+import org.example.newteamultimateedition.alineacion.viewmodels.AlineacionViewModel
 import org.example.newteamultimateedition.personal.models.Persona
+import org.koin.core.Koin
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class AlineacionModalController {
+class AlineacionModalController: KoinComponent {
+    private val viewModel: AlineacionViewModel by inject()
 
     //Campo fútbol
     @FXML
@@ -136,12 +142,6 @@ class AlineacionModalController {
     private lateinit var colNombre: TableColumn<Persona, String>
 
     @FXML
-    private lateinit var colPartidosJugados: TableColumn<Persona, Int>
-
-    @FXML
-    private lateinit var colGoles: TableColumn<Persona, Int>
-
-    @FXML
     private lateinit var colEspecialidad: TableColumn<Persona, String>
 
 
@@ -157,8 +157,6 @@ class AlineacionModalController {
     private lateinit var deleteButton: Button
 
     @FXML
-    private lateinit var backButton: Button
-
     fun initialize() {
         initEvents()
         initBindings()
@@ -166,15 +164,19 @@ class AlineacionModalController {
     }
 
     private fun initEvents() {
-        TODO()
     }
 
     private fun initDefaultValues() {
-        TODO()
+
+        //Tabla
+        tablaAlineacion.items = viewModel.state.value.personas
+
+        colNombre.cellValueFactory = PropertyValueFactory("nombre")
+        colEspecialidad.cellValueFactory = PropertyValueFactory("miEspecialidad")
+
     }
 
     private fun initBindings() {
-        TODO()
     }
 
 
