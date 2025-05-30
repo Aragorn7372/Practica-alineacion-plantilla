@@ -16,7 +16,8 @@ class AlineacionMapper {
             updatedAt = alineacionEntity.updatedAt,
             juegoDate = alineacionEntity.juegoDate,
             personalList = list,
-            entrenador = entrenador
+            entrenador = entrenador,
+            descripcion = alineacionEntity.descripcion,
         )
     }
     fun toEntity(model: Alineacion): AlineacionEntity {
@@ -26,7 +27,8 @@ class AlineacionMapper {
             createdAt = model.createdAt,
             updatedAt = model.updatedAt,
             juegoDate = model.juegoDate,
-            idEntrenador = model.entrenador.id
+            idEntrenador = model.entrenador.id,
+            descripcion = model.descripcion,
         )
     }
     fun toEntity(model: LineaAlineacion): LineaAlineacionEntity {

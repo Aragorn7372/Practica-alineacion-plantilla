@@ -10,29 +10,29 @@ import org.lighthousegames.logging.logging
 
 
 interface LineaAlineacionDao {
-    @SqlQuery("SELECT uuid AS id, id_persona AS personalId, id_alineacion AS alineacionId, posicion AS posicion  FROM linea")
+    @SqlQuery("SELECT uuid AS id, id_persona AS personalId, id_alineacion AS alineacionId, posicion AS posicion  FROM linea_alineacion")
     fun getAll(): List<LineaAlineacionEntity>
 
-    @SqlQuery("SELECT uuid AS id, id_persona AS personalId, id_alineacion AS alineacionId, posicion AS posicion  FROM linea where uuid = :id")
+    @SqlQuery("SELECT uuid AS id, id_persona AS personalId, id_alineacion AS alineacionId, posicion AS posicion  FROM linea_alineacion where uuid = :id")
     fun getById(@Bind("id") id: String): LineaAlineacionEntity?
 
-    @SqlQuery("SELECT uuid AS id, id_persona AS personalId, id_alineacion AS alineacionId, posicion AS posicion  FROM linea where id_alineacion = :alinecionId ")
+    @SqlQuery("SELECT uuid AS id, id_persona AS personalId, id_alineacion AS alineacionId, posicion AS posicion  FROM linea_alineacion where id_alineacion = :alinecionId ")
     fun getByAlineacionId(@Bind("alinecionId") alinecionId: Long): List<LineaAlineacionEntity>
 
-    @SqlUpdate("DELETE FROM linea WHERE id = :alinecionId")
+    @SqlUpdate("DELETE FROM linea_alineacion WHERE id_alineacion = :alinecionId")
     fun deleteByAlinecionId(@Bind("alinecionId") alinecionId: Long):Int
 
-    @SqlUpdate("INSERT INTO linea (uuid,id_persona,id_alineacion,posicion) VALUES (:id, :personalId,:alineacionId,:posicion) ")
+    @SqlUpdate("INSERT INTO linea_alineacion (uuid,id_persona,id_alineacion,posicion) VALUES (:id, :personalId,:alineacionId,:posicion) ")
     fun save(@BindBean codigo: LineaAlineacionEntity): Int
 
-    @SqlUpdate("UPDATE linea SET posicion=:posicion WHERE uuid = :identificacion")
+    @SqlUpdate("UPDATE linea_alineacion SET posicion=:posicion WHERE uuid = :identificacion")
     fun updateById(@BindBean codigo: LineaAlineacionEntity, @Bind("identificacion") identificador:String): Int
 
 
-    @SqlUpdate("DELETE  FROM linea WHERE uuid=:id")
+    @SqlUpdate("DELETE  FROM linea_alineacion WHERE uuid=:id")
     fun deleteById(@Bind("id") id: String): Int
 
-    @SqlUpdate("DELETE  FROM linea")
+    @SqlUpdate("DELETE  FROM linea_alineacion")
     fun deleteAll(): Int
 }
 fun provideLineaAlineacionDao(jdbi: Jdbi): LineaAlineacionDao {

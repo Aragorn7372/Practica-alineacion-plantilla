@@ -10,5 +10,6 @@ data class Alineacion(
     val createdAt: LocalDateTime = LocalDateTime.now(),
     val updatedAt: LocalDateTime = LocalDateTime.now(),
     val juegoDate: LocalDate,
-    val entrenador: Entrenador
+    val entrenador: Entrenador,
+    val descripcion: String,
 )

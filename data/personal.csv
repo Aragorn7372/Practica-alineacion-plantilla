@@ -19,3 +19,33 @@ id,nombre,apellidos,fecha_nacimiento,fecha_incorporacion,salario,pais,rol,especi
 18,David,Evans,1983-12-12,2001-05-15,28500.0,España,Jugador,,CENTROCAMPISTA,15,1.75,67.0,18,115,10350,media/jugador2.png
 19,Patrick,Everett,1984-06-06,2001-05-15,32000.0,España,Jugador,,DEFENSA,2,1.81,73.0,6,150,12770,media/jugador3.png
 20,Richard,Textex,1983-03-03,2001-05-15,27500.0,España,Jugador,,PORTERO,16,1.86,82.0,0,160,13300,media/jugador4.png
+21,Mike,Lowell,1985-01-10,2002-07-01,28000.0,España,Jugador,,DELANTERO,17,1.74,66.0,15,110,9800,media/jugador1.png
+22,Chris,Trainer,1986-04-22,2003-08-15,29000.0,Francia,Jugador,,CENTROCAMPISTA,18,1.70,62.0,10,100,9000,media/jugador2.png
+23,Kevin,Space,1985-07-05,2002-07-01,30000.0,España,Jugador,,DEFENSA,19,1.82,75.0,3,130,11500,media/jugador3.png
+24,Steven,King,1985-09-19,2002-07-01,28500.0,Inglaterra,Jugador,,PORTERO,20,1.88,85.0,0,140,12500,media/jugador4.png
+25,Gary,Oldman,1986-11-30,2003-08-15,31000.0,España,Jugador,,DELANTERO,21,1.79,70.0,35,120,10500,media/jugador1.png
+26,Lisa,Simpson,1987-02-14,2004-01-20,27000.0,España,Jugador,,CENTROCAMPISTA,23,1.68,58.0,8,90,8000,media/jugador2.png
+27,Bart,Simpson,1986-06-01,2003-08-15,29500.0,España,Jugador,,DEFENSA,24,1.76,69.0,2,110,9500,media/jugador3.png
+28,Homer,Simpson,1987-03-03,2004-01-20,30500.0,España,Jugador,,PORTERO,25,1.80,90.0,0,100,8800,media/jugador4.png
+29,Marge,Simpson,1986-09-25,2003-08-15,28000.0,España,Jugador,,DELANTERO,26,1.70,60.0,12,85,7500,media/jugador1.png
+30,Ned,Flanders,1985-05-12,2002-07-01,29000.0,España,Jugador,,CENTROCAMPISTA,27,1.77,71.0,7,95,8200,media/jugador2.png
+31,Apu,Nahasapeemapetilon,1987-08-01,2004-01-20,29500.0,India,Jugador,,DEFENSA,28,1.75,68.0,4,105,9100,media/jugador3.png
+32,Moe,Szyslak,1968-01-01,2005-03-01,54000.0,Estados Unidos,Entrenador,ENTRENADOR_ASISTENTE,,,,,,,,media/entrenador1.png
+33,Barney,Gumble,1986-10-10,2003-08-15,27500.0,España,Jugador,,PORTERO,29,1.83,83.0,0,115,10000,media/jugador4.png
+34,Waylon,Smithers,1985-04-04,2002-07-01,31500.0,España,Jugador,,DELANTERO,30,1.78,70.0,20,130,11200,media/jugador1.png
+35,Milhouse,Van Houten,1987-07-07,2004-01-20,26500.0,España,Jugador,,CENTROCAMPISTA,31,1.65,55.0,5,80,7000,media/jugador2.png
+36,Nelson,Muntz,1986-03-15,2003-08-15,28500.0,España,Jugador,,DEFENSA,32,1.80,72.0,1,95,8500,media/jugador3.png
+37,Patty,Bouvier,1971-06-20,2006-02-10,53000.0,España,Entrenador,ENTRENADOR_ASISTENTE,,,,,,,,media/entrenador2.png
+38,Selma,Bouvier,1971-06-20,2006-02-10,53000.0,España,Entrenador,ENTRENADOR_PRINCIPAL,,,,,,,,media/entrenador1.png
+39,Chief,Wiggum,1985-11-22,2002-07-01,29000.0,España,Jugador,,PORTERO,33,1.87,88.0,0,125,11000,media/jugador4.png
+40,Agnes,Skinner,1987-09-01,2004-01-20,27000.0,España,Jugador,,DELANTERO,34,1.72,64.0,10,90,8000,media/jugador1.png
+41,Seymour,Skinner,1962-02-28,2007-05-20,56000.0,España,Entrenador,ENTRENADOR_PRINCIPAL,,,,,,,,media/entrenador2.png
+42,Comic Book,Guy,1986-08-18,2003-08-15,28000.0,España,Jugador,,CENTROCAMPISTA,35,1.74,70.0,6,100,8900,media/jugador2.png
+43,Krusty,The Clown,1985-02-02,2002-07-01,30000.0,Estados Unidos,Jugador,,DEFENSA,36,1.81,74.0,3,110,9600,media/jugador3.png
+44,Principal,Chalmers,1987-10-30,2004-01-20,26000.0,España,Jugador,,PORTERO,37,1.85,80.0,0,85,7800,media/jugador4.png
+45,Groundskeeper,Willie,1986-12-12,2003-08-15,29000.0,Escocia,Jugador,,DELANTERO,38,1.76,69.0,18,105,9200,media/jugador1.png
+46,Fat,Tony,1970-03-25,2008-01-01,59000.0,Italia,Entrenador,ENTRENADOR_PORTEROS,,,,,,,,media/entrenador1.png
+47,Sideshow,Bob,1985-06-06,2002-07-01,27000.0,España,Jugador,,CENTROCAMPISTA,39,1.73,65.0,9,90,7900,media/jugador2.png
+48,Moe,Moe,1987-04-01,2004-01-20,28000.0,España,Jugador,,DEFENSA,40,1.79,71.0,5,100,8700,media/jugador3.png
+49,Cletus,Spuckler,1986-01-01,2003-08-15,27000.0,España,Jugador,,PORTERO,41,1.82,77.0,0,95,8400,media/jugador4.png
+50,Kang,Kodos,1985-03-13,2002-07-01,29500.0,Espacio,Jugador,,DELANTERO,42,1.90,88.0,10,110,9500,media/jugador1.png

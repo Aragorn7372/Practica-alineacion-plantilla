@@ -32,15 +32,30 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
 
-<VBox prefHeight="600.0" prefWidth="970.0" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newteamultimateedition.personal.controllers.NewTeamUserController">
+<VBox prefHeight="600.0" prefWidth="970.0" stylesheets="@../styles/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newteamultimateedition.personal.controllers.NewTeamUserController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -292,7 +307,7 @@
                                     <Insets left="20.0" right="10.0" />
                                  </HBox.margin>
                                  <children>
-                                    <Label prefHeight="19.0" prefWidth="114.0" text="Salario" />
+                                    <Label prefHeight="19.0" prefWidth="124.0" text="Salario (anual, €)" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_RIGHT" prefHeight="37.0" prefWidth="198.0">
@@ -419,7 +434,7 @@
                                     <Insets left="20.0" right="10.0" />
                                  </HBox.margin>
                                  <children>
-                                    <Label prefHeight="19.0" prefWidth="114.0" text="Altura" />
+                                    <Label prefHeight="19.0" prefWidth="114.0" text="Altura (m)" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_RIGHT" prefHeight="37.0" prefWidth="198.0">
@@ -443,7 +458,7 @@
                                     <Insets left="20.0" right="10.0" />
                                  </HBox.margin>
                                  <children>
-                                    <Label prefHeight="19.0" prefWidth="114.0" text="Peso" />
+                                    <Label prefHeight="19.0" prefWidth="114.0" text="Peso (kg)" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER_RIGHT" prefHeight="37.0" prefWidth="198.0">
@@ -542,7 +557,7 @@
       <children>
             <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="590.0" HBox.hgrow="NEVER">
                <children>
-              <Label maxWidth="-1.0" text="Goles promedio:">
+              <Label maxWidth="-1.0" text="Goles promedio: ">
                      <font>
                   <Font size="11.0" fx:id="x3" />
                      </font>
@@ -561,7 +576,7 @@
                         <Insets right="8.0" />
                      </HBox.margin>
                   </Label>
-                  <Label maxWidth="-1.0" text="Minutos promedio">
+                  <Label maxWidth="-1.0" text="Minutos promedio: ">
                      <font>
                         <Font size="11.0" fx:id="x311" />
                      </font>
@@ -580,7 +595,7 @@
                         <Insets right="8.0" />
                      </HBox.margin>
                   </Label>
-                  <Label maxWidth="-1.0" text="Coste total de la plantilla:">
+                  <Label maxWidth="-1.0" text="Coste total de la plantilla: ">
                      <font>
                         <Font size="11.0" fx:id="x31111" />
                      </font>

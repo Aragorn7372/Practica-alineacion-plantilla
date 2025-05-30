@@ -2,10 +2,13 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -33,7 +36,7 @@
                   </ImageView>
                </children>
             </HBox>
-            <HBox prefHeight="500.0" prefWidth="1000.0">
+            <HBox fillHeight="false" prefHeight="500.0" prefWidth="1000.0">
                <children>
                   <Pane prefHeight="200.0" prefWidth="325.0">
                      <children>
@@ -42,64 +45,97 @@
                               <Image url="@../media/FondoCampoFutbol.png" />
                            </image>
                         </ImageView>
-                        <Pane fx:id="extremoIzquierdo" layoutX="35.0" layoutY="144.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
-                           <children>
-                              <ImageView fx:id="extremoIzquierdoImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </Pane>
-                        <Pane fx:id="delanteroIzquierdo" layoutX="100.0" layoutY="81.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
-                           <children>
-                              <ImageView fx:id="delanteroIzquierdoImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </Pane>
-                        <Pane fx:id="extremoDerecho" layoutX="243.0" layoutY="144.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
-                           <children>
-                              <ImageView fx:id="extremoDerechoImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </Pane>
-                        <Pane fx:id="delanteroDerecho" layoutX="178.0" layoutY="81.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
-                           <children>
-                              <ImageView fx:id="delanteroDerechoImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </Pane>
-                        <Pane fx:id="lateralIzquierdo" layoutX="35.0" layoutY="270.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
-                           <children>
-                              <ImageView fx:id="lateralIzquierdoImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </Pane>
-                        <Pane fx:id="centralIzquierdo" layoutX="100.0" layoutY="329.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
-                           <children>
-                              <ImageView fx:id="centralIzquierdoImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </Pane>
-                        <Pane fx:id="centralDerecho" layoutX="178.0" layoutY="329.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
-                           <children>
-                              <ImageView fx:id="centralDerechoImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </Pane>
-                        <Pane fx:id="lateralDerecho" layoutX="243.0" layoutY="270.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
-                           <children>
-                              <ImageView fx:id="lateralDerechoImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </Pane>
-                        <Pane fx:id="medioCentroIzquierdo" layoutX="100.0" layoutY="208.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
-                           <children>
-                              <ImageView fx:id="medioCentroIzquierdoImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </Pane>
-                        <Pane fx:id="medioCentroDerecho" layoutX="178.0" layoutY="208.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
-                           <children>
-                              <ImageView fx:id="medioCentroDerechoImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </Pane>
-                        <Pane fx:id="porteroTitular" layoutX="139.0" layoutY="415.0" prefHeight="48.0" prefWidth="48.0" style="-fx-background-color: #333;">
-                           <children>
-                              <ImageView fx:id="porteroTitularImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </Pane>
+                        <ImageView fx:id="extremoIzquierdoImg" fitHeight="48.0" fitWidth="48.0" layoutX="35.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../media/profile_picture.png" />
+                           </image>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </ImageView>
+                        <ImageView fx:id="delanteroIzquierdoImg" fitHeight="48.0" fitWidth="48.0" layoutX="100.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../media/profile_picture.png" />
+                           </image>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </ImageView>
+                        <ImageView fx:id="extremoDerechoImg" fitHeight="48.0" fitWidth="48.0" layoutX="243.0" layoutY="144.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../media/profile_picture.png" />
+                           </image>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </ImageView>
+                        <ImageView fx:id="delanteroDerechoImg" fitHeight="48.0" fitWidth="48.0" layoutX="178.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../media/profile_picture.png" />
+                           </image>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </ImageView>
+                        <ImageView fx:id="lateralIzquierdoImg" fitHeight="48.0" fitWidth="48.0" layoutX="35.0" layoutY="270.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../media/profile_picture.png" />
+                           </image>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </ImageView>
+                        <ImageView fx:id="centralIzquierdoImg" fitHeight="48.0" fitWidth="48.0" layoutX="100.0" layoutY="329.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../media/profile_picture.png" />
+                           </image>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </ImageView>
+                        <ImageView fx:id="centralDerechoImg" fitHeight="48.0" fitWidth="48.0" layoutX="178.0" layoutY="329.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../media/profile_picture.png" />
+                           </image>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </ImageView>
+                        <ImageView fx:id="lateralDerechoImg" fitHeight="48.0" fitWidth="48.0" layoutX="243.0" layoutY="270.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../media/profile_picture.png" />
+                           </image>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </ImageView>
+                        <ImageView fx:id="medioCentroIzquierdoImg" fitHeight="48.0" fitWidth="48.0" layoutX="100.0" layoutY="208.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../media/profile_picture.png" />
+                           </image>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </ImageView>
+                        <ImageView fx:id="medioCentroDerechoImg" fitHeight="48.0" fitWidth="48.0" layoutX="178.0" layoutY="208.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../media/profile_picture.png" />
+                           </image>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </ImageView>
+                        <ImageView fx:id="porteroTitularImg" fitHeight="48.0" fitWidth="48.0" layoutX="139.0" layoutY="415.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../media/profile_picture.png" />
+                           </image>
+                           <effect>
+                              <DropShadow />
+                           </effect>
+                        </ImageView>
                      </children>
                   </Pane>
-                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="200.0">
+                  <VBox alignment="TOP_CENTER" prefHeight="487.0" prefWidth="200.0">
                      <children>
                         <Label text="Suplentes">
                            <VBox.margin>
@@ -114,22 +150,28 @@
                            <children>
                               <HBox alignment="CENTER" fillHeight="false" prefHeight="48.0" prefWidth="200.0">
                                  <children>
-                                    <Pane fx:id="suplente1" style="-fx-background-color: #333;">
-                                       <children>
-                                          <ImageView fx:id="suplente1Img" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
-                                       </children>
+                                    <ImageView fx:id="suplente1Img" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;">
+                                       <image>
+                                          <Image url="@../media/profile_picture.png" />
+                                       </image>
                                        <HBox.margin>
-                                          <Insets left="5.0" right="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </HBox.margin>
-                                    </Pane>
-                                    <Pane fx:id="suplente2" style="-fx-background-color: #333;">
-                                       <children>
-                                          <ImageView fx:id="suplente2Img" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
-                                       </children>
+                                       <effect>
+                                          <DropShadow />
+                                       </effect>
+                                    </ImageView>
+                                    <ImageView fx:id="suplente2Img" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;">
+                                       <image>
+                                          <Image url="@../media/profile_picture.png" />
+                                       </image>
                                        <HBox.margin>
-                                          <Insets left="5.0" right="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </HBox.margin>
-                                    </Pane>
+                                       <effect>
+                                          <DropShadow />
+                                       </effect>
+                                    </ImageView>
                                  </children>
                                  <opaqueInsets>
                                     <Insets />
@@ -140,22 +182,28 @@
                               </HBox>
                               <HBox alignment="CENTER" fillHeight="false" prefHeight="48.0" prefWidth="200.0">
                                  <children>
-                                    <Pane fx:id="suplente3" style="-fx-background-color: #333;">
-                                       <children>
-                                          <ImageView fx:id="suplente3Img" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
-                                       </children>
+                                    <ImageView fx:id="suplente3Img" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;">
+                                       <image>
+                                          <Image url="@../media/profile_picture.png" />
+                                       </image>
                                        <HBox.margin>
-                                          <Insets left="5.0" right="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </HBox.margin>
-                                    </Pane>
-                                    <Pane fx:id="suplente4" style="-fx-background-color: #333;">
-                                       <children>
-                                          <ImageView fx:id="suplente4Img" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
-                                       </children>
+                                       <effect>
+                                          <DropShadow />
+                                       </effect>
+                                    </ImageView>
+                                    <ImageView fx:id="suplente4Img" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;">
+                                       <image>
+                                          <Image url="@../media/profile_picture.png" />
+                                       </image>
                                        <HBox.margin>
-                                          <Insets left="5.0" right="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </HBox.margin>
-                                    </Pane>
+                                       <effect>
+                                          <DropShadow />
+                                       </effect>
+                                    </ImageView>
                                  </children>
                                  <opaqueInsets>
                                     <Insets />
@@ -166,22 +214,28 @@
                               </HBox>
                               <HBox alignment="CENTER" fillHeight="false" prefHeight="48.0" prefWidth="200.0">
                                  <children>
-                                    <Pane fx:id="suplente5" style="-fx-background-color: #333;">
-                                       <children>
-                                          <ImageView fx:id="suplente5Img" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
-                                       </children>
+                                    <ImageView fx:id="suplente5Img" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;">
+                                       <image>
+                                          <Image url="@../media/profile_picture.png" />
+                                       </image>
                                        <HBox.margin>
-                                          <Insets left="5.0" right="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </HBox.margin>
-                                    </Pane>
-                                    <Pane fx:id="suplente6" style="-fx-background-color: #333;">
-                                       <children>
-                                          <ImageView fx:id="suplente6Img" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
-                                       </children>
+                                       <effect>
+                                          <DropShadow />
+                                       </effect>
+                                    </ImageView>
+                                    <ImageView fx:id="suplente6Img" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;">
+                                       <image>
+                                          <Image url="@../media/profile_picture.png" />
+                                       </image>
                                        <HBox.margin>
-                                          <Insets left="5.0" right="5.0" />
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </HBox.margin>
-                                    </Pane>
+                                       <effect>
+                                          <DropShadow />
+                                       </effect>
+                                    </ImageView>
                                  </children>
                                  <opaqueInsets>
                                     <Insets />
@@ -192,11 +246,17 @@
                               </HBox>
                               <HBox alignment="CENTER" fillHeight="false" prefHeight="48.0" prefWidth="200.0">
                                  <children>
-                                    <Pane fx:id="porteroSuplente" style="-fx-background-color: #333;">
-                                       <children>
-                                          <ImageView fx:id="porteroSuplenteImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
-                                       </children>
-                                    </Pane>
+                                    <ImageView fx:id="porteroSuplenteImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;">
+                                       <image>
+                                          <Image url="@../media/profile_picture.png" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </HBox.margin>
+                                       <effect>
+                                          <DropShadow />
+                                       </effect>
+                                    </ImageView>
                                  </children>
                                  <opaqueInsets>
                                     <Insets />
@@ -215,11 +275,17 @@
                         </Label>
                         <HBox alignment="CENTER" fillHeight="false" prefHeight="48.0" prefWidth="200.0">
                            <children>
-                              <Pane fx:id="entrenador" style="-fx-background-color: #333;">
-                                 <children>
-                                    <ImageView fx:id="entrenadorImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;" />
-                                 </children>
-                              </Pane>
+                              <ImageView fx:id="entrenadorImg" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-color: #333;">
+                                 <image>
+                                    <Image url="@../media/profile_picture.png" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </HBox.margin>
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                              </ImageView>
                            </children>
                            <opaqueInsets>
                               <Insets />
@@ -227,15 +293,48 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <TableView fx:id="tablaAlineacion" prefHeight="493.0" prefWidth="475.0">
-                    <columns>
-                      <TableColumn fx:id="colNombre" prefWidth="230.0" text="Nombre" />
-                        <TableColumn fx:id="colEspecialidad" prefWidth="244.0" text="Especialidad" />
-                    </columns>
-                  </TableView>
+                  <VBox alignment="TOP_CENTER" fillWidth="false" prefHeight="492.0" prefWidth="475.0">
+                     <children>
+                        <TableView fx:id="tablaAlineacion" prefHeight="386.0" prefWidth="475.0">
+                          <columns>
+                              <TableColumn fx:id="colNombre" prefWidth="108.0" text="Nombre" />
+                              <TableColumn fx:id="colRol" prefWidth="72.0" text="Rol" />
+                              <TableColumn fx:id="colEspecialidad" prefWidth="146.0" text="Especialidad" />
+                              <TableColumn fx:id="colGoles" prefWidth="68.0" text="Goles" />
+                              <TableColumn fx:id="colPartidos" text="Partidos" />
+                          </columns>
+                        </TableView>
+                        <HBox alignment="CENTER">
+                           <VBox.margin>
+                              <Insets top="15.0" />
+                           </VBox.margin>
+                           <children>
+                              <TextArea fx:id="descriptionText" prefHeight="79.0" prefWidth="233.0" promptText="Descripción de la plantilla...">
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </TextArea>
+                              <VBox alignment="CENTER">
+                                 <children>
+                                    <Label text="Fecha de juego">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <DatePicker fx:id="fechaJuegoDP" prefHeight="25.0" prefWidth="130.0">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </VBox.margin>
+                                    </DatePicker>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0">
+            <HBox fx:id="buttonParent" alignment="CENTER" prefHeight="60.0" prefWidth="200.0">
                <children>
                   <Button id="addButton" fx:id="addButton" mnemonicParsing="false" text="Añadir">
                      <HBox.margin>

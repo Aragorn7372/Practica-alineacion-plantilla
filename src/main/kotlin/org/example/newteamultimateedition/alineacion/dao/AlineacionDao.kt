@@ -11,20 +11,20 @@ import org.lighthousegames.logging.logging
 import java.time.LocalDate
 
 interface AlineacionDao {
-    @SqlQuery("SELECT id AS id, fecha_creacion AS createdAt, fecha_actualizacion AS updatedAt, fecha_juego AS juegoDate, id_entrenador AS idEntrenador FROM alineacion")
+    @SqlQuery("SELECT id AS id, fecha_creacion AS createdAt, fecha_actualizacion AS updatedAt, fecha_juego AS juegoDate, id_entrenador AS idEntrenador, descripcion AS descripcion FROM alineacion")
     fun getAll(): List<AlineacionEntity>
 
-    @SqlQuery("SELECT id AS id, fecha_creacion AS createdAt, fecha_actualizacion AS updatedAt, fecha_juego AS juegoDate, id_entrenador AS idEntrenador  FROM alineacion where id = :id")
+    @SqlQuery("SELECT id AS id, fecha_creacion AS createdAt, fecha_actualizacion AS updatedAt, fecha_juego AS juegoDate, id_entrenador AS idEntrenador, descripcion AS descripcion  FROM alineacion where id = :id")
     fun getById(@Bind("id") id: Long): AlineacionEntity?
 
-    @SqlQuery("SELECT id AS id, fecha_creacion AS createdAt, fecha_actualizacion AS updatedAt, fecha_juego AS juegoDate, id_entrenador AS idEntrenador  FROM alineacion where fecha_juego = :fecha ")
+    @SqlQuery("SELECT id AS id, fecha_creacion AS createdAt, fecha_actualizacion AS updatedAt, fecha_juego AS juegoDate, id_entrenador AS idEntrenador, descripcion AS descripcion  FROM alineacion where fecha_juego = :fecha ")
     fun getByFechaJuego(@Bind("fecha") fecha: LocalDate): AlineacionEntity?
 
-    @SqlUpdate("INSERT INTO alineacion (fecha_creacion,fecha_actualizacion,fecha_juego, id_entrenador) VALUES (:createdAt, :updatedAt, :juegoDate, :idEntrenador)")
+    @SqlUpdate("INSERT INTO alineacion ( fecha_creacion,fecha_actualizacion,fecha_juego, id_entrenador, descripcion) VALUES (:createdAt, :updatedAt, :juegoDate, :idEntrenador, :descripcion) ")
     @GetGeneratedKeys("id")
     fun save(@BindBean alineacion: AlineacionEntity): Int
 
-    @SqlUpdate("UPDATE alineacion SET fecha_creacion= :createdAt, fecha_actualizacion = :updatedAt, fecha_juego= :juegoDate, id_entrenador= :idEntrenador WHERE id = :identificacion")
+    @SqlUpdate("UPDATE alineacion SET fecha_creacion= :createdAt, fecha_actualizacion = :updatedAt, fecha_juego= :juegoDate, id_entrenador= :idEntrenador, descripcion= :descripcion WHERE id = :identificacion")
     fun updateById(@BindBean alineacion: AlineacionEntity,@Bind("identificacion") identificacion:Long): Int
 
 

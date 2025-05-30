@@ -85,10 +85,11 @@ class AlineacionServiceImplTest {
     private val alineacion: Alineacion = Alineacion(
         id = 1L,
         personalList = listOf(code),
-        juegoDate =LocalDate.now(),
+        juegoDate = LocalDate.now(),
         updatedAt = LocalDateTime.now(),
         createdAt = LocalDateTime.now(),
-        entrenador = entrenador
+        entrenador = entrenador,
+        descripcion = "aaa",
     )
 
     @Nested
