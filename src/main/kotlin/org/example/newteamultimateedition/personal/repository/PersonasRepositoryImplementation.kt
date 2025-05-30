@@ -19,7 +19,7 @@ class PersonasRepositoryImplementation(
      * @return devuelve la lista de personas
      */
     override fun getAll(): List<Persona> {
-        logger.debug { "Getting all personas" }
+        logger.debug { "Obteniendo todas las personas" }
         return dao.getAll().map { it.toModel() }
     }
 
@@ -29,7 +29,7 @@ class PersonasRepositoryImplementation(
      * @return persona si se encuentra, nulo si no encuentra nada
      */
     override fun getById(id: Long): Persona? {
-        logger.debug { "Getting persona by id $id" }
+        logger.debug { "Obteniendo persona por ID: $id" }
         return dao.getById(id)?.toModel()
     }
 
@@ -40,7 +40,7 @@ class PersonasRepositoryImplementation(
      * @return persona si se encuentra, nulo si no se encuentra
      */
     override fun update(objeto: Persona, id: Long): Persona? {
-        logger.debug { "Updating persona by id $id" }
+        logger.debug { "Actualizando persona por ID: $id" }
         val updated = dao.update(objeto.toEntity(),id)
         if (updated==1){
                 if (objeto is Jugador){
@@ -53,7 +53,7 @@ class PersonasRepositoryImplementation(
     }
 
     override fun delete(id: Long): Persona? {
-        logger.debug { "Deleting logico persona by id $id" }
+        logger.debug { "Borrado logico de persona por ID: $id" }
         dao.getById(id)?.let {
             if (dao.update(it.copy(isDeleted = true),id)==1) return it.toModel()
             else null
@@ -67,7 +67,7 @@ class PersonasRepositoryImplementation(
      * @return devuelve persona si lo encuentra y elimina o nulo si no lo encuentra
      */
     fun deleteFisico(id: Long): Persona? {
-        logger.debug { "Deleting persona by id $id" }
+        logger.debug { "Borrando persona por ID: $id" }
         dao.getById(id)?.let {
             if (dao.deleteById(id)==1) return it.toModel()
             else null
