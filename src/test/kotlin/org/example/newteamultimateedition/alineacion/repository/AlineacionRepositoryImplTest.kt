@@ -86,11 +86,12 @@ class AlineacionRepositoryImplTest {
  )
   
  private val alineacionEntity1 = AlineacionEntity(
-  id = 1L,
-  createdAt = LocalDateTime.of(2022, 5, 10, 14, 30),
-  updatedAt = LocalDateTime.of(2022, 5, 10, 14, 30),
-  juegoDate = LocalDate.of(2003,8,20),
-  idEntrenador = 1L
+     id = 1L,
+     createdAt = LocalDateTime.of(2022, 5, 10, 14, 30),
+     updatedAt = LocalDateTime.of(2022, 5, 10, 14, 30),
+     juegoDate = LocalDate.of(2003, 8, 20),
+     idEntrenador = 1L,
+     descripcion = "aaa"
  )
 
  private val alineacionModel1 = Alineacion(
@@ -99,7 +100,8 @@ class AlineacionRepositoryImplTest {
      createdAt = LocalDateTime.of(2022, 5, 10, 14, 30),
      updatedAt = LocalDateTime.of(2022, 5, 10, 14, 30),
      juegoDate = LocalDate.of(2003,8,20),
-     entrenador = entrenador
+     entrenador = entrenador,
+     descripcion = "aaa"
  )
 
  private val alineacionEntity2 = AlineacionEntity(
@@ -107,7 +109,8 @@ class AlineacionRepositoryImplTest {
   createdAt = LocalDateTime.of(2022, 5, 10, 14, 30),
   updatedAt = LocalDateTime.of(2022, 5, 10, 14, 30),
   juegoDate = LocalDate.of(2000,8,20),
-  idEntrenador = 1L
+  idEntrenador = 1L,
+  descripcion = "aaa"
  )
 
  private val alineacionModel2 = Alineacion(
@@ -116,7 +119,8 @@ class AlineacionRepositoryImplTest {
   createdAt = LocalDateTime.of(2022, 5, 10, 14, 30),
   updatedAt = LocalDateTime.of(2022, 5, 10, 14, 30),
   juegoDate = LocalDate.of(2000,8,20),
-  entrenador = entrenador
+  entrenador = entrenador,
+  descripcion = "aaa"
  )
 
  private val alineacionEntityEmptyPersonalList = AlineacionEntity(
@@ -124,7 +128,8 @@ class AlineacionRepositoryImplTest {
   createdAt = LocalDateTime.of(2022, 5, 10, 14, 30),
   updatedAt = LocalDateTime.of(2022, 5, 10, 14, 30),
   juegoDate = LocalDate.of(2000,8,20),
-  idEntrenador = 1L
+  idEntrenador = 1L,
+  descripcion = "aaa"
  )
 
  private val emptyListCodigosAlineacionEntity: List<LineaAlineacionEntity> = listOf()
@@ -137,7 +142,8 @@ class AlineacionRepositoryImplTest {
   createdAt = LocalDateTime.of(2022, 5, 10, 14, 30),
   updatedAt = LocalDateTime.of(2022, 5, 10, 14, 30),
   juegoDate = LocalDate.of(2000,8,20),
-  entrenador = entrenador
+  entrenador = entrenador,
+  descripcion = "aaa"
  )
 
   @BeforeEach

@@ -4,6 +4,7 @@ import com.github.benmanes.caffeine.cache.Cache
 import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import javafx.application.Platform
+import javafx.beans.property.SimpleStringProperty
 import javafx.fxml.FXML
 import javafx.scene.Cursor.DEFAULT
 import javafx.scene.Cursor.WAIT
@@ -16,6 +17,7 @@ import javafx.stage.Stage
 import org.example.newteamultimateedition.alineacion.error.AlineacionError
 import org.example.newteamultimateedition.alineacion.model.Alineacion
 import org.example.newteamultimateedition.alineacion.viewmodels.AlineacionViewModel
+import org.example.newteamultimateedition.common.locale.toLocalDateTime
 import org.example.newteamultimateedition.personal.error.PersonasError
 import org.example.newteamultimateedition.personal.models.Persona
 import org.example.newteamultimateedition.routes.RoutesManager
@@ -26,6 +28,7 @@ import org.koin.core.component.inject
 import org.lighthousegames.logging.logging
 import java.time.LocalDate
 import java.time.LocalDateTime
+
 
 class AlineacionController(): KoinComponent {
     private val cache: Cache<Long, User> by inject()
@@ -67,7 +70,7 @@ class AlineacionController(): KoinComponent {
     @FXML
     lateinit var colFechaJuego: TableColumn<Alineacion, LocalDate>
     @FXML
-    lateinit var colUpdatedAt: TableColumn<Alineacion, LocalDateTime>
+    lateinit var colUpdatedAt: TableColumn<Alineacion, String>
 
     fun initialize() {
         initEvents()
@@ -76,6 +79,10 @@ class AlineacionController(): KoinComponent {
     }
 
     private fun initDefaultValues() {
+        if(!cache.getIfPresent(0L).isAdmin) {
+            buttonContainer.children.remove(editButton)
+            buttonContainer.children.remove(createButton)
+        }
         handleSesionView()
         viewModel.loadAllAlineciones()
 
@@ -84,7 +91,10 @@ class AlineacionController(): KoinComponent {
         tablaAlineacion.items = viewModel.state.value.alineaciones
 
         colId.cellValueFactory = PropertyValueFactory("id")
-        colUpdatedAt.cellValueFactory = PropertyValueFactory("updatedAt")
+        colUpdatedAt.setCellValueFactory{ cellData ->
+            val alineacion= cellData.value
+            SimpleStringProperty(alineacion.updatedAt.toLocalDateTime())
+        }
         colFechaJuego.cellValueFactory = PropertyValueFactory("juegoDate")
     }
 
@@ -93,9 +103,10 @@ class AlineacionController(): KoinComponent {
     }
 
     private fun initBindings() {
-        if(!cache.getIfPresent(0L).isAdmin) {
-            buttonContainer.children.remove(editButton)
-            buttonContainer.children.remove(createButton)
+        viewModel.state.addListener { _, oldValue, newValue ->
+            if (newValue != oldValue ) {
+                tablaAlineacion.items = viewModel.state.value.alineaciones
+            }
         }
         //Barra de búqueda
         searchBar.textProperty().addListener { _, oldValue, newValue ->
@@ -125,6 +136,19 @@ class AlineacionController(): KoinComponent {
         exportButton.setOnAction { onExportarAction() }
 
         createButton.setOnAction {
+            viewModel.modoAlineacion = AlineacionViewModel.ModoAlineacion.CREAR
+            onCreateAlineacionAction()
+        }
+
+        editButton.setOnAction {
+            viewModel.modoAlineacion = AlineacionViewModel.ModoAlineacion.EDITAR
+            viewModel.alineacion = tablaAlineacion.selectionModel.selectedItem
+            onCreateAlineacionAction()
+        }
+
+        viewButton.setOnAction {
+            viewModel.alineacion = tablaAlineacion.selectionModel.selectedItem
+            viewModel.modoAlineacion = AlineacionViewModel.ModoAlineacion.VISUALIZAR
             onCreateAlineacionAction()
         }
     }

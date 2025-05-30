@@ -1,6 +1,6 @@
 
 DROP TABLE IF EXISTS empleados CASCADE;
-DROP TABLE IF EXISTS codigo CASCADE;
+DROP TABLE IF EXISTS linea_alineacion CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS alineacion CASCADE;
 
@@ -37,10 +37,11 @@ CREATE TABLE IF NOT EXISTS alineacion (
     fecha_creacion TIMESTAMP NOT NULL,
     fecha_actualizacion TIMESTAMP NOT NULL,
     fecha_juego DATE NOT NULL,
-    id_entrenador BIGINT NOT NULL
+    id_entrenador BIGINT NOT NULL,
+    descripcion VARCHAR(255) DEFAULT NULL
 );
 
-CREATE TABLE IF NOT EXISTS linea (
+CREATE TABLE IF NOT EXISTS linea_alineacion (
     uuid VARCHAR NOT NULL PRIMARY KEY,
     id_persona BIGINT NOT NULL,
     id_alineacion BIGINT NOT NULL,
