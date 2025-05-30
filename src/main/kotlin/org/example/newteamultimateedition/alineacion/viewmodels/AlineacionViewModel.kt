@@ -1,6 +1,9 @@
 package org.example.newteamultimateedition.alineacion.viewmodels
 
+import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Result
+import com.github.michaelbull.result.onFailure
+import com.github.michaelbull.result.onSuccess
 import javafx.beans.property.SimpleObjectProperty
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
@@ -14,6 +17,7 @@ import org.example.newteamultimateedition.personal.models.Entrenador
 import org.example.newteamultimateedition.personal.models.Jugador
 import org.example.newteamultimateedition.personal.models.Persona
 import org.example.newteamultimateedition.routes.RoutesManager
+import java.io.File
 import java.time.LocalDate
 import java.util.*
 
@@ -81,6 +85,13 @@ class AlineacionViewModel (
            )
        }
 
+    }
+
+    fun exportarData(alineacion: Alineacion,file: File): Result<Unit,Errors> {
+        val listaPersonas = alineacionService.getJugadoresByLista(alineacion.personalList)
+            if (listaPersonas.isOk) {
+            return alineacionService.exportarData(alineacion,listaPersonas.value,file)
+        }else return Err(listaPersonas.error)
     }
 
 

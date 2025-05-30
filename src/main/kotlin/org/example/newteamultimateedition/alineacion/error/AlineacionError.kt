@@ -23,7 +23,13 @@ abstract class AlineacionError(mensaje: String): Errors(mensaje) {
 
     /**
      *  Excepción que indica que la base de datos de la persona no se ha conectado
-     *  @param message
+     *  @param message Mensaje de error
      */
     class AlineacionDatabaseError(message: String): AlineacionError(message)
+
+    /**
+     * Excepción que indica un fallo en el almacenamiento
+     * @param message Mensaje de error
+     */
+    class AlineacionStorageError(message: String): AlineacionError(message)
 }

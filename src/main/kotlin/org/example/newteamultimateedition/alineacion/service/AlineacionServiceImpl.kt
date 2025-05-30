@@ -1,27 +1,27 @@
 package org.example.newteamultimateedition.alineacion.service
 
 import com.github.benmanes.caffeine.cache.Cache
-import com.github.michaelbull.result.Err
-import com.github.michaelbull.result.Ok
-import com.github.michaelbull.result.Result
-import com.github.michaelbull.result.onSuccess
+import com.github.michaelbull.result.*
 import org.example.newteamultimateedition.alineacion.error.AlineacionError
 import org.example.newteamultimateedition.alineacion.model.Alineacion
 import org.example.newteamultimateedition.alineacion.model.LineaAlineacion
 import org.example.newteamultimateedition.alineacion.repository.AlineacionRepositoryImpl
+import org.example.newteamultimateedition.alineacion.storage.AlineacionStorageImpl
 import org.example.newteamultimateedition.alineacion.validador.AlineacionValidate
 import org.example.newteamultimateedition.common.error.Errors
 import org.example.newteamultimateedition.personal.error.PersonasError
 import org.example.newteamultimateedition.personal.models.Persona
 import org.example.newteamultimateedition.personal.services.PersonaServiceImpl
 import org.lighthousegames.logging.logging
+import java.io.File
 import java.time.LocalDate
 
 class AlineacionServiceImpl(
     private val validator: AlineacionValidate,
     private val cache: Cache<Long, Alineacion>,
     private val repository: AlineacionRepositoryImpl,
-    private val personalService: PersonaServiceImpl
+    private val personalService: PersonaServiceImpl,
+    private val storage: AlineacionStorageImpl
 ): AlineacionService {
     private val logger= logging()
     override fun getByFecha(fecha: LocalDate): Result<Alineacion, AlineacionError> {
@@ -148,5 +148,10 @@ class AlineacionServiceImpl(
             }
         }
         return Err(validado.error)
+    }
+    fun exportarData(alineacion: Alineacion,lista: List<Persona>,file: File): Result<Unit, Errors> {
+        logger.debug { "exportarData" }
+          return  storage.fileWrite(alineacion,lista,file)
+
     }
 }

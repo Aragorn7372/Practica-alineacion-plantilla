@@ -32,7 +32,8 @@ import org.example.newteamultimateedition.personal.services.PersonaServiceImpl
 import org.example.newteamultimateedition.personal.storage.*
 import org.example.newteamultimateedition.alineacion.service.AlineacionServiceImpl
 import org.example.newteamultimateedition.alineacion.viewmodels.AlineacionViewModel
-
+import org.example.newteamultimateedition.alineacion.storage.AlineacionStorageImpl
+import org.example.newteamultimateedition.alineacion.storage.AlineacionStorageHTML
 /**
  * Koin module for the application.
  */
@@ -104,6 +105,12 @@ val appModule = module {
     }
     singleOf(::EquipoStorageXML) {
         bind<EquipoStorageXML>()
+    }
+    singleOf(::AlineacionStorageImpl) {
+        bind<AlineacionStorageImpl>()
+    }
+    singleOf(::AlineacionStorageHTML) {
+        bind<AlineacionStorageHTML>()
     }
 
 

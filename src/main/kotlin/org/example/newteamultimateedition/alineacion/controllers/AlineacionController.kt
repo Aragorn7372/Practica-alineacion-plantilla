@@ -17,6 +17,7 @@ import javafx.stage.Stage
 import org.example.newteamultimateedition.alineacion.error.AlineacionError
 import org.example.newteamultimateedition.alineacion.model.Alineacion
 import org.example.newteamultimateedition.alineacion.viewmodels.AlineacionViewModel
+import org.example.newteamultimateedition.common.error.Errors
 import org.example.newteamultimateedition.common.locale.toLocalDateTime
 import org.example.newteamultimateedition.personal.error.PersonasError
 import org.example.newteamultimateedition.personal.models.Persona
@@ -158,8 +159,29 @@ class AlineacionController(): KoinComponent {
     }
 
     private fun onExportarAction() {
-
+        FileChooser().run {
+            title = "Exportar integrantes"
+            extensionFilters.add(FileChooser.ExtensionFilter("HTML", "*.html"))
+            extensionFilters.add(FileChooser.ExtensionFilter("PDF", "*.pdf"))
+            showSaveDialog(RoutesManager.activeStage)
+        }?.let {
+            // Cambiar el cursor a espera
+            RoutesManager.activeStage.scene.cursor = WAIT
+            Platform.runLater {
+                viewModel.exportarData(tablaAlineacion.selectionModel.selectedItem,it)
+                    .onSuccess {
+                        showAlertOperation(
+                            title = "Datos exportados",
+                            mensaje = "Se ha exportado la alineacion."
+                        )
+                    }.onFailure { error: Errors->
+                        showAlertOperation(alerta = AlertType.ERROR, title = "Error al exportar", mensaje = error.message)
+                    }
+                RoutesManager.activeStage.scene.cursor = DEFAULT
+            }
+        }
     }
+
     private fun showAlertOperation(
         alerta: AlertType = AlertType.CONFIRMATION,
         title: String = "",

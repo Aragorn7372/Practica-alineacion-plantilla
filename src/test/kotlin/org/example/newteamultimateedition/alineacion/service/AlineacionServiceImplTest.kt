@@ -7,6 +7,7 @@ import org.example.newteamultimateedition.alineacion.error.AlineacionError
 import org.example.newteamultimateedition.alineacion.model.Alineacion
 import org.example.newteamultimateedition.alineacion.model.LineaAlineacion
 import org.example.newteamultimateedition.alineacion.repository.AlineacionRepositoryImpl
+import org.example.newteamultimateedition.alineacion.storage.AlineacionStorageImpl
 import org.example.newteamultimateedition.alineacion.validador.AlineacionValidate
 import org.example.newteamultimateedition.personal.error.PersonasError
 import org.example.newteamultimateedition.personal.models.Entrenador
@@ -39,6 +40,8 @@ class AlineacionServiceImplTest {
     private lateinit var personalService: PersonaServiceImpl
     @Mock
     private lateinit var validador: AlineacionValidate
+    @Mock
+    private lateinit var storage: AlineacionStorageImpl
     @InjectMocks
     private lateinit var service: AlineacionServiceImpl
 
