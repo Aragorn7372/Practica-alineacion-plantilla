@@ -12,9 +12,19 @@ import org.example.newteamultimateedition.personal.models.Persona
 import org.lighthousegames.logging.logging
 import java.io.File
 
+/**
+ * Clase que representa el storage de HTML de [Alineacion]
+ */
 class AlineacionStorageHTML : AlineacionStorage<Persona,AlineacionError,Alineacion> {
     private val logger = logging()
 
+    /**
+     * Función que escribe en un archivo HTMl toda la información relativa a una alineación.
+     * @param alineacion La alineación en cuestión
+     * @param lista Lista de jugadores de la alineación
+     * @param file El archivo en el que se escribirá toda la información
+     * @return [Result] de [Unit] en caso correcto o [AlineacionError] en caso incorrecto o de fallo
+     */
     override fun fileWrite(alineacion: Alineacion,lista: List<Persona>, file: File): Result<Unit, AlineacionError> {
         logger.debug { "Escribiendo equipo en formato HTML" }
 
@@ -49,6 +59,14 @@ class AlineacionStorageHTML : AlineacionStorage<Persona,AlineacionError,Alineaci
         file.writeText(html)
         return Ok(Unit)
     }
+
+    /**
+     * crea un html
+     * @param alineacion La alineación en cuestión
+     * @param lista Lista de jugadores de la alineación
+     * @param file El archivo en el que se escribirá toda la información
+     * @return [String] html creado
+     */
     fun createHtml(alineacion: Alineacion,lista: List<Persona>, ): String {
         logger.debug { "Escribiendo equipo en formato HTML" }
 

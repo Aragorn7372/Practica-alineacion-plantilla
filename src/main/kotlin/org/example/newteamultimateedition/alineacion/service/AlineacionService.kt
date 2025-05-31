@@ -10,6 +10,9 @@ import org.example.newteamultimateedition.personal.error.PersonasError
 import org.example.newteamultimateedition.personal.models.Persona
 import java.time.LocalDate
 
+/**
+ * interfaz que incluye una funcion para obtener por fecha para obtener personas de tres formas distintas
+ */
 interface AlineacionService: Service<Alineacion,AlineacionError,Long> {
     fun getByFecha(fecha: LocalDate):Result<Alineacion,AlineacionError>
     fun getAllPersonas(): Result<List<Persona>, PersonasError>
