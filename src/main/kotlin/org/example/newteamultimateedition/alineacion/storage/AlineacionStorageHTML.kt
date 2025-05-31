@@ -25,7 +25,7 @@ class AlineacionStorageHTML : AlineacionStorage<Persona,AlineacionError,Alineaci
 
         val html = buildString {
             appendLine("<!DOCTYPE html>")
-            appendLine("<html><head><meta charset=\"UTF-8\"><title>Equipo</title></head><body>")
+            appendLine("<html><head><meta charset=\"UTF-8\"/><title>Equipo</title></head><body>")
             appendLine("<h1>Alineacion del equipo</h1>")
 
             appendLine("<h2>Información</h2>")
@@ -48,5 +48,33 @@ class AlineacionStorageHTML : AlineacionStorage<Persona,AlineacionError,Alineaci
         }
         file.writeText(html)
         return Ok(Unit)
+    }
+    fun createHtml(alineacion: Alineacion,lista: List<Persona>, ): String {
+        logger.debug { "Escribiendo equipo en formato HTML" }
+
+        val html = buildString {
+            appendLine("<!DOCTYPE html>")
+            appendLine("<html><head><meta charset=\"UTF-8\"/><title>Equipo</title></head><body>")
+            appendLine("<h1>Alineacion del equipo</h1>")
+
+            appendLine("<h2>Información</h2>")
+            appendLine("<p>Id: ${alineacion.id}</p>")
+            appendLine("<p>Entrenador: ${alineacion.entrenador}</p>")
+            appendLine("<p>Fecha de creación: ${alineacion.createdAt}</p>")
+            appendLine("<p>Última actualización: ${alineacion.updatedAt}</p>")
+            appendLine("<p>Fecha de convocatoria: ${alineacion.juegoDate} </p>")
+            appendLine("<p>Descripción: ${alineacion.descripcion}</p>")
+            appendLine("<h2>Jugadores</h2>")
+            appendLine("<ul>")
+            lista.forEach { it as Jugador
+
+                appendLine("<li>")
+                appendLine("Nombre completo: ${it.nombre} ${it.apellidos} - Posición: ${it.posicion} - Dorsal: ${it.dorsal}")
+                appendLine("</li>")
+            }
+            appendLine("</ul>")
+            appendLine("</body></html>")
+        }
+        return html
     }
 }

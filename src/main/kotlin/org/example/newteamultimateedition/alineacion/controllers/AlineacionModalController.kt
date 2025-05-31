@@ -357,7 +357,7 @@ class AlineacionModalController: KoinComponent {
                 } else {
                     entrenador = persona as Entrenador
                     imagenes[pulsado]?.image = Image(RoutesManager.getResourceAsStream(persona.imagen))
-                    viewModel.state.value.personas.remove(jugadores[pulsado])
+                    viewModel.state.value.personas.remove(entrenador)
                     deleteImagesStyle()
                     pulsado = 0
                 }

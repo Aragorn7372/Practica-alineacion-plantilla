@@ -16,10 +16,11 @@ import java.io.File
  * @property storageBIN [EquipoStorageBIN] El almacenamiento BIN
  */
 class EquipoStorageImpl(
-    private val storageCSV: EquipoStorageCSV = EquipoStorageCSV(),
-    private val storageXML: EquipoStorageXML = EquipoStorageXML(),
-    private val storageJSON: EquipoStorageJSON = EquipoStorageJSON(),
-    private val storageBIN: EquipoStorageBIN = EquipoStorageBIN(),
+    private val storageCSV: EquipoStorageCSV ,
+    private val storageXML: EquipoStorageXML ,
+    private val storageJSON: EquipoStorageJSON ,
+    private val storageBIN: EquipoStorageBIN ,
+    private val storageZip: PersonalStorageZip
 ): EquipoStorage {
     /**
      * Llama a uno u otro storage en función de la extensión del archivo a leer que le entra por parámetro
@@ -41,6 +42,9 @@ class EquipoStorageImpl(
             file.name.endsWith(".xml") -> {
                 return storageXML.fileRead(file)
             }
+            file.name.endsWith(".zip") -> {
+                return storageZip.leerDelArchivo(file)
+            }
             else -> {
                 return storageBIN.fileRead(file)
             }
@@ -58,7 +62,7 @@ class EquipoStorageImpl(
      * @see [EquipoStorageBIN]
      */
     override fun fileWrite(equipo: List<Persona>, file: File): Result<Unit, PersonasError> {
-        when {
+        return when {
             file.name.endsWith(".csv") -> {
                 storageCSV.fileWrite(equipo,file)
             }
@@ -67,6 +71,9 @@ class EquipoStorageImpl(
             }
             file.name.endsWith(".xml") -> {
                 storageXML.fileWrite(equipo,file)
+            }
+            file.name.endsWith(".zip") -> {
+                storageZip.escribirAUnArchivo(file,equipo)
             }
             file.name.endsWith(".bin") -> {
                 storageBIN.fileWrite(equipo,file)

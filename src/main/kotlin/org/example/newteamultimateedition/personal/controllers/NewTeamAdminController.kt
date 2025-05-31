@@ -983,6 +983,7 @@ class NewTeamAdminController(): KoinComponent {
             extensionFilters.add(FileChooser.ExtensionFilter("JSON", "*.json"))
             extensionFilters.add(FileChooser.ExtensionFilter("XML", "*.xml"))
             extensionFilters.add(FileChooser.ExtensionFilter("BIN", "*.bin"))
+            extensionFilters.add(FileChooser.ExtensionFilter("ZIP", "*.zip"))
             showSaveDialog(RoutesManager.activeStage)
         }?.let {
             // Cambiar el cursor a espera
@@ -1014,6 +1015,7 @@ class NewTeamAdminController(): KoinComponent {
             extensionFilters.add(FileChooser.ExtensionFilter("JSON", "*.json"))
             extensionFilters.add(FileChooser.ExtensionFilter("XML", "*.xml"))
             extensionFilters.add(FileChooser.ExtensionFilter("BIN", "*.bin"))
+            extensionFilters.add(FileChooser.ExtensionFilter("ZIP", "*.zip"))
             showOpenDialog(RoutesManager.activeStage)
         }?.let {
             // Cambiar el cursor a espera

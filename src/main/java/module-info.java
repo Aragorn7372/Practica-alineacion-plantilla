@@ -30,7 +30,7 @@ module org.example.newteamultimateedition {
     requires jbcrypt;
     //koin
     requires koin.core.jvm;
-
+    requires openhtmltopdf.pdfbox;
 
 
     opens org.example.newteamultimateedition to org.jdbi.v3.core, javafx.fxml, javafx.base;
