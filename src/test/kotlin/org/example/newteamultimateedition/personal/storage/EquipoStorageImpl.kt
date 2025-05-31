@@ -22,6 +22,7 @@ class EquipoStorageImplTest {
     private lateinit var storageXML: EquipoStorageXML
     private lateinit var storageJSON: EquipoStorageJSON
     private lateinit var storageBIN: EquipoStorageBIN
+    private lateinit var storageZip: PersonalStorageZip
     private lateinit var equipoStorageImpl: EquipoStorageImpl
 
     private val e = Entrenador(
@@ -65,7 +66,8 @@ class EquipoStorageImplTest {
         storageXML = mock()
         storageJSON = mock()
         storageBIN = mock()
-        equipoStorageImpl = EquipoStorageImpl(storageCSV, storageXML, storageJSON, storageBIN)
+        storageZip= mock()
+        equipoStorageImpl = EquipoStorageImpl(storageCSV, storageXML, storageJSON, storageBIN, storageZip )
     }
 
     @Nested

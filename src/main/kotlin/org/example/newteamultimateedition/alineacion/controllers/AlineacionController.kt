@@ -130,7 +130,7 @@ class AlineacionController(): KoinComponent {
             if (cache.getIfPresent(0L).isAdmin) {
                 RoutesManager.initAdminStage(searchBar.scene.window as Stage)
             }else{
-                RoutesManager.initUserStage(searchBar.scene.window as Stage)
+                if(true) RoutesManager.initUserStage(searchBar.scene.window as Stage)
             }
         }
 

@@ -1,12 +1,12 @@
 package org.example.newteamultimateedition.personal.storage
-/*
+
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import org.example.newteamultimateedition.common.config.Config
 import org.example.newteamultimateedition.personal.error.PersonasError
-import org.example.newteamultimateedition.personal.models.Jugador
 import org.example.newteamultimateedition.personal.models.Persona
+import org.example.newteamultimateedition.routes.RoutesManager.app
 
 
 import org.lighthousegames.logging.logging
@@ -82,27 +82,38 @@ class PersonalStorageZip(
     }
 
 
-    fun escribirAUnArchivo(file: File, persona: List<Persona>, tipe: Tipo): Result<String, PersonasError> {
-        logger.debug { "exportando a zip con datos en formato: $tipe " }
+    fun escribirAUnArchivo(file: File, persona: List<Persona>): Result<Unit, PersonasError> {
+        logger.debug { "exportando a zip con datos en formato: " }
         val tempDir = Files.createTempDirectory(tempDirName)
         try {
             persona.forEach {
-                    val newfile = File(config.configProperties.imagesDirectory + "/" + it.imagen)
-                    if (newfile.exists()) {
-                        Files.copy(
-                            newfile.toPath(),
-                            Paths.get("$tempDir/", file.name),
-                            StandardCopyOption.REPLACE_EXISTING
-                        )
+                val imageFile = File(config.configProperties.imagesDirectory + "/" + it.imagen)
+                if (imageFile.exists()) {
+                    Files.copy(
+                        imageFile.toPath(),
+                        tempDir.resolve(imageFile.name),
+                        StandardCopyOption.REPLACE_EXISTING
+                    )
+                } else {
+                    val resourceUrl = app::class.java.getResource(it.imagen)
+                    if (resourceUrl != null) {
+                        val inputStream = resourceUrl.openStream()
+                        val targetPath = tempDir.resolve(it.imagen.substringAfterLast("/"))
+                        Files.copy(inputStream, targetPath, StandardCopyOption.REPLACE_EXISTING)
+                    } else {
+                        logger.warn { "Imagen no encontrada: ${resourceUrl}" }
                     }
+                }
             }
 
+            val tipe=(1..4).random()
             val datafile = when (tipe) {
-                Tipo.CSV -> csv.fileWrite(persona, File("$tempDirName/data.csv"))
-                Tipo.JSON -> json.fileWrite(persona,File("$tempDirName/data.json"))
-                Tipo.XML -> xml.fileWrite(persona,File("$tempDirName/data.xml"))
-                Tipo.BIN -> bin.fileWrite(persona, File("$tempDirName/data.bin"))
+                1 -> csv.fileWrite(persona, File("$tempDir/data.csv"))
+                2 -> json.fileWrite(persona,File("$tempDir/data.json"))
+                3 -> xml.fileWrite(persona,File("$tempDir/data.xml"))
+                else -> bin.fileWrite(persona, File("$tempDir/data.bin"))
             }
+
             if (datafile.isOk) {
                 val archivos = Files.walk(tempDir).filter { Files.isRegularFile(it) }.toList()
                 ZipOutputStream(Files.newOutputStream(file.toPath())).use { zip ->
@@ -113,8 +124,8 @@ class PersonalStorageZip(
                         zip.closeEntry()
                     }
                 }
-                tempDir.toFile().deleteRecursively()
-                return Ok(file.absolutePath)
+                tempDir.toFile()
+                return Ok(Unit)
             } else return Err(PersonasError.PersonasStorageError(datafile.error.toString()))
         } catch (e: Exception) {
             logger.debug { "fallo al importar" }
@@ -122,8 +133,6 @@ class PersonalStorageZip(
         }
     }
 }
-enum class Tipo {
-    CSV, JSON, XML, BIN
-}
 
-*/
+
+
