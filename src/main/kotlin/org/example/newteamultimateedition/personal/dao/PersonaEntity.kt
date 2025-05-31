@@ -4,7 +4,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 /**
- * Clase que representa a un Persona en forma de Entidad, para la base de datos.
+ * Clase que representa a una Persona en forma de Entidad, para la base de datos.
  * @property id Identificador del objeto
  * @property nombre Nombre de la persona
  * @property apellidos Apellidos de la persona

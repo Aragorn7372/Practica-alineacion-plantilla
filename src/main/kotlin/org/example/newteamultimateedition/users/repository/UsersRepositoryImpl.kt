@@ -13,7 +13,7 @@ class UsersRepositoryImpl(
     private val mapper: UsersMapper
 ): UsersRepository {
     /**
-     * devuelve una lista de usuarios
+     * Devuelve una lista de usuarios
      * @return lista a devolver
      */
     override fun getAll(): List<User> {
@@ -21,7 +21,7 @@ class UsersRepositoryImpl(
     }
 
     /**
-     * obtiene un usuario en base a una id
+     * Obtiene un usuario con base en una, id
      * @param id indicador principal para obtener un usuario
      * @return devuelve un usuario o nulo si no lo encuentra
      */
@@ -30,7 +30,7 @@ class UsersRepositoryImpl(
     }
 
     /**
-     * actualiza los datos de un usuario en base a un usuario y un id
+     * Actualiza los datos de un usuario con base en un usuario y un ID
      * @param objeto datos a actualizar
      * @param id indicativo del usuario a cambiar
      * @return devuelve el usuario o nulo dependiendo de si lo actualiza o no
@@ -45,7 +45,7 @@ class UsersRepositoryImpl(
     }
 
     /**
-     * elimina un usuario en base a una id
+     * Elimina un usuario con base en un ID
      * @param id indicativo de los datos a eliminar
      * @return devuelve el usuario o nulo si no lo encuentra o no es capaz de eliminarlo
      */
@@ -57,7 +57,7 @@ class UsersRepositoryImpl(
     }
 
     /**
-     * guarda un usuario
+     * Guarda un usuario
      * @param objeto usuario a guardar
      * @return usuario guardado
      */

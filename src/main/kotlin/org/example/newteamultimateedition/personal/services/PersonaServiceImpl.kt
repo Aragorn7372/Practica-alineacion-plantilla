@@ -15,6 +15,14 @@ import org.example.newteamultimateedition.personal.validator.PersonaValidation
 import org.lighthousegames.logging.logging
 import java.nio.file.Path
 
+/**
+ * Clase que representa el servicio del Personal
+ * @property repositorio de [PersonasRepositoryImplementation]
+ * @property cache de tipo [Cache] de [Long] como llave y [Persona] como value
+ * @property validator de [PersonaValidation]
+ * @property storage de [EquipoStorageImpl]
+ * @property logger para representar el flujo de la aplicacion
+ */
 class PersonaServiceImpl(
     private val repositorio: PersonasRepositoryImplementation,
     private val cache: Cache<Long, Persona>,
@@ -22,6 +30,12 @@ class PersonaServiceImpl(
     private val storage: EquipoStorageImpl,
 ):PersonaService {
     private val logger= logging()
+
+    /**
+     * Importa datos desde un archivo
+     * @param fichero archivo de donde sacar datos
+     * @return [List] de [Persona] si va bien o [PersonasError] si algo falla
+     */
     override fun importarDatosDesdeFichero(fichero: Path): Result<List<Persona>, PersonasError> {
         logger.debug { "importando desde fichero" }
         val file= fichero.toFile()
@@ -38,7 +52,11 @@ class PersonaServiceImpl(
             return Err(PersonasError.PersonaDatabaseError(e.message.toString()))
         }
     }
-
+    /**
+     * Exporta datos a un archivo
+     * @param fichero archivo donde guardar datos
+     * @return [Unit] si va bien o [PersonasError] si algo falla
+     */
     override fun exportarDatosDesdeFichero(fichero: Path): Result<Unit, PersonasError> {
         logger.debug { "exportando desde fichero" }
         val archivo= fichero.toFile()
@@ -55,6 +73,10 @@ class PersonaServiceImpl(
         return Err(result.error)
     }
 
+    /**
+     * Obtiene a todas las [Persona]
+     * @return [List] de [Persona] si va bien o [PersonasError] si algo falla
+     */
     override fun getAll(): Result<List<Persona>,PersonasError> {
         return try {
             Ok(repositorio.getAll().filter { !it.isDeleted })
@@ -63,6 +85,11 @@ class PersonaServiceImpl(
         }
     }
 
+    /**
+     * Devuelve a una persona en base a una id
+     * @param id [Long] identificador con el que buscar a la persona
+     * @return [Persona] si va bien o [PersonasError] si algo falla
+     */
     override fun getByID(id: Long): Result<Persona, PersonasError> {
         return cache.getIfPresent(id)?.let { Ok(it) }?:run {
             try {
@@ -79,6 +106,11 @@ class PersonaServiceImpl(
         }
     }
 
+    /**
+     * Guarda a un [Persona]
+     * @param item [Persona] a guardar
+     * @return [Persona] si se guarda o [PersonasError] si algo falla
+     */
     override fun save(item: Persona): Result<Persona, PersonasError> {
         logger.debug { "Guardando en el servicio con ID: ${item.id}" }
         val validado=validator.validator(item)
@@ -92,6 +124,11 @@ class PersonaServiceImpl(
         } else Err(validado.error)
     }
 
+    /**
+     * Elimina a una [Persona] basándonos en un ID
+     * @param id [Long] identificador a buscar
+     * @return [Persona] eliminada o [PersonasError] si algo falla
+     */
     override fun delete(id: Long): Result<Persona, PersonasError> {
         logger.debug { "Borrando en el servicio con ID: $id" }
         return try {
@@ -104,6 +141,12 @@ class PersonaServiceImpl(
         }
     }
 
+    /**
+     * Actualiza a una [Persona]
+     * @param id [Long] identificador de la [Persona]
+     * @param item [Persona] datos actualizados
+     * @return [Persona] si se actualiza o [PersonasError] si algo falla
+     */
     override fun update(id: Long, item: Persona): Result<Persona, PersonasError> {
         logger.debug { "Actualizando en el servicio con ID: $id" }
         val validado=validator.validator(item)

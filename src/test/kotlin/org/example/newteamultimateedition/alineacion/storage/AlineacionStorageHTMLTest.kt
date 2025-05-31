@@ -111,7 +111,7 @@ class AlineacionStorageHTMLTest{
 
             val expectedString = """
                 <!DOCTYPE html>
-                <html><head><meta charset="UTF-8"><title>Equipo</title></head><body>
+                <html><head><meta charset="UTF-8"/><title>Equipo</title></head><body>
                 <h1>Alineacion del equipo</h1>
                 <h2>Información</h2>
                 <p>Id: 1</p>

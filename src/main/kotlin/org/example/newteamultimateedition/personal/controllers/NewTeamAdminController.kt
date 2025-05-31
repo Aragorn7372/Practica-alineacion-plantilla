@@ -334,7 +334,7 @@ class NewTeamAdminController(): KoinComponent {
     /**
      * Detecta qué integrante de la tabla está seleccionado
      * @param newValue el integrante seleccionado
-     * @see [EquipoViewModel.updateIntegranteSelected]
+     * @see [EquipoViewModel.updatePersonalSelected]
      */
     private fun onTablaSelected(newValue: Persona) {
         logger.debug { " Integrante seleccionado en la tabla: $newValue " }
@@ -358,9 +358,6 @@ class NewTeamAdminController(): KoinComponent {
      * @see [onCreateEntrenadorAction]
      * @see [onCheckDeleteState]
      * @see [onImageSelectAction]
-     * @see [onSortByNombreAction]
-     * @see [onSortBySalarioAction]
-     * @see [onSortByNothingAction]
      * @see [onFilterByNothingAction]
      * @see [onFilterByEntrenadoresAction]
      * @see [onFilterByJugadoresAction]
@@ -440,7 +437,7 @@ class NewTeamAdminController(): KoinComponent {
      * Filtra la lista de integrantes por nombre
      * @param cadena la cadena a filtrar
      * @see [EquipoViewModel.quitarFiltros]
-     * @see [EquipoViewModel.filterIntegrantes]
+     * @see [EquipoViewModel.filterPersonas]
      */
     private fun filterByName (cadena: String){
         logger.debug { "Filtrando integrantes por nombre" }
@@ -465,8 +462,8 @@ class NewTeamAdminController(): KoinComponent {
 
     /**
      * Filtra los entrenadores de la lista de integrantes
-     * @see [EquipoViewModel.loadAllIntegrantes]
-     * @see [EquipoViewModel.filterIntegrantes]
+     * @see [EquipoViewModel.loadAllPersonas]
+     * @see [EquipoViewModel.filterPersonas]
      */
     private fun onFilterByEntrenadoresAction() {
         logger.debug { "Filtrando los jugadores" }
@@ -479,8 +476,8 @@ class NewTeamAdminController(): KoinComponent {
     }
     /**
      * Filtra los jugadores de la lista de integrantes
-     * @see [EquipoViewModel.loadAllIntegrantes]
-     * @see [EquipoViewModel.filterIntegrantes]
+     * @see [EquipoViewModel.loadAllPersonas]
+     * @see [EquipoViewModel.filterPersonas]
      */
     private fun onFilterByJugadoresAction() {
         logger.debug { "Filtrando los jugadores" }
@@ -744,7 +741,7 @@ class NewTeamAdminController(): KoinComponent {
      * Crea un entrenador vacío
      * @see enableEntrenador
      * @see disableJugador
-     * @see [EquipoViewModel.createEmptyIntegrante]
+     * @see [EquipoViewModel.createEmptyPersona]
      */
     private fun onCreateEntrenadorAction(){
         logger.debug { "Creando Entrenador" }
@@ -758,7 +755,7 @@ class NewTeamAdminController(): KoinComponent {
      * Crea un jugador vacío
      * @see enableJugador
      * @see disableEntrenador
-     * @see [EquipoViewModel.createEmptyIntegrante]
+     * @see [EquipoViewModel.createEmptyPersona]
      */
     private fun onCreateJugadorAction() {
         logger.debug { "Creando Jugador" }
@@ -769,10 +766,10 @@ class NewTeamAdminController(): KoinComponent {
     }
 
     /**
-     * Guarda un integrante tras validar sus datos
+     * Guarda una persona tras validar sus datos
      * @see validarJugador
      * @see validarEntrenador
-     * @see [EquipoViewModel.saveIntegrante]
+     * @see [EquipoViewModel.savePersona]
      */
     private fun onSaveIntegranteAction(esJugador: Boolean): Result<Persona, PersonasError> {
         logger.debug { "Guardando nuevo jugador" }
@@ -792,7 +789,7 @@ class NewTeamAdminController(): KoinComponent {
         if (esJugador) newIntegrante = viewModel.state.value.persona.toJugadorModel()
         else newIntegrante = viewModel.state.value.persona.toEntrenadorModel()
         val newList = viewModel.loadAllPersonas()
-        return viewModel.saveIntegrante(newIntegrante).onFailure {
+        return viewModel.savePersona(newIntegrante).onFailure {
            return Err(it)
 
         }.onSuccess {
@@ -801,7 +798,7 @@ class NewTeamAdminController(): KoinComponent {
     }
 
     /**
-     * Crea un integrante en el [EquipoViewModel] recogiendo los datos que contienen los distintos campos de la interfaz
+     * Crea una Persona en el [EquipoViewModel] recogiendo los datos que contienen los distintos campos de la interfaz
      * @param esJugador indica si es un jugador o un entrenador
      * @see getPosicionFromView
      * @see getEspecialidadFromView
@@ -843,7 +840,7 @@ class NewTeamAdminController(): KoinComponent {
                 )
             )
         }
-        logger.debug { "Integrante parseado al estado: ${viewModel.state.value.persona}" }
+        logger.debug { "Perona parseada al estado: ${viewModel.state.value.persona}" }
     }
 
     /**
@@ -971,14 +968,14 @@ class NewTeamAdminController(): KoinComponent {
     }
 
     /**
-     * Hace una copia de seguridad de los integrantes en un fichero
+     * Hace una copia de seguridad de las personas en un fichero
      * @see[EquipoViewModel.exportIntegrantestoFile]
      */
     private fun onExportarAction(){
         logger.debug{ "Iniciando FileChooser" }
 
         FileChooser().run {
-            title = "Exportar integrantes"
+            title = "Exportar personal"
             extensionFilters.add(FileChooser.ExtensionFilter("CSV", "*.csv"))
             extensionFilters.add(FileChooser.ExtensionFilter("JSON", "*.json"))
             extensionFilters.add(FileChooser.ExtensionFilter("XML", "*.xml"))
@@ -993,7 +990,7 @@ class NewTeamAdminController(): KoinComponent {
                     .onSuccess {
                         showAlertOperation(
                             title = "Datos exportados",
-                            mensaje = "Se han exportado los Integrantes."
+                            mensaje = "Se han exportado las personas."
                         )
                     }.onFailure { error: PersonasError->
                         showAlertOperation(alerta = AlertType.ERROR, title = "Error al exportar", mensaje = error.message)
@@ -1004,13 +1001,13 @@ class NewTeamAdminController(): KoinComponent {
     }
 
     /**
-     * Importa los integrantes de un fichero seleccionado por el usuario
+     * Importa el personal de un fichero seleccionado por el usuario
      * @see [EquipoViewModel.loadIntegrantesFromFile]
      */
     private fun onImportarAction() {
         logger.debug{ "Iniciando FileChooser" }
         FileChooser().run {
-            title = "Importar integrantes"
+            title = "Importar personal"
             extensionFilters.add(FileChooser.ExtensionFilter("CSV", "*.csv"))
             extensionFilters.add(FileChooser.ExtensionFilter("JSON", "*.json"))
             extensionFilters.add(FileChooser.ExtensionFilter("XML", "*.xml"))
@@ -1025,7 +1022,7 @@ class NewTeamAdminController(): KoinComponent {
                     .onSuccess {
                         showAlertOperation(
                             title = "Datos importados",
-                            mensaje = "Se han importado los Integrantes."
+                            mensaje = "Se han importado las personas."
                         )
                     }.onFailure { error: PersonasError->
                         showAlertOperation(alerta = AlertType.ERROR, title = "Error al importar", mensaje = error.message)

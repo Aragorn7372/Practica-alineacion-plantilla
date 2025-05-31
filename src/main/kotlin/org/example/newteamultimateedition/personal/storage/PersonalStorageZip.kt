@@ -19,6 +19,13 @@ import java.util.zip.ZipFile
 import java.util.zip.ZipOutputStream
 import kotlin.io.path.name
 
+/**
+ * Clase que se encarga de guardar en un zip con todas las extensiones en forma de backup
+ * @property csv Almacenamiento CSV
+ * @property json Almacenamiento JSON
+ * @property bin Almacenamiento BIN
+ * @property xml Almacenamiento XML
+ */
 class PersonalStorageZip(
 
     private val csv: EquipoStorageCSV,
@@ -30,6 +37,12 @@ class PersonalStorageZip(
 
     private val tempDirName = "players"
     private val logger = logging()
+
+    /**
+     * Función que lee de un archivo zip
+     * @param file El archivo
+     * @return [Result] de [Persona] en caso correcto o [PersonasError] en caso incorrecto o de fallo
+     */
     fun leerDelArchivo(file: File): Result<List<Persona>, PersonasError> {
         logger.info { "descomprimiendo archivos" }
         val tempDir = Files.createTempDirectory(tempDirName)
@@ -81,7 +94,12 @@ class PersonalStorageZip(
         }
     }
 
-
+    /**
+     * Función que escribe en un archivo zip
+     * @param file El archivo
+     * @param persona Lista de personas a exportar
+     * @return [Result] de [Unit] en caso correcto o [PersonasError] en caso incorrecto o de fallo
+     */
     fun escribirAUnArchivo(file: File, persona: List<Persona>): Result<Unit, PersonasError> {
         logger.debug { "exportando a zip con datos en formato: " }
         val tempDir = Files.createTempDirectory(tempDirName)

@@ -16,7 +16,7 @@ import org.koin.core.component.inject
 import org.mindrot.jbcrypt.BCrypt
 
 /**
- * Controlador de Registro de usuarios
+ * Controlador de CAmbio de contraseña de usuarios
  * @property dao DAO que interviene con la base de datos
  * @property acercaDeButton [Button] Boton 'Acerca de'
  * @property errorMessage [Label] Label que saca un mensaje de error
@@ -24,7 +24,6 @@ import org.mindrot.jbcrypt.BCrypt
  * @property userText [TextField] Campo que recoge el usuario
  * @property registerButton [Button] boton que procesa el inicio de sesion
  */
-
 class ChangePasswordController: KoinComponent {
 
     private val dao: UsersServiceImpl by inject()

@@ -47,6 +47,9 @@ class LoginController: KoinComponent {
         initEvents()
     }
 
+    /**
+     * Inicia los eventos de los componentes de la interfaz
+     */
     private fun initEvents() {
         acercaDeButton.setOnAction {
             RoutesManager.initAboutStage()
@@ -76,6 +79,9 @@ class LoginController: KoinComponent {
         }
     }
 
+    /**
+     * Función que se encarga de validar la sesión del usuario para poder dar paso al inicio de sesión
+     */
     private fun handleLogin() {
         val result = validateForm(userText.text, passwordText.text)
         if(result.isErr) showUserError(result.error.message)
@@ -87,6 +93,10 @@ class LoginController: KoinComponent {
         }
     }
 
+    /**
+     * Muestra el error al usuario cambiando los colores de la interfaz y mostrando el mensaje de error
+     * @param error El mensaje de error
+     */
     private fun showUserError(error: String) {
         errorMessage.style = "-fx-text-fill: #FF2C2C;"
         userText.style = "-fx-border-color: #FF2C2C;" +
@@ -98,6 +108,12 @@ class LoginController: KoinComponent {
         errorMessage.text = error
     }
 
+    /**
+     * Valida el formulario
+     * @param username Nombre de usuario
+     * @param password Contraseña sin hashear del usuario
+     * @return [Result] de [User] en caso correcto o de [UsersException] en caso incorrecto o de fallo
+     */
     private fun validateForm(username: String, password: String): Result<User, UsersException> {
         //val encrypt= BCrypt.hashpw(password, BCrypt.gensalt(12))
         if (username.isEmpty() || password.isEmpty()) {

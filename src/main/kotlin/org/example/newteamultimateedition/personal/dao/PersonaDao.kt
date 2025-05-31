@@ -57,7 +57,7 @@ interface PersonaDao {
     fun deleteById(@Bind("id") id: Long): Int
 
     /**
-     * Elimina todo el contenido de la tabla empleados
+     * Elimina el contenido de la tabla empleados
      */
     @SqlUpdate("DELETE  FROM empleados")
     fun deleteAll(): Int

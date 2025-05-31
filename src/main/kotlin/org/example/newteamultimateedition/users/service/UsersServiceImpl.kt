@@ -74,7 +74,7 @@ class UsersServiceImpl(
     }
 
     /**
-     * actualiza un usuario
+     * Actualiza un usuario
      * @param id inidicativo del usuario a actualizar
      * @param item usuario a eliminar
      * @return usuario o error
@@ -88,6 +88,12 @@ class UsersServiceImpl(
         }
     }
 
+    /**
+     * Maneja la sesión del usuario comprobando la contraseña hasheada con la proporcionada por la persona que intenta iniciar sesión
+     * @param username Nombre de usuario
+     * @param password Contraseña sin hashear
+     * @return [Result] de [User] en caso correcto o [UsersException] en caso incorrecto o de fallo
+     */
     fun goodLogin(username: String, password: String): Result<User, UsersException> {
         try {
         val userResult = repositorio.getById(username)

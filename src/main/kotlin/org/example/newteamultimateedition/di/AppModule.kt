@@ -37,7 +37,7 @@ import org.example.newteamultimateedition.alineacion.storage.AlineacionStorageHT
 import org.example.newteamultimateedition.alineacion.storage.AlineacionStoragePDF
 
 /**
- * Koin module for the application.
+ * Módulo de Koin para la aplicación
  */
 val appModule = module {
 
@@ -45,7 +45,7 @@ val appModule = module {
     singleOf(::provideDatabaseManager) {
         bind<Jdbi>()
     }
-
+    //Alineacion
     singleOf(::AlineacionServiceImpl){
         bind<AlineacionServiceImpl>()
     }
@@ -57,9 +57,7 @@ val appModule = module {
     }
 
     // DAO: depende de Jdbi
-    singleOf(::provideUsersDao) {
-        bind<UsersDao>()
-    }
+
 
     singleOf(::provideLineaAlineacionDao) {
         bind<LineaAlineacionDao>()
@@ -72,7 +70,9 @@ val appModule = module {
     singleOf(::AlineacionValidate) {
         bind<AlineacionValidate>()
     }
-
+    singleOf(::provideUsersDao) {
+        bind<UsersDao>()
+    }
     // Repository: depende de DAO
     singleOf(::UsersRepositoryImpl) {
         bind<UsersRepositoryImpl>()

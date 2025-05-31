@@ -10,6 +10,10 @@ import org.example.newteamultimateedition.personal.models.Persona
 
 import org.lighthousegames.logging.logging
 
+/**
+ * Clase que representa el repositorio de personas
+ * @property dao DAO de personas
+ */
 class PersonasRepositoryImplementation(
     private val dao: PersonaDao,
     ): PersonalRepository {

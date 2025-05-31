@@ -7,6 +7,10 @@ import org.example.newteamultimateedition.personal.models.Persona
 import org.example.newteamultimateedition.users.models.User
 import org.lighthousegames.logging.logging
 
+/**
+ * Caché caffeine encargada de gestionar la sesión de la aplicación
+ * @return [Cache] de [Long] y [User]
+ */
 fun darUsersCache(
 ): Cache<Long, User> {
     val size= 1L

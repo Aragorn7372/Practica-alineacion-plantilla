@@ -6,7 +6,9 @@ import org.example.newteamultimateedition.common.config.Config
 import org.example.newteamultimateedition.personal.models.Persona
 import org.lighthousegames.logging.logging
 
-
+/**
+ * Caché caffeine para la gestión de personas
+ */
 fun darPersonasCache(
 ):Cache<Long, Persona> {
     val size= Config.configProperties.cacheSize
