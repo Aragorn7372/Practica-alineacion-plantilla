@@ -23,6 +23,11 @@ import org.lighthousegames.logging.logging
 import java.time.LocalDate
 import kotlin.math.E
 
+/**
+ * Clase que representa el controlador de la vista modal de alineaciones.
+ * @property viewModel viewModel de alineaciones
+ * @see [AlineacionViewModel]
+ */
 class AlineacionModalController: KoinComponent {
 
 
@@ -166,7 +171,14 @@ class AlineacionModalController: KoinComponent {
     private var entrenador: Entrenador? =null
     private var pulsado: Int = 0
 
+    /**
+     * Método automáticamente llamado por JavaFX cuando se crea el [AlineacionModalController] asociado al correspondiente .fxml
+     * @see initEvents
+     * @see initDefaultValues
+     * @see initBindings
+     */
     fun initialize() {
+        logger.debug { "Ejecutando initialize" }
         imagenes= mutableMapOf(Pair(1, porteroTitularImg), Pair(2, centralIzquierdoImg), Pair(3, centralDerechoImg),
             Pair(4, lateralIzquierdoImg), Pair(5, lateralDerechoImg), Pair(6, medioCentroIzquierdoImg),
             Pair(7, medioCentroDerechoImg), Pair(8, extremoIzquierdoImg),Pair(9,extremoDerechoImg),
@@ -177,7 +189,15 @@ class AlineacionModalController: KoinComponent {
         initDefaultValues()
     }
 
+    /**
+     * Asigna la función de cada elemento de la vista al hacer click sobre el mismo.
+     * @see onAddPersona
+     * @see onEliminarPersona
+     * @see onGuardarAlineacion
+     * @see deleteImagesStyle
+     */
     private fun initEvents() {
+        logger.debug { "Inicializando eventos" }
         addButton.setOnAction {
           onAddPersona()
         }
@@ -316,7 +336,15 @@ class AlineacionModalController: KoinComponent {
 
     }
 
+    /**
+     * Acción asignada al botón [saveButton], guarda la alineación construída por el usuario.
+     * @see comprobarDatos
+     * @see [AlineacionViewModel.saveAlineacion]
+     * @see showAlertOperation
+     * @see [AlineacionViewModel.loadAllAlineciones]
+     */
     private fun onGuardarAlineacion() {
+        logger.debug { "Guardando alineación" }
         comprobarDatos().onSuccess {
             viewModel.saveAlineacion(entrenador!!, jugadores.toMap(), descriptionText.text.toString(),fechaJuegoDP.value,idAlineacion).onSuccess {
                 showAlertOperation(AlertType.CONFIRMATION, "Guardado", "Alineación guardada con éxito")
@@ -331,7 +359,13 @@ class AlineacionModalController: KoinComponent {
         }
     }
 
+    /**
+     * Acción asignada al botón [deleteButton], elimina una persona de la alineación.
+     * @see deleteImagesStyle
+     * @see showAlertOperation
+     */
     private fun onEliminarPersona(){
+        logger.debug { "Eliminando persona" }
         if (pulsado != 0){
             viewModel.state.value.personas.add(jugadores[pulsado])
             jugadores.remove(pulsado)
@@ -344,7 +378,13 @@ class AlineacionModalController: KoinComponent {
         }
     }
 
+    /**
+     * Acción asignada al botón [addButton], añade una persona a la alineación.
+     * @see deleteImagesStyle
+     * @see showAlertOperation
+     */
     private fun onAddPersona() {
+        logger.debug { "Añadiendo persona" }
         comprobarSeleccionado().onSuccess {
             val persona= tablaAlineacion.selectionModel.selectedItem
             if (jugadores[pulsado]==null) {
@@ -368,7 +408,12 @@ class AlineacionModalController: KoinComponent {
 
     }
 
+    /**
+     * Valida si la persona que está seleccionada en la tabla puede colocarse en la posición elegida.
+     * @return [Result] de [Unit] si todo va bien, o de [AlineacionError] en caso de haber algún error.
+     */
     private fun comprobarSeleccionado(): Result<Unit, AlineacionError> {
+        logger.debug { "Comprobando integrante seleccionado" }
         val persona=tablaAlineacion.selectionModel.selectedItem
         if (pulsado==0) return Err(AlineacionError.AlineacionInvalidoError("Debes seleccionar una posición en la que añadir al jugador o entrenador"))
         if (persona == null) return Err(AlineacionError.AlineacionInvalidoError("Selecciona algún jugador o persona"))
@@ -381,7 +426,12 @@ class AlineacionModalController: KoinComponent {
         return Ok(Unit)
     }
 
+    /**
+     * Comprueba que los datos de los campos que forman la alineación sean correctos.
+     * @return [Result] de [Unit] si todo es correcto, de [AlineacionError] en caso contrario.
+     */
     private fun comprobarDatos():Result<Unit, AlineacionError>{
+        logger.debug { "Comprobando datos de la alineación" }
         if (descriptionText.text.toString().isEmpty()) return Err(AlineacionError.AlineacionInvalidoError("La descripción no debe estar vacía"))
         if (entrenador == null) return Err(AlineacionError.AlineacionInvalidoError("Tiene que tener un entrenador"))
         if (jugadores.size != 18) return Err(AlineacionError.AlineacionInvalidoError("Tiene que tener 18 jugadores"))
@@ -393,7 +443,11 @@ class AlineacionModalController: KoinComponent {
     }
 
 
+    /**
+     * Elimina los efectos visuales asignados a las imágenes de los integrantes de la alineación.
+     */
     private fun deleteImagesStyle(){
+        logger.debug { "Eliminando los efectos visuales de las imágenes de la plantilla" }
         porteroTitularImg.style = "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 15, 0, 0, 0);"
         porteroSuplenteImg.style = "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 15, 0, 0, 0);"
         centralIzquierdoImg.style = "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 15, 0, 0, 0);"
@@ -415,7 +469,16 @@ class AlineacionModalController: KoinComponent {
         entrenadorImg.style = "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 15, 0, 0, 0);"
     }
 
+    /**
+     * Inicializa los valores por defecto que tendrán los distintos campos de la vista.
+     * @see handleSesionView
+     * @see [AlineacionViewModel.modoAlineacion]
+     * @see initDefaultForCreate
+     * @see initDefaultForEdit
+     * @see initDefaultForView
+     */
     private fun initDefaultValues() {
+        logger.debug { "Iniciando valores por defecto" }
 
         addButton.isDisable = true
 
@@ -452,7 +515,11 @@ class AlineacionModalController: KoinComponent {
 
     }
 
+    /**
+     * Inicializa los enlaces de datos entre los campos de la vista y la información contenida en el [AlineacionViewModel].
+     */
     private fun initBindings() {
+        logger.debug { "Iniciando enlaces de datos" }
 
         tablaAlineacion.selectionModel.selectedItemProperty().addListener { _, _, newValue ->
             addButton.isDisable = newValue == null // Si no se esta seleccionando nada en la tabla, se desactiva el boton
@@ -463,11 +530,23 @@ class AlineacionModalController: KoinComponent {
         }
     }
 
+    /**
+     * Carga todos los integrantes del equipo en la ventana modal de alineaciones.
+     * @see [AlineacionViewModel.loadAllAlineciones]
+     */
     private fun initDefaultForCreate(){
+        logger.debug { "Iniciando valores por defecto para el modo crear" }
         viewModel.loadAllPersonas()
     }
 
+    /**
+     * Carga todos los integrantes del equipo en la ventana modal de alineaciones, excepto los que están en la alineación.
+     * @see [AlineacionViewModel.loadAllPersonas]
+     * @see mapAlineacionToVista
+     * @see asignarImagenes
+     */
     private fun initDefaultForEdit(){
+        logger.debug { "Iniciando valores por defecto para el modo editar" }
         viewModel.loadAllPersonas()
         mapAlineacionToVista()
         asignarImagenes()
@@ -480,6 +559,11 @@ class AlineacionModalController: KoinComponent {
 
 
     }
+
+    /**
+     * Asigna la imagen correspondiente a cada integrante del equipo que forma la alineación.
+     * @see [RoutesManager.getResourceAsStream]
+     */
     private fun asignarImagenes(){
         jugadores.forEach {
             imagenes[it.key]?.image= Image(RoutesManager.getResourceAsStream(it.value.imagen))
@@ -487,6 +571,12 @@ class AlineacionModalController: KoinComponent {
         }
         imagenes[19]?.image= Image(RoutesManager.getResourceAsStream(entrenador!!.imagen))
     }
+
+    /**
+     * Prepara la vista para visualizar sin la posibilidad de modificar la alineación
+     * @see mapAlineacionToVista
+     * @see asignarImagenes
+     */
     private fun initDefaultForView(){
         viewModel.state.value.personas.clear()
         buttonParent.children.remove(saveButton)
@@ -502,6 +592,10 @@ class AlineacionModalController: KoinComponent {
 
     }
 
+    /**
+     * Transforma una alineación para mostrarla en formato de la vista de JavaFX.
+     * @see [AlineacionViewModel.loadListJugadores]
+     */
     private fun mapAlineacionToVista() {
         val alineacion = viewModel.alineacion
         idAlineacion = alineacion!!.id
@@ -518,6 +612,12 @@ class AlineacionModalController: KoinComponent {
         fechaJuegoDP.value=alineacion.juegoDate
     }
 
+    /**
+     * Inicia una ventana de confirmación.
+     * @param alerta tipo de alerta.
+     * @param title título de la ventana.
+     * @param mensaje mensaje de la ventana.
+     */
     private fun showAlertOperation(
         alerta: AlertType = AlertType.CONFIRMATION,
         title: String = "",

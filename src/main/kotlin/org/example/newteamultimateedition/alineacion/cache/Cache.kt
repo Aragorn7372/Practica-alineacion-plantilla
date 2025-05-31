@@ -7,8 +7,14 @@ import org.example.newteamultimateedition.common.config.Config
 
 import org.lighthousegames.logging.logging
 
+private val logger = logging()
+
+/**
+ * Proporciona una caché de [Alineacion], con un tamaño determinado por [Config.configProperties]
+ */
 fun darAlineacionCache(
 ): Cache<Long, Alineacion> {
+    logger.debug { "Proporcionando caché de Alineación" }
     val size= Config.configProperties.cacheSize
     val logger= logging()
     logger.debug { "creando cache" }

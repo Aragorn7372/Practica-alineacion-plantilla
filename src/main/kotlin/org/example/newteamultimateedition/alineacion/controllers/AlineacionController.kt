@@ -19,6 +19,7 @@ import org.example.newteamultimateedition.alineacion.model.Alineacion
 import org.example.newteamultimateedition.alineacion.viewmodels.AlineacionViewModel
 import org.example.newteamultimateedition.common.error.Errors
 import org.example.newteamultimateedition.common.locale.toLocalDateTime
+import org.example.newteamultimateedition.personal.controllers.NewTeamAdminController
 import org.example.newteamultimateedition.personal.error.PersonasError
 import org.example.newteamultimateedition.personal.models.Persona
 import org.example.newteamultimateedition.routes.RoutesManager
@@ -30,7 +31,12 @@ import org.lighthousegames.logging.logging
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-
+/**
+ * Clase que representa el controlador de la vista de alineaciones.
+ * @property cache memoria caché.
+ * @property viewModel viewModel de alineaciones.
+ * @see [AlineacionViewModel]
+ */
 class AlineacionController(): KoinComponent {
     private val cache: Cache<Long, User> by inject()
     private val viewModel: AlineacionViewModel by inject()
@@ -73,13 +79,27 @@ class AlineacionController(): KoinComponent {
     @FXML
     lateinit var colUpdatedAt: TableColumn<Alineacion, String>
 
+    /**
+     * Método automáticamente llamado por JavaFX cuando se crea el [AlineacionController] asociado al correspondiente .fxml
+     * @see initEvents
+     * @see initDefaultValues
+     * @see initBindings
+     */
     fun initialize() {
+        logger.debug { "Ejecutando initialize" }
         initEvents()
         initBindings()
         initDefaultValues()
     }
 
+    /**
+     * Inicializa los valores por defecto que tendrán los distintos campos de la vista.
+     * @see handleSesionView
+     * @see [AlineacionViewModel.loadAllAlineciones]
+     * @see [AlineacionViewModel.loadAllPersonas]
+     */
     private fun initDefaultValues() {
+        logger.debug { "Iniciando valores por defecto" }
         if(!cache.getIfPresent(0L).isAdmin) {
             buttonContainer.children.remove(editButton)
             buttonContainer.children.remove(createButton)
@@ -103,7 +123,11 @@ class AlineacionController(): KoinComponent {
 
     }
 
+    /**
+     * Inicializa los enlaces de datos entre los campos de la vista y la información contenida en el [AlineacionViewModel].
+     */
     private fun initBindings() {
+        logger.debug { "Iniciando enlaces de datos" }
         viewModel.state.addListener { _, oldValue, newValue ->
             if (newValue != oldValue ) {
                 tablaAlineacion.items = viewModel.state.value.alineaciones
@@ -115,7 +139,19 @@ class AlineacionController(): KoinComponent {
         }
     }
 
+    /**
+     * Asigna la función de cada elemento de la vista al hacer click sobre el mismo.
+     * @see [RoutesManager.initAboutStage]
+     * @see [RoutesManager.initAdminStage]
+     * @see [RoutesManager.initUserStage]
+     * @see [RoutesManager.onAppExit]
+     * @see showLogoutAlert
+     * @see onExportarAction
+     * @see [AlineacionViewModel.ModoAlineacion]
+     * @see onCreateAlineacionAction
+     */
     private fun initEvents() {
+        logger.debug { "Iniciando eventos" }
         aboutButton.setOnAction {
             RoutesManager.initAboutStage()
         }
@@ -154,11 +190,22 @@ class AlineacionController(): KoinComponent {
         }
     }
 
+    /**
+     * Acción asignada al botón [createButton], inicia la ventana modal de alineaciones.
+     * @see [RoutesManager.initAlineacionesModalStage]
+     */
     private fun onCreateAlineacionAction() {
+        logger.debug { "Ejecutando acción del botón crear" }
         RoutesManager.initAlineacionesModalStage()
     }
 
+    /**
+     * Acción asignada al botón [exportButton]. El usuario elige en qué formato (html o pdf) y ruta desea exportar los datos.
+     * @see [FileChooser]
+     * @see [RoutesManager.showAlertOperation]
+     */
     private fun onExportarAction() {
+        logger.debug { "Ejecutando acción del botón exportar" }
         FileChooser().run {
             title = "Exportar integrantes"
             extensionFilters.add(FileChooser.ExtensionFilter("HTML", "*.html"))
@@ -182,11 +229,18 @@ class AlineacionController(): KoinComponent {
         }
     }
 
+    /**
+     * Inicia una ventana de confirmación.
+     * @param alerta tipo de alerta.
+     * @param title título de la ventana.
+     * @param mensaje mensaje de la ventana.
+     */
     private fun showAlertOperation(
         alerta: AlertType = AlertType.CONFIRMATION,
         title: String = "",
         mensaje: String = ""
     ) {
+        logger.debug { "Iniciando ventana de alerta" }
         Alert(alerta).apply {
             this.title = title
             this.contentText = mensaje
@@ -194,9 +248,12 @@ class AlineacionController(): KoinComponent {
     }
 
     /**
-     * Muestra una ventana de confirmación para cerrar sesión
+     * Muestra una ventana de confirmación para cerrar sesión. En caso de confirmar, se limpia la caché.
+     * @see [RoutesManager.initLoginStage]
+     *
      */
     private fun showLogoutAlert(){
+        logger.debug { "Iniciando ventana de confirmación de cierre de sesión" }
         val alert = Alert(AlertType.CONFIRMATION).apply {
             this.title = "Cerrar sesión"
             this.contentText = "Si cierras la sesión perderás todos los datos no guardados. ¿Estás seguro de querer continuar?"

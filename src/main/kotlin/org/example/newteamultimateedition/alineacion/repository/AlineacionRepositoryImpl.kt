@@ -9,7 +9,9 @@ import org.example.newteamultimateedition.personal.repository.PersonasRepository
 import org.lighthousegames.logging.logging
 import java.time.LocalDate
 
-
+/**
+ * Clase que implementa la interfaz [AlineacioRepository] para gestionar las alineaciones de un equipo de fútbol en una base de datos
+ */
 class AlineacionRepositoryImpl(
     private val alineacionDao: AlineacionDao,
     private val lineaAlineacionDao: LineaAlineacionDao,
@@ -18,6 +20,10 @@ class AlineacionRepositoryImpl(
 ):AlineacioRepository {
     private val logger = logging()
 
+    /**
+     * Dada una fecha obtiene la alineación asignada a esa fecha
+     * @param date la fecha de la alineación a buscar
+     */
     override fun getByDate(date: LocalDate): Alineacion? {
         logger.debug { "getByDate: $date" }
         val lista= alineacionDao.getByFechaJuego(date)?.let {
@@ -31,6 +37,10 @@ class AlineacionRepositoryImpl(
         return lista
     }
 
+    /**
+     * Obtiene todas las [Alineacion] de la base de datos y lo convierte en una [List] de [Alineacion]
+     * @return [List] de [Alineacion]
+     */
     override fun getAll(): List<Alineacion> {
         logger.debug { "Obteniendo todas las alineaciones ... " }
         val alineacionesEntity = alineacionDao.getAll()
@@ -46,6 +56,11 @@ class AlineacionRepositoryImpl(
 
     }
 
+    /**
+     * Obtiene una [Alineacion] en base a un id de la base de datos
+     * @param id [Long] Identificador que representa el objeto
+     * @return [Alineacion] o nulo si no encuentra el objeto
+     */
     override fun getById(id: Long): Alineacion? {
         logger.debug { "getById: $id" }
         val lista= alineacionDao.getById(id)?.let {
@@ -59,6 +74,12 @@ class AlineacionRepositoryImpl(
         return lista
     }
 
+    /**
+     * Funcion que actualiza una alineación en la base de datos
+     *  @param id [Long] El identificador que representa el objeto que se quiere actualizar
+     *  @param entity [Alineacion] La alineación que se quiere actualizar
+     * @return [Alineacion] o nulo si no encuentra el objeto
+     */
     override fun update(objeto: Alineacion, id: Long): Alineacion? {
         logger.debug { "update: $objeto" }
             alineacionDao.getById(id)?.let{ entity ->
@@ -75,6 +96,11 @@ class AlineacionRepositoryImpl(
         return null
     }
 
+    /**
+     * Elimina una [Alineacion] de la base de datos en base a un ID
+     * @param id [Long] el identificador que representa el objeto que se quiere borrar de la base de datos
+     * @return [Alineacion] o nulo si no encuentra el objeto
+     */
     override fun delete(id: Long): Alineacion? {
         logger.debug { "delete: $id" }
         return getById(id)?.let {
@@ -86,6 +112,11 @@ class AlineacionRepositoryImpl(
         }
     }
 
+    /**
+     * Funcion que guarda una [Alineacion] en la base de datos
+     * @param entity [Alineacion] La alineación que se intenta guardar en el mapa
+     * @return [Alineacion]
+     */
     override fun save(objeto: Alineacion): Alineacion {
         logger.debug { "save: $objeto" }
         val identificator= alineacionDao.save(mapper.toEntity(objeto)).toLong()
