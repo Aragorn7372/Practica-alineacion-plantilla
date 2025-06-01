@@ -127,7 +127,7 @@ import java.util.*
  }
  @Test
  fun fileWriteNotOk() {
-  val file = File( "media/")
+  val file = File( "hola", "data.csv")
   val result=storagePDF.fileWrite(alineacion, listOf(jugador1, jugador2), file)
 
   assertTrue(result.isErr, "deberia ser un error")

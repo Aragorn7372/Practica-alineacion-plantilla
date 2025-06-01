@@ -13,6 +13,7 @@ import org.example.newteamultimateedition.users.models.User
 import org.example.newteamultimateedition.users.service.UsersServiceImpl
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.koin.core.qualifier.named
 
 
 import org.mindrot.jbcrypt.BCrypt
@@ -30,7 +31,7 @@ class RegisterController: KoinComponent {
 
     private val dao: UsersServiceImpl by inject()
 
-    private val cache: Cache<Long,User> by inject()
+    private val cache: Cache<Long,User> by inject(named("usersCache"))
 
     @FXML
     lateinit var acercaDeButton: Button

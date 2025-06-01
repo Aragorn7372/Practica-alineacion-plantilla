@@ -14,6 +14,7 @@ import org.example.newteamultimateedition.personal.storage.EquipoStorageImpl
 import org.example.newteamultimateedition.personal.validator.PersonaValidation
 import org.lighthousegames.logging.logging
 import java.nio.file.Path
+import org.koin.core.qualifier.named
 
 /**
  * Clase que representa el servicio del Personal

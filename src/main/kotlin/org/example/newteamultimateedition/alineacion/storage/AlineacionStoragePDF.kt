@@ -17,7 +17,7 @@ class AlineacionStoragePDF(
     private val storageHTML: AlineacionStorageHTML
 ):AlineacionStorage<Persona, AlineacionError, Alineacion> {
     override fun fileWrite(item: Alineacion, equipo: List<Persona>, file: File): Result<Unit, AlineacionError> {
-        if (!file.isFile ||!file.parentFile.exists()) {
+        if (!file.parentFile.exists()) {
             return Err(AlineacionError.AlineacionStorageError("El directorio padre del fichero no existe"))
         }
         val html= storageHTML.createHtml(item,equipo)

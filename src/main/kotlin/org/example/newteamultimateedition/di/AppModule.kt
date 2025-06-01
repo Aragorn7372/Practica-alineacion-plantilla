@@ -1,11 +1,13 @@
 package org.example.newteamultimateedition.di
 
 import com.github.benmanes.caffeine.cache.Cache
+import org.example.newteamultimateedition.alineacion.cache.darAlineacionCache
 import org.example.newteamultimateedition.alineacion.dao.AlineacionDao
 import org.example.newteamultimateedition.alineacion.dao.LineaAlineacionDao
 import org.example.newteamultimateedition.alineacion.dao.provideAlineacionDao
 import org.example.newteamultimateedition.alineacion.dao.provideLineaAlineacionDao
 import org.example.newteamultimateedition.alineacion.mapper.AlineacionMapper
+import org.example.newteamultimateedition.alineacion.model.Alineacion
 import org.example.newteamultimateedition.alineacion.repository.AlineacionRepositoryImpl
 import org.example.newteamultimateedition.alineacion.validador.AlineacionValidate
 import org.example.newteamultimateedition.common.database.provideDatabaseManager
@@ -35,6 +37,7 @@ import org.example.newteamultimateedition.alineacion.viewmodels.AlineacionViewMo
 import org.example.newteamultimateedition.alineacion.storage.AlineacionStorageImpl
 import org.example.newteamultimateedition.alineacion.storage.AlineacionStorageHTML
 import org.example.newteamultimateedition.alineacion.storage.AlineacionStoragePDF
+import org.koin.core.qualifier.named
 
 /**
  * Módulo de Koin para la aplicación
@@ -46,8 +49,14 @@ val appModule = module {
         bind<Jdbi>()
     }
     //Alineacion
-    singleOf(::AlineacionServiceImpl){
-        bind<AlineacionServiceImpl>()
+    single {
+        AlineacionServiceImpl(
+            validator = get(),
+            cache = get(named("alineacionCache")),
+            repository = get(),
+            personalService = get(),
+            storage = get()
+        )
     }
     singleOf(::AlineacionRepositoryImpl){
         bind<AlineacionRepositoryImpl>()
@@ -88,8 +97,13 @@ val appModule = module {
         bind<UsersMapper>()
     }
 
-    singleOf(::PersonaServiceImpl) {
-        bind<PersonaServiceImpl>()
+    single {
+        PersonaServiceImpl(
+            repositorio = get(),
+            cache = get(named("personaCache")),
+            validator = get(),
+            storage = get()
+        )
     }
 
     //storages
@@ -121,14 +135,23 @@ val appModule = module {
         bind<AlineacionStoragePDF>()
     }
 
+    // Alineación Cache
+    single<Cache<Long, Alineacion>>(named("alineacionCache")) {
+        darAlineacionCache()
+    }
 
+    single<Cache<Long, Persona>>(named("personaCache")) {
+        darPersonasCache()
+    }
+
+    single<Cache<Long, User>>(named("usersCache")) {
+        darUsersCache()
+    }
 
     singleOf(::PersonasRepositoryImplementation) {
         bind<PersonasRepositoryImplementation>()
     }
-    singleOf(::darPersonasCache) {
-        bind<Cache<Long, Persona>>()
-    }
+
     singleOf(::PersonaValidation) {
         bind<PersonaValidation>()
     }
@@ -138,9 +161,8 @@ val appModule = module {
     singleOf(::UsersRepositoryImpl) {
         bind<UsersRepository>()
     }
-    singleOf(::darUsersCache) {
-        bind<Cache<Long, User>>()
-    }
+
+
     singleOf(::EquipoViewModel)
     singleOf(::AlineacionViewModel)
 }

@@ -33,6 +33,7 @@ module org.example.newteamultimateedition {
     requires openhtmltopdf.pdfbox;
 
 
+
     opens org.example.newteamultimateedition to org.jdbi.v3.core, javafx.fxml, javafx.base;
     exports org.example.newteamultimateedition;
     opens org.example.newteamultimateedition.alineacion.model to javafx.fxml;

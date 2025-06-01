@@ -27,6 +27,7 @@ import org.example.newteamultimateedition.users.models.User
 import org.example.newteamultimateedition.personal.viewmodels.EquipoViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.koin.core.qualifier.named
 import org.lighthousegames.logging.logging
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -38,7 +39,7 @@ import java.time.LocalDateTime
  * @see [AlineacionViewModel]
  */
 class AlineacionController(): KoinComponent {
-    private val cache: Cache<Long, User> by inject()
+    private val cache: Cache<Long, User> by inject(named("usersCache"))
     private val viewModel: AlineacionViewModel by inject()
     private val logger= logging()
 
@@ -65,9 +66,7 @@ class AlineacionController(): KoinComponent {
     @FXML
     lateinit var logoutButton:MenuItem
 
-    // Hbox de arriba
-    @FXML
-    lateinit var searchBar: TextField
+
 
     //TableView
     @FXML
@@ -104,7 +103,6 @@ class AlineacionController(): KoinComponent {
             buttonContainer.children.remove(editButton)
             buttonContainer.children.remove(createButton)
         }
-        handleSesionView()
         viewModel.loadAllAlineciones()
 
         // Tabla
@@ -119,9 +117,7 @@ class AlineacionController(): KoinComponent {
         colFechaJuego.cellValueFactory = PropertyValueFactory("juegoDate")
     }
 
-    private fun handleSesionView() {
 
-    }
 
     /**
      * Inicializa los enlaces de datos entre los campos de la vista y la información contenida en el [AlineacionViewModel].
@@ -134,9 +130,7 @@ class AlineacionController(): KoinComponent {
             }
         }
         //Barra de búqueda
-        searchBar.textProperty().addListener { _, oldValue, newValue ->
-            if(oldValue != newValue) println("Arreglao")
-        }
+
     }
 
     /**
@@ -164,9 +158,9 @@ class AlineacionController(): KoinComponent {
         }
         backButton.setOnAction {
             if (cache.getIfPresent(0L).isAdmin) {
-                RoutesManager.initAdminStage(searchBar.scene.window as Stage)
+                RoutesManager.initAdminStage(tablaAlineacion.scene.window as Stage)
             }else{
-                if(true) RoutesManager.initUserStage(searchBar.scene.window as Stage)
+                RoutesManager.initUserStage(tablaAlineacion.scene.window as Stage)
             }
         }
 
@@ -260,7 +254,7 @@ class AlineacionController(): KoinComponent {
         }.showAndWait().ifPresent { opcion ->
             if (opcion == ButtonType.OK) {
                 cache.cleanUp()
-                RoutesManager.initLoginStage(searchBar.scene.window as Stage)
+                RoutesManager.initLoginStage(tablaAlineacion.scene.window as Stage)
             }
         }
     }

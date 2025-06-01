@@ -176,7 +176,7 @@ Nombre completo: Jugadora hola - Posición: DEFENSA - Dorsal: 12
         @Test
         @DisplayName("Export | No es un archivo")
         fun notFileOnExport(@TempDir tempDir: File){
-            val file = File("data.csv", "data.csv")
+            val file = File("hola", "data.csv")
 
             val error = storage.fileWrite(alineacion, listOf(jugador1, jugador2), file)
             assertTrue(error.isErr)
@@ -184,7 +184,7 @@ Nombre completo: Jugadora hola - Posición: DEFENSA - Dorsal: 12
     }
     @Test
     fun fileWriteNotOk() {
-        val file = File( "media/")
+        val file = File( "hola", "data.csv")
         val result=storage.fileWrite(alineacion, listOf(jugador1, jugador2), file)
 
         assertTrue(result.isErr, "deberia ser un error")

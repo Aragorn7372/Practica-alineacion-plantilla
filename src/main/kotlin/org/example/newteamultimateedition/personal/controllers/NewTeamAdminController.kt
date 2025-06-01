@@ -26,6 +26,7 @@ import org.example.newteamultimateedition.users.models.User
 import org.example.newteamultimateedition.personal.viewmodels.EquipoViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.koin.core.qualifier.named
 import org.lighthousegames.logging.logging
 import java.time.LocalDate
 
@@ -38,7 +39,7 @@ class NewTeamAdminController(): KoinComponent {
 
     private val logger = logging()
     private val viewModel: EquipoViewModel by inject()
-    private val cache: Cache<Long, User> by inject()
+    private val cache: Cache<Long, User> by inject(named("usersCache"))
 
     /* Menu */
     @FXML

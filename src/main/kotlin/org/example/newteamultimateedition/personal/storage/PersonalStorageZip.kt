@@ -142,7 +142,7 @@ class PersonalStorageZip(
                         zip.closeEntry()
                     }
                 }
-                tempDir.toFile()
+                tempDir.toFile().deleteRecursively()
                 return Ok(Unit)
             } else return Err(PersonasError.PersonasStorageError(datafile.error.toString()))
         } catch (e: Exception) {
