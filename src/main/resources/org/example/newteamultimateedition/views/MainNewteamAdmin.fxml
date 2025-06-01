@@ -228,7 +228,7 @@
                <children>
                   <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="546.0" prefWidth="370.0">
                      <content>
-                        <VBox id="details" fx:id="detalles" alignment="CENTER" prefHeight="900.0" prefWidth="348.0">
+                        <VBox id="details" fx:id="detalles" alignment="TOP_CENTER" prefHeight="900.0" prefWidth="348.0">
                            <children>
                               <Label id="bigLabel" alignment="CENTER" style="&#10;" text="Detalles" textAlignment="CENTER" wrapText="false">
                                  <font>
@@ -451,7 +451,7 @@
                                     </HBox>
                                  </children>
                               </VBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="110.0">
+                              <HBox fx:id="dorsalbox" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="110.0">
                                  <children>
                                     <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="124.0">
                                        <HBox.margin>
@@ -475,7 +475,7 @@
                                     <Insets left="5.0" />
                                  </padding>
                               </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="110.0">
+                              <HBox fx:id="alturaBox" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="110.0">
                                  <children>
                                     <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="124.0">
                                        <HBox.margin>
@@ -499,7 +499,7 @@
                                     <Insets left="5.0" />
                                  </padding>
                               </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="110.0">
+                              <HBox fx:id="pesoBox" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="110.0">
                                  <children>
                                     <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="124.0">
                                        <HBox.margin>
@@ -523,7 +523,7 @@
                                     <Insets left="5.0" />
                                  </padding>
                               </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="110.0">
+                              <HBox fx:id="golesBox" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="110.0">
                                  <children>
                                     <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="124.0">
                                        <HBox.margin>
@@ -547,7 +547,7 @@
                                     <Insets left="5.0" />
                                  </padding>
                               </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="110.0">
+                              <HBox fx:id="partidosBox" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="110.0">
                                  <children>
                                     <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="124.0">
                                        <HBox.margin>
@@ -571,7 +571,7 @@
                                     <Insets left="5.0" />
                                  </padding>
                               </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="110.0">
+                              <HBox fx:id="minutosBox" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="110.0">
                                  <children>
                                     <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="124.0">
                                        <HBox.margin>

@@ -11,6 +11,7 @@ import javafx.scene.control.Alert.AlertType
 import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
+import javafx.scene.layout.HBox
 import javafx.scene.layout.VBox
 import javafx.stage.FileChooser
 import javafx.stage.Stage
@@ -36,6 +37,7 @@ import java.time.LocalDate
  * @see [EquipoViewModel]
  */
 class NewTeamAdminController(): KoinComponent {
+
 
     private val logger = logging()
     private val viewModel: EquipoViewModel by inject()
@@ -111,6 +113,18 @@ class NewTeamAdminController(): KoinComponent {
     lateinit var radioDelantero: RadioButton
     @FXML
     lateinit var posicionBox: VBox
+    @FXML
+    lateinit var minutosBox: HBox
+    @FXML
+    lateinit var partidosBox: HBox
+    @FXML
+    lateinit var golesBox: HBox
+    @FXML
+    lateinit var pesoBox: HBox
+    @FXML
+    lateinit var alturaBox: HBox
+    @FXML
+    lateinit var dorsalbox: HBox
 
     // Entrenadores
     @FXML
@@ -340,8 +354,13 @@ class NewTeamAdminController(): KoinComponent {
     private fun onTablaSelected(newValue: Persona) {
         logger.debug { " Integrante seleccionado en la tabla: $newValue " }
         disableAll()
-        if(newValue is  Jugador){
-            detalles
+        if(newValue is Jugador){
+            contenedorJugadorEnable()
+            contenedorEntrenadorDisable()
+        }
+        else {
+            contenedorJugadorDisable()
+            contenedorEntrenadorEnable()
         }
         viewModel.updatePersonalSelected(newValue)
         logger.debug { "IntegranteState selected: ${viewModel.state.value.persona}" }
@@ -700,8 +719,8 @@ class NewTeamAdminController(): KoinComponent {
         pesoField.isDisable = false
         alturaField.isDisable = false
         dorsalField.isDisable = false
-        contenedorEspecialidadDisable()
-        contenedorPosicionEnable()
+        contenedorEntrenadorDisable()
+        contenedorJugadorEnable()
         posicion.toggles.forEach { (it as RadioButton).isDisable = false }
     }
 
@@ -729,8 +748,8 @@ class NewTeamAdminController(): KoinComponent {
      */
     private fun enableEntrenador(){
         enableComunes()
-        contenedorPosicionDisable()
-        contenedorEspecialidadEnable()
+        contenedorJugadorDisable()
+        contenedorEntrenadorEnable()
         especialidad.toggles.forEach { (it as RadioButton).isDisable = false }
     }
     private fun enableCreateButotns(){
@@ -741,21 +760,46 @@ class NewTeamAdminController(): KoinComponent {
         saveJugadorButton.isDisable = true
         saveEntrenadorButton.isDisable = true
     }
-    private fun contenedorEspecialidadDisable(){
+    private fun contenedorEntrenadorDisable(){
         especialidadBox.isVisible = false
         especialidadBox.isManaged = false
     }
-    private fun contenedorPosicionDisable(){
+    private fun contenedorJugadorDisable(){
         posicionBox.isVisible = false
         posicionBox.isManaged = false
+        dorsalbox.isManaged = false
+        dorsalbox.isVisible = false
+        pesoBox.isManaged = false
+        pesoBox.isVisible = false
+        alturaBox.isManaged = false
+        alturaBox.isVisible = false
+        golesBox.isVisible = false
+        golesBox.isManaged = false
+        partidosBox.isVisible = false
+        partidosBox.isManaged = false
+        minutosBox.isVisible = false
+        minutosBox.isManaged = false
     }
-    private fun contenedorEspecialidadEnable(){
+    private fun contenedorEntrenadorEnable(){
         especialidadBox.isVisible = true
         especialidadBox.isManaged = true
     }
-    private fun contenedorPosicionEnable(){
+    private fun contenedorJugadorEnable(){
         posicionBox.isVisible = true
         posicionBox.isManaged = true
+        dorsalbox.isManaged = true
+        dorsalbox.isVisible = true
+        pesoBox.isManaged = true
+        pesoBox.isVisible = true
+        alturaBox.isManaged = true
+        alturaBox.isVisible = true
+        golesBox.isVisible = true
+        golesBox.isManaged = true
+        partidosBox.isVisible = true
+        partidosBox.isManaged = true
+        minutosBox.isVisible = true
+        minutosBox.isManaged = true
+
     }
 
 
@@ -769,8 +813,8 @@ class NewTeamAdminController(): KoinComponent {
         logger.debug { "Creando Entrenador" }
         enableEntrenador()
         disableJugador()
-        contenedorPosicionDisable()
-        contenedorEspecialidadEnable()
+        contenedorJugadorDisable()
+        contenedorEntrenadorEnable()
         val emptyEntrenador = EquipoViewModel.PersonalState(especialidad = "ENTRENADOR_PORTEROS")
         viewModel.createEmptyPersona(emptyEntrenador)
     }
@@ -785,8 +829,8 @@ class NewTeamAdminController(): KoinComponent {
         logger.debug { "Creando Jugador" }
         enableJugador()
         disableEntrenador()
-        contenedorEspecialidadDisable()
-        contenedorPosicionEnable()
+        contenedorEntrenadorDisable()
+        contenedorJugadorEnable()
         val emptyJugador = EquipoViewModel.PersonalState()
         viewModel.createEmptyPersona(emptyJugador)
     }
