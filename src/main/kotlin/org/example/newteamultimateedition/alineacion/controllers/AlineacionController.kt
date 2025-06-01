@@ -104,7 +104,8 @@ class AlineacionController(): KoinComponent {
             buttonContainer.children.remove(createButton)
         }
         viewModel.loadAllAlineciones()
-
+        editButton.isDisable=true
+        viewButton.isDisable=true
         // Tabla
         viewModel.loadAllPersonas()
         tablaAlineacion.items = viewModel.state.value.alineaciones
@@ -127,6 +128,15 @@ class AlineacionController(): KoinComponent {
         viewModel.state.addListener { _, oldValue, newValue ->
             if (newValue != oldValue ) {
                 tablaAlineacion.items = viewModel.state.value.alineaciones
+            }
+        }
+        tablaAlineacion.selectionModel.selectedItemProperty().addListener { _, _, newValue ->
+            newValue?.let {
+                editButton.isDisable=false
+                viewButton.isDisable=false
+            }?:run {
+                editButton.isDisable=true
+                viewButton.isDisable=true
             }
         }
         //Barra de búqueda
