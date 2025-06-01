@@ -109,7 +109,7 @@ class NewTeamAdminController(): KoinComponent {
     @FXML
     lateinit var radioDelantero: RadioButton
     @FXML
-    lateinit var posicionVBox: VBox
+    lateinit var posicionBox: VBox
 
     // Entrenadores
     @FXML
@@ -699,6 +699,8 @@ class NewTeamAdminController(): KoinComponent {
         pesoField.isDisable = false
         alturaField.isDisable = false
         dorsalField.isDisable = false
+        contenedorEspecialidadDisable()
+        contenedorPosicionEnable()
         posicion.toggles.forEach { (it as RadioButton).isDisable = false }
     }
 
@@ -726,6 +728,8 @@ class NewTeamAdminController(): KoinComponent {
      */
     private fun enableEntrenador(){
         enableComunes()
+        contenedorPosicionDisable()
+        contenedorEspecialidadEnable()
         especialidad.toggles.forEach { (it as RadioButton).isDisable = false }
     }
     private fun enableCreateButotns(){
@@ -736,6 +740,23 @@ class NewTeamAdminController(): KoinComponent {
         saveJugadorButton.isDisable = true
         saveEntrenadorButton.isDisable = true
     }
+    private fun contenedorEspecialidadDisable(){
+        especialidadBox.isVisible = false
+        especialidadBox.isManaged = false
+    }
+    private fun contenedorPosicionDisable(){
+        posicionBox.isVisible = false
+        posicionBox.isManaged = false
+    }
+    private fun contenedorEspecialidadEnable(){
+        especialidadBox.isVisible = true
+        especialidadBox.isManaged = true
+    }
+    private fun contenedorPosicionEnable(){
+        posicionBox.isVisible = true
+        posicionBox.isManaged = true
+    }
+
 
     /**
      * Crea un entrenador vacío
@@ -747,6 +768,8 @@ class NewTeamAdminController(): KoinComponent {
         logger.debug { "Creando Entrenador" }
         enableEntrenador()
         disableJugador()
+        contenedorPosicionDisable()
+        contenedorEspecialidadEnable()
         val emptyEntrenador = EquipoViewModel.PersonalState(especialidad = "ENTRENADOR_PORTEROS")
         viewModel.createEmptyPersona(emptyEntrenador)
     }
@@ -761,6 +784,8 @@ class NewTeamAdminController(): KoinComponent {
         logger.debug { "Creando Jugador" }
         enableJugador()
         disableEntrenador()
+        contenedorEspecialidadDisable()
+        contenedorPosicionEnable()
         val emptyJugador = EquipoViewModel.PersonalState()
         viewModel.createEmptyPersona(emptyJugador)
     }

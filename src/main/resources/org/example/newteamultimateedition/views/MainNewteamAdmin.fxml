@@ -165,7 +165,7 @@
                                           </TextField>
                                           <MenuButton mnemonicParsing="false" text="Filtrar">
                                              <items>
-                                                <MenuItem fx:id="filterByNothing" mnemonicParsing="false" text="Nada" />
+                                                <MenuItem fx:id="filterByNothing" mnemonicParsing="false" text="Todos" />
                                                 <MenuItem fx:id="filterByJugadores" mnemonicParsing="false" text="Jugadores" />
                                                 <MenuItem fx:id="filterByEntrenadores" mnemonicParsing="false" text="Entrenadores" />
                                              </items>
