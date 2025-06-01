@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>console</headerType>
+  <jar>C:\Users\fryfe\Desktop\NewTeamUltimateEdition-1.0-SNAPSHOT.jar</jar>
+  <outfile>C:\Users\fryfe\Desktop\New Team Manager.exe</outfile>
+  <errTitle></errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl></downloadUrl>
+  <supportUrl></supportUrl>
+  <stayAlive>false</stayAlive>
+  <restartOnCrash>false</restartOnCrash>
+  <manifest></manifest>
+  <icon>C:\Users\fryfe\Desktop\iconos\logo.ico</icon>
+  <jre>
+    <path>%JAVA_HOME%;%PATH%</path>
+    <requiresJdk>true</requiresJdk>
+    <requires64Bit>true</requires64Bit>
+    <minVersion>21.0.7</minVersion>
+    <maxVersion></maxVersion>
+  </jre>
+  <versionInfo>
+    <fileVersion>1.0.0.0</fileVersion>
+    <txtFileVersion>1.0.RC1</txtFileVersion>
+    <fileDescription>Aplicacion que simula un manager de un equipo</fileDescription>
+    <copyright>NewTeamsCompany</copyright>
+    <productVersion>1.0.0.0</productVersion>
+    <txtProductVersion>1.0.RC1</txtProductVersion>
+    <productName>New Teams Manager</productName>
+    <companyName>NewTeamsCompany</companyName>
+    <internalName>manager</internalName>
+    <originalFilename>New Team Manager.exe</originalFilename>
+    <trademarks></trademarks>
+    <language>CASTILIAN_SPANISH</language>
+  </versionInfo>
+</launch4jConfig>
