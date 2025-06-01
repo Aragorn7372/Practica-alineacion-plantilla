@@ -82,15 +82,11 @@ class PersonalStorageZip(
                 "csv" -> csv.fileRead(personas.first())
                 "json" -> json.fileRead(personas.first())
                 "bin" -> bin.fileRead(personas.first())
-                "xml" -> xml.fileRead(personas.first())
-
-                else -> {
-                    return Err(PersonasError.PersonasStorageError("tipo invalido"))
-                }
+                else -> xml.fileRead(personas.first())
             }
 
         } catch (ex: Exception) {
-            return Err(PersonasError.PersonasStorageError("tipo invalido"))
+            return Err(PersonasError.PersonasStorageError(ex.message.toString()))
         }
     }
 
@@ -106,7 +102,7 @@ class PersonalStorageZip(
         try {
             persona.forEach {
                 val imageFile = File(config.configProperties.imagesDirectory + "/" + it.imagen)
-                if (imageFile.exists()) {
+                if (imageFile.isFile) {
                     Files.copy(
                         imageFile.toPath(),
                         tempDir.resolve(imageFile.name),
@@ -124,13 +120,7 @@ class PersonalStorageZip(
                 }
             }
 
-            val tipe=(1..4).random()
-            val datafile = when (tipe) {
-                1 -> csv.fileWrite(persona, File("$tempDir/data.csv"))
-                2 -> json.fileWrite(persona,File("$tempDir/data.json"))
-                3 -> xml.fileWrite(persona,File("$tempDir/data.xml"))
-                else -> bin.fileWrite(persona, File("$tempDir/data.bin"))
-            }
+            val datafile = csv.fileWrite(persona, File("$tempDir/data.csv"))
 
             if (datafile.isOk) {
                 val archivos = Files.walk(tempDir).filter { Files.isRegularFile(it) }.toList()
