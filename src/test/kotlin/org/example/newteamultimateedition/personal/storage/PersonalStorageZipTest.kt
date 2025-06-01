@@ -1,6 +1,8 @@
 package org.example.newteamultimateedition.personal.storage
 
+import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
+import org.example.newteamultimateedition.alineacion.error.AlineacionError
 import org.example.newteamultimateedition.common.database.DatabaseManager
 import org.example.newteamultimateedition.personal.dao.getPersonasDao
 import org.example.newteamultimateedition.personal.error.PersonasError
@@ -257,6 +259,38 @@ class PersonalStorageZipTest {
             verify(storageBIN, times(0)).fileRead(any())
             verify(storageXML, times(0)).fileRead(any())
             verify(storageJSON, times(0)).fileRead(any())
+        }
+        @Test
+        @DisplayName("Exportar con error")
+        fun exportBad(@TempDir tempDir: File) {
+            val outputFile = File(tempDir, "output.zip")
+            whenever(storageCSV.fileWrite(eq(listaPersonas),any())).thenReturn(Err(PersonasError.PersonasStorageError("todo lo que podia salir mal ha sucedido")))
+            // When
+            val result = storageZip.escribirAUnArchivo(outputFile, listaPersonas)
+            if (result.isErr) {
+                println("Error devuelto: ${result.error}")
+                println(result.error.message)
+            }
+            // Then
+            assertTrue(result.isErr, "La exportación debería ser exitosa")
+            assertTrue(result.error is PersonasError.PersonasStorageError,"deberia ser un error de personas")
+
+
+            verify(storageCSV).fileWrite(eq(listaPersonas), any())
+        }
+        @Test
+        @DisplayName("Exportar con excepcion")
+        fun exportBadException(@TempDir tempDir: File) {
+            val outputFile = File(tempDir, "output.zip")
+            whenever(storageCSV.fileWrite(eq(listaPersonas),any())).thenThrow(RuntimeException("todo salio mal"))
+            // When
+            val result = storageZip.escribirAUnArchivo(outputFile, listaPersonas)
+
+            // Then
+            assertTrue(result.isErr, "deberia ser un error")
+            assertEquals(result.error.message ,"todo salio mal","deberian ser iguales")
+
+            verify(storageCSV).fileWrite(eq(listaPersonas), any())
         }
     }
 }
