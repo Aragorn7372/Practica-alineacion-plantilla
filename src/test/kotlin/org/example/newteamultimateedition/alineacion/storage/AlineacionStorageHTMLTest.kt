@@ -1,5 +1,6 @@
 package org.example.newteamultimateedition.alineacion.storage
 
+import org.example.newteamultimateedition.alineacion.error.AlineacionError
 import org.example.newteamultimateedition.alineacion.model.Alineacion
 import org.example.newteamultimateedition.alineacion.model.LineaAlineacion
 import org.example.newteamultimateedition.personal.models.Entrenador
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
+import org.mockito.kotlin.whenever
 import java.io.File
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -105,7 +107,8 @@ class AlineacionStorageHTMLTest{
         @DisplayName("Escribir ok")
         fun fileWriteOk(@TempDir tempDir: File) {
 
-            val tempFile = File(tempDir, "alineacion.html")
+            val tempFile = File(tempDir, "alineaciones.html")
+            tempFile.writeText("")
 
             val result = storage.fileWrite(alineacion, listOf(jugador1, jugador2), tempFile)
 
@@ -140,6 +143,32 @@ class AlineacionStorageHTMLTest{
 
         }
     }
+    @Test
+    @DisplayName("Crear string html")
+    fun createHtml(){
+        val expectedString = """<!DOCTYPE html>
+<html><head><meta charset="UTF-8"/><title>Equipo</title></head><body>
+<h1>Alineacion del equipo</h1>
+<h2>Información</h2>
+<p>Id: 1</p>
+<p>Entrenador: Entrenador(id= 103, nombre= Pepito, apellidos= Grillo, fecha_nacimiento= 1942-01-01, fecha_incorporacion= 2025-02-02, salario= 1234.0, pais = Italia, createdAt= 2025-05-31T14:30, updatedAt= 2025-05-31T14:30, especialidad = ENTRENADOR_PRINCIPAL, imagen = pepito-grillo.png)</p>
+<p>Fecha de creación: 2025-05-31T14:30</p>
+<p>Última actualización: 2025-05-31T14:30</p>
+<p>Fecha de convocatoria: 2025-05-31 </p>
+<p>Descripción: El dream team</p>
+<h2>Jugadores</h2>
+<ul>
+<li>
+Nombre completo: Oliver Atom - Posición: DELANTERO - Dorsal: 10
+</li>
+<li>
+Nombre completo: Jugadora hola - Posición: DEFENSA - Dorsal: 12
+</li>
+</ul>
+</body></html>""".trim()
+        val result = storage.createHtml(alineacion,listOf(jugador1, jugador2))
+        assertEquals(result.trim(),expectedString,"deberian ser iguales")
+    }
 
     @Nested
     @DisplayName("Tests incorrectos")
@@ -152,5 +181,13 @@ class AlineacionStorageHTMLTest{
             val error = storage.fileWrite(alineacion, listOf(jugador1, jugador2), file)
             assertTrue(error.isErr)
         }
+    }
+    @Test
+    fun fileWriteNotOk() {
+        val file = File( "media/")
+        val result=storage.fileWrite(alineacion, listOf(jugador1, jugador2), file)
+
+        assertTrue(result.isErr, "deberia ser un error")
+        assertEquals(AlineacionError.AlineacionStorageError("El directorio padre del fichero no existe").message, result.error.message,"deberian ser iguales")
     }
 }

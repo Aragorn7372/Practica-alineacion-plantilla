@@ -45,7 +45,7 @@ class EquipoStorageImplTest {
         nombre = "Oliver",
         apellidos = "Atom",
         fechaNacimiento = LocalDate.of(1983, 4, 10),
-        fechaIncorporacion = LocalDate.of(2001, 5, 15) ,
+        fechaIncorporacion = LocalDate.of(2001, 5, 15),
         salario = 35000.0,
         pais = "España",
         imagen = "media/jugador1.png",
@@ -66,8 +66,8 @@ class EquipoStorageImplTest {
         storageXML = mock()
         storageJSON = mock()
         storageBIN = mock()
-        storageZip= mock()
-        equipoStorageImpl = EquipoStorageImpl(storageCSV, storageXML, storageJSON, storageBIN, storageZip )
+        storageZip = mock()
+        equipoStorageImpl = EquipoStorageImpl(storageCSV, storageXML, storageJSON, storageBIN, storageZip)
     }
 
     @Nested
@@ -240,20 +240,52 @@ class EquipoStorageImplTest {
             verify(storageXML, times(0)).fileWrite(list, xmlFile)
             verify(storageBIN, times(1)).fileWrite(list, binFile)
         }
+
+        @Test
+        @DisplayName("Escribir en ZIP exitoso")
+        fun writeOnZip() {
+            val zipFile = File("resources", "test.zip")
+
+            whenever(storageZip.escribirAUnArchivo(zipFile,list)).thenReturn(Ok(Unit))
+
+            equipoStorageImpl.fileWrite(list, zipFile)
+
+            verify(storageCSV, times(0)).fileWrite(list, zipFile)
+            verify(storageJSON, times(0)).fileWrite(list, zipFile)
+            verify(storageXML, times(0)).fileWrite(list, zipFile)
+            verify(storageBIN, times(0)).fileWrite(list, zipFile)
+            verify(storageZip, times(1)).escribirAUnArchivo(zipFile,list)
+        }
+        @Test
+        @DisplayName("leer de ZIP exitoso")
+        fun readfromZip() {
+            val zipFile = File("resources", "test.zip")
+
+            whenever(storageZip.leerDelArchivo(zipFile)).thenReturn(Ok(list))
+
+            equipoStorageImpl.fileRead( zipFile)
+
+            verify(storageCSV, times(0)).fileRead( zipFile)
+            verify(storageJSON, times(0)).fileRead( zipFile)
+            verify(storageXML, times(0)).fileRead( zipFile)
+            verify(storageBIN, times(0)).fileRead( zipFile)
+            verify(storageZip, times(1)).leerDelArchivo(zipFile)
+        }
     }
+
 
     @Nested
     @DisplayName("Tests incorrectos")
     inner class TestsIncorrectos {
         @Test
         @DisplayName("Extensión de archivo no soportada")
-        fun invalidFile(){
+        fun invalidFile() {
             val pngFile = File("resources", "test.png")
             val result = equipoStorageImpl.fileWrite(list, pngFile)
 
             assertAll(
-                {assertTrue(result.isErr)},
-                {assertTrue(result.error is PersonasError.PersonasStorageError)}
+                { assertTrue(result.isErr) },
+                { assertTrue(result.error is PersonasError.PersonasStorageError) }
             )
             verify(storageCSV, times(0)).fileWrite(list, pngFile)
             verify(storageJSON, times(0)).fileWrite(list, pngFile)
@@ -262,4 +294,5 @@ class EquipoStorageImplTest {
         }
 
     }
+
 }

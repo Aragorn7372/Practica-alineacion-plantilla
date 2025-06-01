@@ -28,7 +28,7 @@ class AlineacionStorageHTML : AlineacionStorage<Persona,AlineacionError,Alineaci
     override fun fileWrite(alineacion: Alineacion,lista: List<Persona>, file: File): Result<Unit, AlineacionError> {
         logger.debug { "Escribiendo equipo en formato HTML" }
 
-        if (!file.parentFile.exists() || !file.parentFile.isDirectory) {
+        if (!file.isFile || !file.parentFile.exists()) {
             return Err(AlineacionError.AlineacionStorageError("El directorio padre del fichero no existe"))
         }
 

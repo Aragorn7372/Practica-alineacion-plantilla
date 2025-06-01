@@ -26,7 +26,7 @@ class AlineacionStorageImpl(
      */
     override fun fileWrite(alineacion: Alineacion,equipo: List<Persona>, file: File): Result<Unit, Errors> {
         logger.debug { "Exportando equipo" }
-        when {
+        return when {
             file.name.endsWith(".html") -> {
                 return storageHTML.fileWrite(alineacion,equipo,file)
             }
@@ -37,6 +37,6 @@ class AlineacionStorageImpl(
             return Err(PersonasError.PersonasStorageError("Extensión inválida."))
             }
         }
-        return Ok(Unit)
+
     }
 }

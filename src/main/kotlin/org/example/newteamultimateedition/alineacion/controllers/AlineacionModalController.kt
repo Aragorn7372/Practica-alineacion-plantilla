@@ -188,6 +188,12 @@ class AlineacionModalController: KoinComponent {
         initBindings()
         initDefaultValues()
     }
+    private fun isExternalImage(path: String):Boolean {
+        if (path.startsWith("file:/"))
+            return true
+        else
+            return false
+    }
 
     /**
      * Asigna la función de cada elemento de la vista al hacer click sobre el mismo.
@@ -367,12 +373,19 @@ class AlineacionModalController: KoinComponent {
     private fun onEliminarPersona(){
         logger.debug { "Eliminando persona" }
         if (pulsado != 0){
-            viewModel.state.value.personas.add(jugadores[pulsado])
-            jugadores.remove(pulsado)
-            imagenes[pulsado]?.image = Image(RoutesManager.getResourceAsStream("media/profile_picture.png"))
-            deleteImagesStyle()
-            pulsado = 0
-
+            if (pulsado==19){
+                viewModel.state.value.personas.add(entrenador)
+                entrenador=null
+                imagenes[pulsado]?.image = Image(RoutesManager.getResourceAsStream("media/profile_picture.png"))
+                deleteImagesStyle()
+                pulsado = 0
+            }else {
+                viewModel.state.value.personas.add(jugadores[pulsado])
+                jugadores.remove(pulsado)
+                imagenes[pulsado]?.image = Image(RoutesManager.getResourceAsStream("media/profile_picture.png"))
+                deleteImagesStyle()
+                pulsado = 0
+            }
         }else{
             showAlertOperation(AlertType.ERROR,"Error", "Por favor, seleccione alguno")
         }
@@ -390,13 +403,14 @@ class AlineacionModalController: KoinComponent {
             if (jugadores[pulsado]==null) {
                 if (persona is Jugador) {
                     jugadores[pulsado] = persona
-                    imagenes[pulsado]?.image = Image(RoutesManager.getResourceAsStream(persona.imagen))
+                    imagenes[pulsado]?.image = if(isExternalImage(persona.imagen)) Image(persona.imagen) else Image(RoutesManager.getResourceAsStream(persona.imagen))
+
                     viewModel.state.value.personas.remove(jugadores[pulsado])
                     deleteImagesStyle()
                     pulsado = 0
                 } else {
                     entrenador = persona as Entrenador
-                    imagenes[pulsado]?.image = Image(RoutesManager.getResourceAsStream(persona.imagen))
+                    imagenes[pulsado]?.image = if(isExternalImage(persona.imagen)) Image(persona.imagen) else Image(RoutesManager.getResourceAsStream(persona.imagen))
                     viewModel.state.value.personas.remove(entrenador)
                     deleteImagesStyle()
                     pulsado = 0

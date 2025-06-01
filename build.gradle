@@ -131,7 +131,7 @@ jlinkZip {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'org.example.newteam.HelloApplication'
+        attributes 'Main-Class': 'org.example.newteamultimateedition.MainApp'
     }
     from {
         configurations["compileClasspath"].collect { it.isDirectory() ? it : zipTree(it) }
