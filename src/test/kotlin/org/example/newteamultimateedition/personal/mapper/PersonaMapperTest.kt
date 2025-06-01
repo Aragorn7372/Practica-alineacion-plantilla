@@ -3,6 +3,7 @@ package org.example.newteamultimateedition.personal.mapper
 import org.example.newteamultimateedition.personal.dao.PersonaEntity
 import org.example.newteamultimateedition.personal.dto.IntegranteDTO
 import org.example.newteamultimateedition.personal.dto.IntegranteXmlDTO
+import org.example.newteamultimateedition.personal.extensions.copy
 import org.example.newteamultimateedition.personal.models.*
 import org.example.newteamultimateedition.personal.viewmodels.EquipoViewModel
 import org.junit.jupiter.api.DisplayName
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.assertThrows
 
 
 class PersonaMapperTest {
+
     class PersonaRemix(
         id: Long = 0L,
         nombre: String,
@@ -56,6 +58,43 @@ class PersonaMapperTest {
         minutosJugados = 100,
         imagen = "jaskjndkjnas",
         isDeleted = false
+    )
+    private val jugadorState = EquipoViewModel.PersonalState(
+        id = 1L,
+        nombre = "Jugadora",
+        apellidos = "hola",
+        fechaNacimiento = LocalDate.parse("2020-01-01"),
+        fechaIncorporacion = LocalDate.parse("2020-01-02"),
+        salario = 3000.0,
+        pais = "españa",
+        imagen = "jaskjndkjnas",
+        especialidad ="",
+        posicion = "DEFENSA",
+        dorsal = 12,
+        altura =100.0,
+        peso = 100.0,
+        goles = 10,
+        partidosJugados = 10,
+        minutosJugados = 100
+    )
+
+    private val entrenadorState = EquipoViewModel.PersonalState(
+        id = 2,
+        nombre = "Entrenadora",
+        apellidos = "hola",
+        fechaNacimiento = LocalDate.parse("2020-01-01"),
+        fechaIncorporacion = LocalDate.parse("2020-01-02"),
+        salario = 3000.0,
+        pais = "españa",
+        imagen = "oijsdoiasjd",
+        especialidad = "ENTRENADOR_PRINCIPAL",
+        posicion = "",
+        dorsal = 0,
+        altura = 0.0,
+        peso = 0.0,
+        goles = 0,
+        partidosJugados = 0,
+        minutosJugados = 0
     )
 
     private val entrenador = Entrenador(
@@ -402,6 +441,46 @@ class PersonaMapperTest {
 
             assertTrue(result is IntegranteDTO)
             assertEquals(expected.posicion, result.posicion, "El resultado del mapeo debe coincidir con lo esperado.")
+        }
+
+        @Test
+        @DisplayName("Persona State to Jugador")
+        fun personaStateToJugador(){
+            val result = jugadorState.toJugadorModel()
+            assertAll(
+                { assertTrue(result is Jugador) },
+                { assertEquals(jugador.id, result.id) },
+                { assertEquals(jugador.nombre, result.nombre) },
+                { assertEquals(jugador.apellidos, result.apellidos) },
+                { assertEquals(jugador.fechaNacimiento, result.fechaNacimiento) },
+                { assertEquals(jugador.fechaIncorporacion, result.fechaIncorporacion) },
+                { assertEquals(jugador.salario, result.salario) },
+                { assertEquals(jugador.pais, result.pais) },
+                { assertEquals(jugador.imagen, result.imagen) },
+                { assertEquals(jugador.posicion, (result as Jugador).posicion) },
+                { assertEquals(jugador.dorsal, (result as Jugador).dorsal) },
+                { assertEquals(jugador.altura, (result as Jugador).altura) },
+                { assertEquals(jugador.peso, (result as Jugador).peso) },
+                { assertEquals(jugador.goles, (result as Jugador).goles) },
+                { assertEquals(jugador.partidosJugados, (result as Jugador).partidosJugados) },
+                { assertEquals(jugador.minutosJugados, (result as Jugador).minutosJugados) },
+            )
+        }
+        @Test
+        @DisplayName("Entrenador State to Entrenador")
+        fun personaStateToEntrenador(){
+            val result= entrenadorState.toEntrenadorModel()
+            assertAll(
+                { assertTrue(result is Entrenador) },
+                { assertEquals(entrenador.id, result.id) },
+                { assertEquals(entrenador.nombre, result.nombre) },
+                { assertEquals(entrenador.apellidos, result.apellidos) },
+                { assertEquals(entrenador.fechaNacimiento,result.fechaNacimiento) },
+                { assertEquals(entrenador.fechaIncorporacion,result.fechaIncorporacion) },
+                { assertEquals(entrenador.salario,result.salario) },
+                { assertEquals(entrenador.pais,result.pais) },
+                { assertEquals(entrenador.especialidad,(result as Entrenador).especialidad) },
+            )
         }
     }
 }

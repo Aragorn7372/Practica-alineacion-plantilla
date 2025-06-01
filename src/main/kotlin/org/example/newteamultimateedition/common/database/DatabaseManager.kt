@@ -32,6 +32,9 @@ class DatabaseManager(
         if (initData) ejecutarScriptSql("data.sql")
     }
 
+    /**
+     * Ejecuta un script SQL.
+     */
     private fun ejecutarScriptSql(file: String) {
         val scriptString= ClassLoader.getSystemResourceAsStream(file)?.bufferedReader()!!
         val script = scriptString.readText()
@@ -40,6 +43,11 @@ class DatabaseManager(
         }
     }
 }
+
+/**
+ * funcion que devuelve un [Jdbi]
+ * @return [Jdbi] personalizado
+ */
 fun provideDatabaseManager(): Jdbi {
     val logger = logging()
     logger.debug { "Obteniendo config properties..." }

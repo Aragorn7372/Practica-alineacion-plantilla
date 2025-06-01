@@ -1,8 +1,13 @@
 package org.example.newteamultimateedition.users.exception
 
+import org.example.newteamultimateedition.common.error.Errors
 
 
-abstract class UsersException (val message: String) {
+/**
+ * Representa la clase inicial de los posibles errores de usuarios
+ * @property message Mensaje de error
+ */
+abstract class UsersException (message: String): Errors(message) {
 
     /**
      * Excepción que indica que no se ha encontrado el usuario buscado.
@@ -18,4 +23,5 @@ abstract class UsersException (val message: String) {
      */
     class DatabaseException(messager: String): UsersException(messager)
     class ContraseniaEquivocadaException(messager: String): UsersException(messager)
+    class AccessDeniedException(messager: String) : UsersException(messager)
 }

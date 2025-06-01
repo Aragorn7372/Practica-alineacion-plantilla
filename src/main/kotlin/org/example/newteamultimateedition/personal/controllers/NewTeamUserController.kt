@@ -19,6 +19,7 @@ import org.example.newteamultimateedition.users.models.User
 import org.example.newteamultimateedition.personal.viewmodels.EquipoViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.koin.core.qualifier.named
 import org.lighthousegames.logging.logging
 
 /**
@@ -29,7 +30,7 @@ import org.lighthousegames.logging.logging
 class NewTeamUserController(): KoinComponent {
     private val logger = logging()
     private val viewModel: EquipoViewModel by inject()
-    private val cache: Cache<Long,User> by inject()
+    private val cache: Cache<Long,User> by inject(named("usersCache"))
 
     /* Menu */
     @FXML
@@ -316,12 +317,12 @@ class NewTeamUserController(): KoinComponent {
     }
 
     /**
-     * Detecta qué integrante de la tabla está seleccionado
-     * @param newValue el integrante seleccionado
-     * @see [EquipoViewModel.updateIntegranteSelected]
+     * Detecta qué persona de la tabla está seleccionado
+     * @param newValue la persona seleccionada
+     * @see [EquipoViewModel.updatePersonalSelected]
      */
     private fun onTablaSelected(newValue: Persona) {
-        logger.debug { " Integrante seleccionado en la tabla: $newValue " }
+        logger.debug { " Persona seleccionada en la tabla: $newValue " }
         viewModel.updatePersonalSelected(newValue)
     }
 
@@ -330,9 +331,6 @@ class NewTeamUserController(): KoinComponent {
      * @see [RoutesManager.initAboutStage]
      * @see [RoutesManager.onAppExit]
      * @see [showLogoutAlert]
-     * @see [onSortByNombreAction]
-     * @see [onSortBySalarioAction]
-     * @see [onSortByNothingAction]
      * @see [onFilterByNothingAction]
      * @see [onFilterByEntrenadoresAction]
      * @see [onFilterByJugadoresAction]
@@ -365,10 +363,10 @@ class NewTeamUserController(): KoinComponent {
      * Filtra la lista de integrantes por nombre
      * @param cadena la cadena a filtrar
      * @see [EquipoViewModel.quitarFiltros]
-     * @see [EquipoViewModel.filterIntegrantes]
+     * @see [EquipoViewModel.filterPersonas]
      */
     private fun filterByName (cadena: String){
-        logger.debug { "Filtrando integrantes por nombre" }
+        logger.debug { "Filtrando personal por nombre" }
 
         viewModel.quitarFiltros()
 
@@ -389,9 +387,9 @@ class NewTeamUserController(): KoinComponent {
     }
 
     /**
-     * Filtra los entrenadores de la lista de integrantes
-     * @see [EquipoViewModel.loadAllIntegrantes]
-     * @see [EquipoViewModel.filterIntegrantes]
+     * Filtra los entrenadores de la lista de personas
+     * @see [EquipoViewModel.loadAllPersonas]
+     * @see [EquipoViewModel.filterPersonas]
      */
     private fun onFilterByEntrenadoresAction() {
         logger.debug { "Filtrando los jugadores" }
@@ -404,9 +402,9 @@ class NewTeamUserController(): KoinComponent {
     }
 
     /**
-     * Filtra los jugadores de la lista de integrantes
-     * @see [EquipoViewModel.loadAllIntegrantes]
-     * @see [EquipoViewModel.filterIntegrantes]
+     * Filtra los jugadores de la lista de personas
+     * @see [EquipoViewModel.loadAllPersonas]
+     * @see [EquipoViewModel.filterPersonas]
      */
     private fun onFilterByJugadoresAction() {
         logger.debug { "Filtrando los jugadores" }
@@ -418,6 +416,9 @@ class NewTeamUserController(): KoinComponent {
         alreadyFiltered = true
     }
 
+    /**
+     * Muestra una ventana de algún tipo
+     */
     private fun showAlertOperation(
         alerta: AlertType = AlertType.CONFIRMATION,
         title: String = "",

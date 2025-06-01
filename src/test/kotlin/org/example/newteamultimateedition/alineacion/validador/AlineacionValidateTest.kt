@@ -47,13 +47,13 @@ inner class CasosCorrectos {
   @DisplayName("validate correcto")
   fun validar(){
   val alineacion=Alineacion(
-   1L,
-   personalList = createList(18),
-   juegoDate = LocalDate.now(),
-   updatedAt = LocalDateTime.now(),
-   createdAt = LocalDateTime.now(),
-   entrenador = entrenador
-
+      1L,
+      personalList = createList(18),
+      juegoDate = LocalDate.now(),
+      updatedAt = LocalDateTime.now(),
+      createdAt = LocalDateTime.now(),
+      entrenador = entrenador,
+      descripcion = "aaa"
   )
    val result=validator.validator(alineacion)
    assertTrue(result.isOk,"deberia esta bien")
@@ -68,12 +68,13 @@ inner class CasosCorrectos {
   @DisplayName("validate incorrecto fecha")
   fun validarInvalidoFecha(){
    val alineacion=Alineacion(
-    1L,
-    personalList = createList(18),
-    juegoDate = LocalDate.parse("2025-05-23"),
-    updatedAt = LocalDateTime.now(),
-    createdAt = LocalDateTime.now(),
-    entrenador = entrenador
+       1L,
+       personalList = createList(18),
+       juegoDate = LocalDate.parse("2025-05-23"),
+       updatedAt = LocalDateTime.now(),
+       createdAt = LocalDateTime.now(),
+       entrenador = entrenador,
+       descripcion = "aaa"
    )
    val result=validator.validator(alineacion)
    assertTrue(result.isErr,"deberia devolver un error")
@@ -88,7 +89,8 @@ inner class CasosCorrectos {
     juegoDate = LocalDate.now(),
     updatedAt = LocalDateTime.now(),
     createdAt = LocalDateTime.now(),
-    entrenador = entrenador
+    entrenador = entrenador,
+    descripcion = "aaa"
    )
    val result=validator.validator(alineacion)
    assertTrue(result.isErr,"deberia devolver un error")
@@ -103,7 +105,8 @@ inner class CasosCorrectos {
     juegoDate = LocalDate.now(),
     updatedAt = LocalDateTime.now(),
     createdAt = LocalDateTime.now(),
-    entrenador = entrenador
+    entrenador = entrenador,
+    descripcion = "aaa"
    )
    val result=validator.validator(alineacion)
    assertTrue(result.isErr,"deberia devolver un error")

@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Separator?>
@@ -44,6 +45,11 @@
          <children>
             <Pane id="loginForm" layoutX="65.0" layoutY="24.0" prefHeight="270.0" prefWidth="270.0">
                <children>
+                  <Label layoutX="26.0" layoutY="142.0" text="¿Olvidó su contraseña?">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
                   <Button fx:id="loginButton" layoutX="25.0" layoutY="177.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" text="Iniciar Sesión" />
                   <GridPane layoutX="25.0" layoutY="41.0" prefHeight="94.0" prefWidth="220.0">
                      <columnConstraints>
@@ -65,6 +71,11 @@
                      <font>
                         <Font size="11.0" />
                      </font></Label>
+                  <Hyperlink fx:id="changePassword" layoutX="148.0" layoutY="139.0" text="Cámbiala">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Hyperlink>
                </children>
             </Pane>
          </children>

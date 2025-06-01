@@ -46,7 +46,9 @@ object RoutesManager {
         LOGIN("views/LoginNewTeam.fxml"),
         ABOUT("views/AboutNewTeam.fxml"),
         REGISTER("views/RegisterNewTeam.fxml"),
-        ALINEACIONADMIN("views/alineacionesAdmin.fxml"),
+        CHANGE_PASSWORD("views/ChangePasswordNewTeam.fxml"),
+        ALINEACION_ADMIN("views/alineacionesAdmin.fxml"),
+        ALINEACION_MODAL("views/Alineaciones.fxml"),
         ALINEACIONUSER("views/alineacionesUser.fxml"),
     }
 
@@ -170,9 +172,25 @@ object RoutesManager {
         mainStage.show()
     }
 
+    fun initChangePasswordStage(stage: Stage) {
+        logger.debug { "Iniciando Change Password stage" }
+        val fxmlLoader = FXMLLoader(getResource(Vistas.CHANGE_PASSWORD.path))
+        val parentRoot = fxmlLoader.load<Pane>()
+        val scene = Scene(parentRoot, 400.0, 650.0)
+        stage.title = "Cambiar contraseña"
+        stage.isResizable = false
+        stage.icons.add(Image(getResourceAsStream("media/app-icon.png")))
+        stage.scene = scene
+        stage.centerOnScreen()
+        stage.setOnCloseRequest {  }
+        mainStage = stage
+        _activeStage = stage
+        mainStage.show()
+    }
+
     fun initAlineacionesAdminStage(stage: Stage) {
         logger.debug { "Iniciando Alineaciones Admin" }
-        val fxmlLoader = FXMLLoader(getResource(Vistas.ALINEACIONADMIN.path))
+        val fxmlLoader = FXMLLoader(getResource(Vistas.ALINEACION_ADMIN.path))
         val parentRoot = fxmlLoader.load<Pane>()
         val myScene = Scene(parentRoot, 900.0, 600.0)
         stage.title = "Alineaciones"
@@ -184,6 +202,22 @@ object RoutesManager {
         mainStage = stage
         _activeStage = stage
         mainStage.show()
+    }
+
+    fun initAlineacionesModalStage() {
+        logger.debug { "Iniciando Modal de alineaciones" }
+        val fxmlLoader = FXMLLoader(getResource(Vistas.ALINEACION_MODAL.path))
+        val parentRoot = fxmlLoader.load<Pane>()
+        val myScene = Scene(parentRoot, 1000.0, 600.0)
+        val stage = Stage()
+        stage.title = "Gestionar alineacion"
+        stage.scene = myScene
+        stage.initOwner(mainStage)
+        stage.centerOnScreen()
+        stage.initModality(Modality.WINDOW_MODAL)
+        stage.icons.add(Image(getResourceAsStream("media/app-icon.png")))
+        stage.isResizable = false
+        stage.show()
     }
 
     /**

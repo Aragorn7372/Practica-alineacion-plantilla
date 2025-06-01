@@ -13,6 +13,7 @@ import org.example.newteamultimateedition.users.models.User
 import org.example.newteamultimateedition.users.service.UsersServiceImpl
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.koin.core.qualifier.named
 
 
 import org.mindrot.jbcrypt.BCrypt
@@ -26,12 +27,11 @@ import org.mindrot.jbcrypt.BCrypt
  * @property userText [TextField] Campo que recoge el usuario
  * @property registerButton [Button] boton que procesa el inicio de sesion
  */
-
 class RegisterController: KoinComponent {
 
     private val dao: UsersServiceImpl by inject()
 
-    private val cache: Cache<Long,User> by inject()
+    private val cache: Cache<Long,User> by inject(named("usersCache"))
 
     @FXML
     lateinit var acercaDeButton: Button
@@ -55,6 +55,9 @@ class RegisterController: KoinComponent {
         initEvents()
     }
 
+    /**
+     * Inicia los eventos de los componentes de la interfaz
+     */
     private fun initEvents() {
 
         acercaDeButton.setOnAction {
@@ -94,6 +97,9 @@ class RegisterController: KoinComponent {
         }
     }
 
+    /**
+     * Función que se encarga de registrar al usuario o mostrar un error en caso de fallo
+     */
     private fun registerUser(){
         val result = validation(userText.text.toString(), passwordText.text.toString(), passwordConfirmationText.text)
         if (result.isErr) showUserError(result.error.message)
@@ -106,17 +112,29 @@ class RegisterController: KoinComponent {
             }
         }
     }
+
+    /**
+     * Valida el formulario de registro
+     * @param userName Nombre de usuario
+     * @param password Contraseña del usuario sin hashear
+     * @param passwordConfirmation Confirmación de la contraseña del usuario.
+     * @return [Result] de [User] en caso correcto o de [UsersException] en caso incorrecto o de fallo
+     */
     private fun validation(userName: String, password: String, passwordConfirmation: String) : Result<User,UsersException> {
         val encrypt= BCrypt.hashpw(password, BCrypt.gensalt(12))
         if (userName.isEmpty() || password.isEmpty() || passwordConfirmation.isEmpty()){
             return Err(UsersException.ContraseniaEquivocadaException("Por favor, rellena los campos"))
         }
         if (password!= passwordConfirmation){
-            return Err(UsersException.ContraseniaEquivocadaException("Las contraseñas no son iguales, aprende a escribir"))
+            return Err(UsersException.ContraseniaEquivocadaException("Las contraseñas no son iguales."))
         }
         return Ok(User(userName, encrypt))
     }
 
+    /**
+     * Muestra el error al usuario cambiando los colores de la interfaz y mostrando el mensaje de error
+     * @param error El mensaje de error
+     */
     private fun showUserError(error: String) {
         errorMessage.style = "-fx-text-fill: #FF2C2C;"
         userText.style = "-fx-border-color: #FF2C2C;" +

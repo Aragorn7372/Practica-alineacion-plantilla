@@ -2,7 +2,9 @@ package org.example.newteamultimateedition.common.service
 
 import com.github.michaelbull.result.Result
 
-
+/**
+ * Interfaz que represeta las operaciones CRUD versión servicio
+ */
 interface Service<T,E,ID> {
     fun getAll():Result<List<T>,E>
     fun getByID(id:ID): Result<T, E>

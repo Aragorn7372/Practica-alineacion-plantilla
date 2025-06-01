@@ -1,13 +1,10 @@
 package org.example.newteamultimateedition.personal.viewmodels
 
 import com.github.michaelbull.result.Result
-import com.github.michaelbull.result.andThen
-import com.github.michaelbull.result.onFailure
 import com.github.michaelbull.result.onSuccess
 import javafx.beans.property.SimpleObjectProperty
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
-import javafx.scene.control.Alert
 import org.example.newteamultimateedition.common.config.Config
 import org.example.newteamultimateedition.personal.error.PersonasError
 import org.example.newteamultimateedition.personal.extensions.redondearA2Decimales
@@ -17,7 +14,6 @@ import org.example.newteamultimateedition.personal.models.Entrenador
 import org.example.newteamultimateedition.personal.models.Jugador
 import org.example.newteamultimateedition.personal.models.Persona
 import org.example.newteamultimateedition.personal.services.PersonaServiceImpl
-import org.example.newteamultimateedition.routes.RoutesManager
 import org.lighthousegames.logging.logging
 import java.io.File
 import java.nio.file.Files
@@ -72,7 +68,7 @@ class EquipoViewModel (
      * @param persona el integrante a guardar
      * @see updateState
      */
-    fun saveIntegrante(persona: Persona): Result<Persona, PersonasError> {
+    fun savePersona(persona: Persona): Result<Persona, PersonasError> {
         // Comprueba si el integrante seleccionado es 0, puesto que eso significa que se está creando en ese momento. De lo contrario, lanza una actualización para que no se duplique el integrante
         logger.debug { persona.toString() }
         return if(persona.id==0L){
