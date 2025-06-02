@@ -157,6 +157,10 @@ Maven / Gradle
 
 Trello (planificación)
 
+## 🐱 GitFlow
+
+![app-icon](documentacion/GitFlow.png)
+
 # 👤 Autores
 Nombre: Cristian Ortega, Carlos Cortes, Samuel Gomez, Victor Marin
 
